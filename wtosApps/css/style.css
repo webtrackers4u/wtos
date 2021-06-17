@@ -1,0 +1,51 @@
+@import "xpeed.css";
+@import "common.css";
+.category-menu{
+
+}
+.main-menu-container{
+    border-bottom: 1px solid rgba(0,0,0,0.03);
+    background-color: white;
+}
+.main-menu-container .uk-navbar-nav > li > a{
+    text-transform: none;
+    color: #444;
+}
+.main-menu-container .uk-navbar-nav > li.uk-active > a{
+    color: var(--color-primary);
+}
+.category-menu-container{
+    border-bottom: 1px solid rgba(0,0,0,0.03);
+}
+.category-menu > * > :first-child{
+    padding: 9px 8px;
+    color: #444;
+}
+.category-menu .uk-dropdown{
+    box-shadow: none;
+    filter: drop-shadow(0 0 5px rgba(0,0,0,0.06));
+}
+.category-menu .uk-dropdown:after{
+    content: "";
+    position: absolute;
+    height: 16px;
+    width: 16px;
+    transform: rotate(45deg);
+    background-color: white;
+    top: -6px;
+    left: 15px;
+
+}
+.banner{
+    background: rgb(237,237,237);
+    background: radial-gradient(circle, rgba(237,237,237,1) 0%, rgba(246,246,246,1) 60%);
+}
+.uk-image-text{
+    background-color: black;
+    background-image: url("https://source.unsplash.com/1280x720");
+    background-repeat: no-repeat;
+    background-size: cover;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-font-smoothing: antialiased;
+}

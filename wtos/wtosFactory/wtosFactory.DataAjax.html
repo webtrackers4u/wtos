@@ -1,0 +1,173 @@
+<? 
+/*
+   # wtos version : WTF_version
+   # page called by ajax script in WTF_viewPage 
+   #  
+*/
+include('WTF_config_directory');
+include($site['root-wtos'].'wtosCommon.php');
+$pluginName='WTF_plugin';
+$os->loadPluginConstant($pluginName);
+
+ 
+?><?
+
+if($os->get('WTF_listingKey')=='OK')
+ 
+{
+    $where='';
+	$showPerPage= $os->post('showPerPage');
+	 	
+	WTF_andFields
+	   
+	$searchKey=$os->post('searchKey');
+	if($searchKey!=''){
+	$where ="WTF_searchFullQuery";
+ 
+	}
+		
+	$listingQuery="  select * from WTF_table where WTF_primery>0   $where  WTF_andFieldQuery   order by WTF_primery desc";
+	  
+	$resource=$os->pagingQuery($listingQuery,$os->showPerPage,false,true);
+	$rsRecords=$resource['resource'];
+	 
+ 
+?>
+<div class="listingRecords">
+<div class="pagingLinkCss">Total:<b><? echo $os->val($resource,'totalRec'); ?></b>  &nbsp;&nbsp; <? echo $resource['links']; ?>   </div>
+
+<table  border="0" cellspacing="0" cellpadding="0" class="noBorder"  >
+							<tr class="borderTitle" >
+						
+	                            <td >#</td>
+									<td >Action </td>
+								
+
+											WTF_listTitles						
+							 
+ 
+						       	</tr>
+							
+							
+							
+							<?php
+								  
+						  	 $serial=$os->val($resource,'serial');  
+						 
+							while($record=$os->mfa( $rsRecords)){ 
+							 $serial++;
+							    
+								
+							
+						
+							 ?>
+							<tr class="trListing">
+							<td><?php echo $serial; ?>     </td>
+							<td> 
+							<? if($os->access('wtView')){ ?>
+							<span  class="actionLink" ><a href="javascript:void(0)"  onclick="WTF_getTableRowById('<? echo $record['WTF_primery'];?>')" >Edit</a></span>  <? } ?>  </td>
+								WTF_listValues
+								
+				 </tr>
+                          <? 
+						  
+						 
+						  } ?>  
+							
+		
+			
+			
+							 
+		</table> 
+		
+		
+		
+		</div>
+		
+		<br />
+		
+		
+						
+<?php 
+exit();
+	
+}
+ 
+
+
+
+
+
+if($os->get('WTF_editKey')=='OK')
+{
+ $WTF_primery=$os->post('WTF_primery');
+ 
+ 
+		 WTF_dataToSave
+ 
+		
+		
+		//$dataToSave['modifyDate']=$os->now();
+		//$dataToSave['modifyBy']=$os->userDetails['adminId']; 
+		
+		if($WTF_primery < 1){
+		
+		$dataToSave['addedDate']=$os->now();
+		$dataToSave['addedBy']=$os->userDetails['adminId'];
+		}
+		
+		 
+          $qResult=$os->save('WTF_table',$dataToSave,'WTF_primery',$WTF_primery);///    allowed char '\*#@/"~$^.,()|+_-=:££ 	
+		if($qResult)  
+				{
+		if($WTF_primery>0 ){ $mgs= " Data updated Successfully";}
+		if($WTF_primery<1 ){ $mgs= " Data Added Successfully"; $WTF_primery=  $qResult;}
+		
+		  $mgs=$WTF_primery."#-#".$mgs;
+		}
+		else
+		{
+		$mgs="Error#-#Problem Saving Data.";
+		
+		}
+		//_d($dataToSave);
+		echo $mgs;		
+ 
+exit();
+	
+} 
+ 
+if($os->get('WTF_getTableRowById')=='OK')
+{
+		$WTF_primery=$os->post('WTF_primery');
+		
+		if($WTF_primery>0)	
+		{
+		$wheres=" where WTF_primery='$WTF_primery'";
+		}
+	    $dataQuery=" select * from WTF_table  $wheres ";
+		$rsResults=$os->mq($dataQuery);
+		$record=$os->mfa( $rsResults);
+		
+		 WTF_FillJsonPhp
+		
+		
+		echo  json_encode($record);	 
+ 
+exit();
+	
+}
+ 
+ 
+if($os->get('WTF_deleteRowById')=='OK')
+{ 
+
+$WTF_primery=$os->post('WTF_primery');
+ if($WTF_primery>0){
+ $updateQuery="delete from WTF_table where WTF_primery='$WTF_primery'";
+ $os->mq($updateQuery);
+    echo 'Record Deleted Successfully';
+ }
+ exit();
+}
+ 

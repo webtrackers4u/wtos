@@ -1,0 +1,15 @@
+{
+  "template-default.php": [
+    {
+      "name": "home_title",
+      "type": "text",
+      "label": "Home Title",
+      "placeholder": "Please enter page title"
+    }, {
+      "name": "saver",
+      "type": "rich-text",
+      "label": "Description No",
+      "placeholder": "Please enter description no"
+    }
+  ]
+}

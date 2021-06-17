@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+@import "xpeed.css";
+
+/*
+ * color
+ */
+:root {
+    --color-primary: #1c67ac;
+    --color-primary-dark: #0c427e;
+    --color-secondary: #a50b0b;
+    --color-secondary-dark: #580505;
+    font-family: Helvetica, "Trebuchet MS", Verdana, sans-serif;
+}
+::selection{
+background-color: var(--color-primary) !important;
+}
+
+
+/********
+ * color
+ */
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    -webkit-focus-ring-color: rgba(0, 0, 0, 0);
+}
+h1, h2, h3, h4, h5, h6{
+    font-weight: 700;
+}
+html, body{
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8f8;
+}
+
+@media only screen and (max-width: 960px) {
+
+    .uk-table .uk-label {
+        white-space: inherit;
+    }
+
+    .uk-table-responsive td[title] {
+        padding-left: 130px;
+        position: relative;
+        min-height: 30px;
+
+    }
+
+    .uk-table-responsive td[title]:before {
+        content: attr(title);
+        position: absolute;
+        left: 12px;
+        color: #666;
+    }
+}
+
+

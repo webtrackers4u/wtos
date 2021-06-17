@@ -1,0 +1,24 @@
+{
+    "name": "webtrackers4u/wtos-cms",
+    "description": "wtOS Content Management System is built with wtOS Library.",
+    "authors": [
+        {
+            "name": "Nafish Ahmed",
+            "email": "nafish.ahmed.dev@gmail.com"
+        },{
+            "name": "Mizanur Rahaman",
+            "email": "admin@webtrackers.co.in"
+        }
+    ],
+    "require": {
+        "tinymce/tinymce": ">= 5",
+        "ext-pdo": "*",
+        "ext-json": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Library\\": "library",
+            "": "library/wtosLibrary"
+        }
+    }
+}

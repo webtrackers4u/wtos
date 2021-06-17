@@ -1,0 +1,130 @@
+<?
+/*
+   # wtos version : WTF_version
+   # List Page : WTF_listPage 
+   #  
+*/
+include('WTF_config_directory');
+include($site['root-wtos'].'top.php');
+$pluginName='WTF_plugin';
+$os->loadPluginConstant($pluginName);
+?><?
+
+$editPage='WTF_editPage';
+$listPage='WTF_listPage';
+$primeryTable='WTF_table';
+$primeryField='WTF_primery';
+$pageHeader='WTF_headingAdd';
+ 
+ 
+$editPageLink=$os->pluginLink($pluginName).$editPage.'?'.$os->addParams(array(),array()).'editRowId=';
+$listPageLink=$os->pluginLink($pluginName).$listPage.'?'.$os->addParams(array(),array());
+$tmpVar='';
+$editRowId=$os->get('editRowId');
+if($editRowId)
+{
+ $pageHeader='WTF_headingEdit';
+}
+
+
+##  update row
+if($os->post('operation'))
+{
+
+	 if($os->post('operation')=='updateField')
+	 {
+	  $rowId=$os->post('rowId');
+	  
+	  #---- edit section ----#
+	 	 	 	 	 	 	 	 	 	 	 	 	 	  	 	 	 	 	 	 	 	 	    	  	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	  	 	  	 	 	WTF_dataToSave
+																																															
+																																															           if($rowId < 1){
+			$dataToSave['addedDate']=$os->now();
+			$dataToSave['addedBy']=$os->userDetails['adminId'];
+			}
+																																															
+																																															
+		
+		
+	  $os->saveTable($primeryTable,$dataToSave,$primeryField,$rowId);
+	 
+	 
+	  $flashMsg=($rowId)?'Record Updated Successfully':'Record Added Successfully';
+	  
+	  $os->flashMessage($primeryTable,$flashMsg);
+	  
+	   $os->redirect($os->post('redirectLink'));
+	  #---- edit section end ----#
+	
+	 }
+	
+	
+}
+
+
+$pageData='';
+if($editRowId)
+  {
+    
+	   $os->data=$os->rowByField('',$primeryTable,$primeryField,$editRowId);
+	    
+  }
+
+  
+$os->showFlash($os->flashMessage($primeryTable));
+?>
+ 
+ 
+	<table class="container">
+				<tr>
+					 
+			  <td  class="middle" style="padding-left:5px;">
+			  
+			  
+			 <div class="formsection">
+						<h3><?php  echo $pageHeader; ?></h3>
+						
+						<form  action="<? echo $editPageLink ?>" method="post"   enctype="multipart/form-data" id="submitFormDataId">
+						
+						<fieldset class="cFielSets"  >
+						<legend  class="cLegend">Details</legend>
+						
+				 
+						
+						<table width="100%" border="0" class="formClass"   >
+						
+							WTF_EditFields
+                        </table>
+						</fieldset>
+						
+						
+						
+						
+						 
+						
+					<? if($os->access('wtEdit')){ ?> 	<input type="button" class="submit"  value="Save" onclick="submitFormData()" />	 <? } ?>	 
+                        <input type="button" class="submit"  value="Back to List" onclick="javascript:window.location='<? echo $listPageLink ?>';" />	
+						<input type="hidden" name="redirectLink"  value="<? echo $os->server('HTTP_REFERER'); ?>" />
+						<input type="hidden" name="rowId" value="<?php   echo  $os->getVal($primeryField) ;?>" />
+                        <input type="hidden" name="operation" value="updateField" />
+						</form>
+					</div>			  </td>
+			  </tr>
+			</table>
+
+
+ 
+<script>
+function submitFormData()
+{
+
+
+   WTF_javascriptEmptyValidation
+   
+  os.submitForm('submitFormDataId');
+
+}
+</script>
+ 
+<? include($site['root-wtos'].'bottom.php'); ?>
+ 

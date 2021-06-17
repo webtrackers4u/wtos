@@ -1,0 +1,220 @@
+<?
+/*
+   # wtos version : WTF_version
+   # main ajax process page : WTF_ajaxPage 
+   #  
+*/
+include('WTF_config_directory');
+include($site['root-wtos'].'top.php');
+?><?
+$pluginName='WTF_plugin';
+$listHeader='WTF_H_viewPage';
+$ajaxFilePath= 'WTF_ajaxPage';
+$os->loadPluginConstant($pluginName);
+$loadingImage=$site['url-wtos'].'images/loadingwt.gif';
+ 
+?>
+  
+
+ <table class="container">
+				<tr>
+					 
+			  <td  class="middle" style="padding-left:5px;">
+			  
+			  
+			  <div class="listHeader"> <?php  echo $listHeader; ?>  </div>
+			  
+			  <!--  ggggggggggggggg   -->
+			  
+			  
+			  <table width="100%"  cellspacing="0" cellpadding="1" class="ajaxViewMainTable">
+			  
+  <tr>
+    <td width="470" height="470" valign="top" class="ajaxViewMainTableTDForm">
+	<div class="formDiv">
+	<div class="formDivButton">
+	<? if($os->access('wtDelete')){ ?><input type="button" value="Delete" onclick="WTF_deleteRowById('');" /><? } ?>	 
+	&nbsp;&nbsp;
+	&nbsp; <input type="button" value="New" onclick="javascript:window.location='';" />
+	 
+	&nbsp;<? if($os->access('wtEdit')){ ?> <input type="button" value="Save" onclick="WTF_editKey();" /><? } ?>	 
+	
+	</div>
+	<table width="100%" border="0" cellspacing="1" cellpadding="1" class="ajaxEditForm">	
+	 WTF_EditFields	
+									
+		 								
+	</table>
+	
+	
+	<input type="hidden"  id="showPerPage" value="<? echo $os->showPerPage; ?>" />					
+	<input type="hidden"  id="WTF_primery" value="0" />	
+	<input type="hidden"  id="WTF_pagingPageno" value="1" />	
+	<div class="formDivButton">						
+	<? if($os->access('wtDelete')){ ?><input type="button" value="Delete" onclick="WTF_deleteRowById('');" />	<? } ?>	  
+	&nbsp;&nbsp;
+	&nbsp; <input type="button" value="New" onclick="javascript:window.location='';" />
+	 
+	&nbsp; <? if($os->access('wtEdit')){ ?><input type="button" value="Save" onclick="WTF_editKey();" /><? } ?>	
+	</div> 
+	</div>	
+	
+	 
+	
+	</td>
+    <td valign="top" class="ajaxViewMainTableTDList">
+	
+	<div class="ajaxViewMainTableTDListSearch">
+	Search Key  
+  <input type="text" id="searchKey" />   &nbsp;
+     
+	  
+	 
+  <div style="display:none" id="advanceSearchDiv">
+         WTF_searchHtml 
+  </div>
+ 
+   
+  <input type="button" value="Search" onclick="WTF_listingKey();" style="cursor:pointer;"/>
+  <input type="button" value="Reset" onclick="searchReset();" style="cursor:pointer;"/>
+  
+   </div>
+	<div  class="ajaxViewMainTableTDListData" id="WTF_listingDiv">&nbsp; </div>
+	&nbsp;</td>
+  </tr>
+</table>
+
+		
+			  			  
+			  <!--   ggggggggggggggg  -->
+			  
+			  </td>
+			  </tr>
+			</table>
+			
+			 
+
+<script>
+ 
+function WTF_listingKey() // list table searched data get 
+{
+	var formdata = new FormData();
+	
+	WTF_searchScript
+	
+	 
+	formdata.append('searchKey',os.getVal('searchKey') );
+	formdata.append('showPerPage',os.getVal('showPerPage') );
+	var WTF_pagingPageno=os.getVal('WTF_pagingPageno');
+	var url='wtpage='+WTF_pagingPageno;
+	url='<? echo $ajaxFilePath ?>?WTF_listingKey=OK&'+url;
+	os.animateMe.div='div_busy';
+	os.animateMe.html='<div class="loadImage"><img  src="<? echo $loadingImage?>"  /> <div class="loadText">&nbsp;Please wait. Working...</div></div>';	
+	os.setAjaxHtml('WTF_listingDiv',url,formdata);
+		
+}
+
+WTF_listingKey();
+function  searchReset() // reset Search Fields
+	{
+		WTF_resetScript	
+		os.setVal('searchKey','');
+		WTF_listingKey();	
+	
+	}
+	
+ 
+function WTF_editKey()  // collect data and send to save
+{
+        
+	var formdata = new FormData();
+	WTF_EditJavaScripts
+	WTF_javascriptEmptyValidation
+	 var   WTF_primery=os.getVal('WTF_primery');
+	 formdata.append('WTF_primery',WTF_primery );
+  	var url='<? echo $ajaxFilePath ?>?WTF_editKey=OK&';
+	os.animateMe.div='div_busy';
+	os.animateMe.html='<div class="loadImage"><img  src="<? echo $loadingImage?>"  /> <div class="loadText">&nbsp;Please wait. Working...</div></div>';	
+	os.setAjaxFunc('WTF_AfterEditReload',url,formdata);
+
+}	
+
+function WTF_AfterEditReload(data) // after edit reload list
+{
+  
+	var d=data.split('#-#');
+	var WTF_primery=parseInt(d[0]);
+	if(d[0]!='Error' && WTF_primery>0)
+	{
+	  os.setVal('WTF_primery',WTF_primery);
+	}
+	
+	if(d[1]!=''){alert(d[1]);}
+	WTF_listingKey();
+}
+
+function WTF_getTableRowById(WTF_primery) // get record by table primery id
+{
+	var formdata = new FormData();	 
+	formdata.append('WTF_primery',WTF_primery );
+	var url='<? echo $ajaxFilePath ?>?WTF_getTableRowById=OK&';
+	os.animateMe.div='div_busy';
+	os.animateMe.html='<div class="loadImage"><img  src="<? echo $loadingImage?>"  /> <div class="loadText">&nbsp;Please wait. Working...</div></div>';	
+	os.setAjaxFunc('WTF_FillData',url,formdata);
+				
+}
+
+function WTF_FillData(data)  // fill data form by JSON
+{
+   
+	var objJSON = JSON.parse(data);
+	os.setVal('WTF_primery',parseInt(objJSON.WTF_primery));
+	WTF_FillJsonScript
+  
+}
+
+function WTF_deleteRowById(WTF_primery) // delete record by table id
+{
+	var formdata = new FormData();	 
+	if(parseInt(WTF_primery)<1 || WTF_primery==''){  
+	var  WTF_primery =os.getVal('WTF_primery');
+	}
+	
+	if(parseInt(WTF_primery)<1){ alert('No record Selected'); return;}
+	
+	var p =confirm('Are you Sure? You want to delete this record forever.')
+	if(p){
+	
+	formdata.append('WTF_primery',WTF_primery );
+	
+	var url='<? echo $ajaxFilePath ?>?WTF_deleteRowById=OK&';
+	os.animateMe.div='div_busy';
+	os.animateMe.html='<div class="loadImage"><img  src="<? echo $loadingImage?>"  /> <div class="loadText">&nbsp;Please wait. Working...</div></div>';	
+	os.setAjaxFunc('WTF_deleteRowByIdResults',url,formdata);
+	}
+ 
+
+}
+function WTF_deleteRowByIdResults(data)
+{
+	alert(data);
+	WTF_listingKey();
+} 
+
+function wtAjaxPagination(pageId,pageNo)// pagination function
+{
+	os.setVal('WTF_pagingPageno',parseInt(pageNo));
+	WTF_listingKey();
+}
+
+	
+	
+	
+	 
+	 
+</script>
+
+
+  
+ 
+<? include($site['root-wtos'].'bottom.php'); ?>
