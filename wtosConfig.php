@@ -8,9 +8,9 @@ if(!in_array($_SERVER['SERVER_ADDR'],array('127.0.0.1','::1')))
 {
  	$wtSystemFolder='';	##'wtossystem/'
 	$site['host']='85.10.205.173';
-	$site['user']='nahid_root';
-	$site['pass']='querty12345';
-	$site['db']='pp_book';
+	$site['user']='wtos_123';
+	$site['pass']='wtos_123';
+	$site['db']='wtos_123';
 }
 else
 {
