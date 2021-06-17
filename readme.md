@@ -1,3 +1,5 @@
+![Alt Text](wtos-images/logo.svg)
+
 ## wtOS Content Management System v2.0
 > ```wtHome.php``` and ```wtContent.php``` alternatively the new templating system is introduced.
 
