@@ -6,7 +6,7 @@ $site['server']='http://'.$_SERVER['SERVER_NAME'].'/';
 
 if(!in_array($_SERVER['SERVER_ADDR'],array('127.0.0.1','::1')))
 {
- 	$wtSystemFolder='wtos-v2.0/';	##'wtossystem/'
+ 	$wtSystemFolder='';	##'wtossystem/'
 	$site['host']='localhost';
 	$site['user']='u990995717_wtosv2';
 	$site['pass']='SsEGGwBDqw7;';
