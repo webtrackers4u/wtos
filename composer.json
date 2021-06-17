@@ -13,7 +13,8 @@
     "require": {
         "tinymce/tinymce": ">= 5",
         "ext-pdo": "*",
-        "ext-json": "*"
+        "ext-json": "*",
+        "ext-mysql":"*"
     },
     "autoload": {
         "psr-4": {
