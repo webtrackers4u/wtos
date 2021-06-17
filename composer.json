@@ -20,5 +20,8 @@
             "Library\\": "library",
             "": "library/wtosLibrary"
         }
+    },
+    "require-dev": {
+        "heroku/heroku-buildpack-php": "*"
     }
 }
