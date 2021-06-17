@@ -1,4 +1,4 @@
-#wtOS Content Management System v2.0
+## wtOS Content Management System v2.0
 > ```wtHome.php``` and ```wtContent.php``` alternatively the new templating system is introduced.
 
 1. To create a template you have to create a file in a pattern ```template-[TEMPLATE_NAME].php```. You can also create a template for specific slug like ```page-[SLUG].php```
