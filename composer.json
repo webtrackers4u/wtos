@@ -13,9 +13,9 @@
     "require": {
         "tinymce/tinymce": ">= 5",
         "php": ">=7.3",
-        "ext-pdo": "*",
         "ext-json": "*",
-        "ext-pdo_mysql":"*"
+        "ext-pdo_mysql":"*",
+        "ext-mysqli":"*"
     },
     "autoload": {
         "psr-4": {
