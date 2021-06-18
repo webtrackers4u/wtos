@@ -1,7 +1,7 @@
 <?php
 
 $site['base']=$_SERVER['DOCUMENT_ROOT'].'/';
-$site['server']='http://'.$_SERVER['SERVER_NAME'].'/';
+$site['server']='https://'.$_SERVER['SERVER_NAME'].'/';
 
 
 if(!in_array($_SERVER['SERVER_ADDR'],array('127.0.0.1','::1')))
