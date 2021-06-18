@@ -1,2 +1,4 @@
 /vendor/
 /.idea/
+/wtosConfig.php
+/composer.lock
