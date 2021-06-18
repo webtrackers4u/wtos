@@ -247,11 +247,12 @@ if($editRowId)
 
                                     <? if($field->type=="checkbox"){
                                         $values = (array)@$field->values;
+                                        $already_values = Template::get_field($field->name,$pageData["pagecontentId"]);
                                         foreach ($values as $key=>$val){
                                             $no = "fields_".$field->name.rand(0, 100);
                                             ?>
                                             <label for="<?= $no?>">
-                                                <input class="uk-checkbox" type="checkbox" value="<?= $key?>" name="fields[<?= $field->name?>][]" id="<?= $no?>" <?= Template::get_field($field->name,$pageData["pagecontentId"])=="$key"?"checked":""?>> <span><?=$val?></span>
+                                                <input class="uk-checkbox" type="checkbox" value="<?= $key?>" name="fields[<?= $field->name?>][]" id="<?= $no?>" <?= in_array($key, $already_values)?"checked":""?>> <span><?=$val?></span>
                                             </label><br>
                                             <?
                                         }
