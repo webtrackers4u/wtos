@@ -7,10 +7,10 @@ $site['server']='http://'.$_SERVER['SERVER_NAME'].'/';
 if(!in_array($_SERVER['SERVER_ADDR'],array('127.0.0.1','::1')))
 {
  	$wtSystemFolder='';	##'wtossystem/'
-	$site['host']='85.10.205.173';
-	$site['user']='wtos_123';
-	$site['pass']='wtos_123';
-	$site['db']='wtos_123';
+	$site['host']='freedb.tech';
+	$site['user']='freedbtech_userxen';
+	$site['pass']='qwerty12345';
+	$site['db']='freedbtech_wtos';
 }
 else
 {
