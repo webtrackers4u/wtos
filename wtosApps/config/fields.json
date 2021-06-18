@@ -10,6 +10,24 @@
       "type": "rich-text",
       "label": "Description No",
       "placeholder": "Please enter description no"
+    },{
+      "name": "show_header",
+      "type": "radio",
+      "label": "Show Header",
+      "placeholder": "Please enter description no",
+      "values" : {
+        "Yes": "Yes",
+        "No": "No"
+      }
+    },{
+      "name": "who_are_you",
+      "type": "select",
+      "label": "Who are you",
+      "placeholder": "Please enter description no",
+      "values" : {
+        "Yes": "Yes",
+        "No": "No"
+      }
     }
   ]
 }

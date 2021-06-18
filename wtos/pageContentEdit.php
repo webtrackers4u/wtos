@@ -196,14 +196,16 @@ if($editRowId)
 
 
                 </div>
+
+
+                <?
+                $template = @$pageData["template"]!=""?$pageData["template"]:Template::$DEFAULT_TEMPLATE;
+                $fields = Template::get_fields($template);
+                if (!empty($fields)){
+                ?>
                 <div class="uk-card uk-card-small uk-card-default uk-card-body uk-margin">
                     <h4>Other Params</h4>
-                    <?
-                    $template = @$pageData["template"]!=""?$pageData["template"]:Template::$DEFAULT_TEMPLATE;
-                    $fields = Template::get_fields($template);
-                    ?>
-
-                        <? foreach($fields as $field){?>
+                    <? foreach($fields as $field){?>
                             <div class="uk-margin-small">
                                 <label><?= $field->label ?></label>
                                 <div>
@@ -216,11 +218,33 @@ if($editRowId)
                                     <? if($field->type=="rich-text"){?>
                                         <textarea class="uk-textarea uk-form-small tmce" placeholder="<?= $field->placeholder?>" type="text" name="fields[<?= $field->name?>]" id="fields_<?= $field->name?>"><?= Template::get_field($field->name,$pageData["pagecontentId"])?></textarea>
                                     <?}?>
+
+                                    <? if($field->type=="radio"){
+                                        $values = (array)@$field->values;
+                                        foreach ($values as $key=>$val){
+                                            ?>
+                                            <input type="radio" value="<?= $key?>" name="fields[<?= $field->name?>]" id="fields_<?= $field->name?>" <?= Template::get_field($field->name,$pageData["pagecontentId"])=="$key"?"checked":""?>> <label><?=$val?></label>
+                                            <?
+                                        }
+                                    }
+                                    ?>
+
+                                    <? if($field->type=="select"){
+                                        $values = (array)@$field->values;
+                                        ?>
+                                        <select class="uk-select" name="fields[<?= $field->name?>]" id="fields_<?= $field->name?>">
+                                            <? foreach ($values as $key=>$val){?>
+                                                <option value="<?= $key?>"  <?= Template::get_field($field->name,$pageData["pagecontentId"])=="$key"?"checked":""?>><?=$val?></option>
+                                            <?} ?>
+                                        </select>
+                                        <?
+                                    }
+                                    ?>
                                 </div>
                             </div>
                         <?}?>
-
                 </div>
+                <?}?>
 
             </div>
             <div class="uk-width-large@m">
