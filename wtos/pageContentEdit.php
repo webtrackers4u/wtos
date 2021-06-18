@@ -212,6 +212,12 @@ if($editRowId)
                                     <? if($field->type=="text"){?>
                                         <input class="uk-input uk-form-small" placeholder="<?= $field->placeholder?>" type="text" name="fields[<?= $field->name?>]" id="fields_<?= $field->name?>" value="<?= Template::get_field($field->name,$pageData["pagecontentId"])?>">
                                     <?}?>
+                                    <? if($field->type=="number"){?>
+                                        <input  class="uk-input uk-form-small" placeholder="<?= $field->placeholder?>" type="number" name="fields[<?= $field->name?>]" id="fields_<?= $field->name?>" value="<?= Template::get_field($field->name,$pageData["pagecontentId"])?>">
+                                    <?}?>
+                                    <? if($field->type=="password"){?>
+                                        <input class="uk-input uk-form-small" placeholder="<?= $field->placeholder?>" type="password" name="fields[<?= $field->name?>]" id="fields_<?= $field->name?>" value="<?= Template::get_field($field->name,$pageData["pagecontentId"])?>">
+                                    <?}?>
                                     <? if($field->type=="textarea"){?>
                                         <textarea class="uk-textarea uk-form-small" placeholder="<?= $field->placeholder?>" type="text" name="fields[<?= $field->name?>]" id="fields_<?= $field->name?>"><?= Template::get_field($field->name,$pageData["pagecontentId"])?></textarea>
                                     <?}?>
@@ -223,7 +229,7 @@ if($editRowId)
                                         $values = (array)@$field->values;
                                         foreach ($values as $key=>$val){
                                             ?>
-                                            <input type="radio" value="<?= $key?>" name="fields[<?= $field->name?>]" id="fields_<?= $field->name?>" <?= Template::get_field($field->name,$pageData["pagecontentId"])=="$key"?"checked":""?>> <label><?=$val?></label>
+                                            <input class="uk-radio" type="radio" value="<?= $key?>" name="fields[<?= $field->name?>]" id="fields_<?= $field->name?>" <?= Template::get_field($field->name,$pageData["pagecontentId"])=="$key"?"checked":""?>> <label><?=$val?></label>
                                             <?
                                         }
                                     }
@@ -234,10 +240,21 @@ if($editRowId)
                                         ?>
                                         <select class="uk-select" name="fields[<?= $field->name?>]" id="fields_<?= $field->name?>">
                                             <? foreach ($values as $key=>$val){?>
-                                                <option value="<?= $key?>"  <?= Template::get_field($field->name,$pageData["pagecontentId"])=="$key"?"checked":""?>><?=$val?></option>
+                                                <option value="<?= $key?>"  <?= Template::get_field($field->name,$pageData["pagecontentId"])=="$key"?"selected":""?>><?=$val?></option>
                                             <?} ?>
                                         </select>
-                                        <?
+                                    <? } ?>
+
+                                    <? if($field->type=="checkbox"){
+                                        $values = (array)@$field->values;
+                                        foreach ($values as $key=>$val){
+                                            $no = "fields_".$field->name.rand(0, 100);
+                                            ?>
+                                            <label for="<?= $no?>">
+                                                <input class="uk-checkbox" type="checkbox" value="<?= $key?>" name="fields[<?= $field->name?>][]" id="<?= $no?>" <?= Template::get_field($field->name,$pageData["pagecontentId"])=="$key"?"checked":""?>> <span><?=$val?></span>
+                                            </label><br>
+                                            <?
+                                        }
                                     }
                                     ?>
                                 </div>
