@@ -57,8 +57,8 @@ function tmce(id)
             mode : "exact",
             selector: "#"+id,
             forced_root_block : '',
-            force_br_newlines : true,
-            force_p_newlines : false,
+            //force_br_newlines : true,
+            //force_p_newlines : false,
 
             plugins: 'codesample print preview  importcss  searchreplace autolink autosave save directionality  visualblocks visualchars fullscreen image link media  template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime lists wordcount  imagetools textpattern noneditable help  charmap  quickbars  emoticons',
 

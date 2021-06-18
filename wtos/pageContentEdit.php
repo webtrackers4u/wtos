@@ -212,6 +212,7 @@ if($editRowId)
                                     <? if($field->type=="text"){?>
                                         <input class="uk-input uk-form-small" placeholder="<?= $field->placeholder?>" type="text" name="fields[<?= $field->name?>]" id="fields_<?= $field->name?>" value="<?= Template::get_field($field->name,$pageData["pagecontentId"])?>">
                                     <?}?>
+                                    
                                     <? if($field->type=="number"){?>
                                         <input  class="uk-input uk-form-small" placeholder="<?= $field->placeholder?>" type="number" name="fields[<?= $field->name?>]" id="fields_<?= $field->name?>" value="<?= Template::get_field($field->name,$pageData["pagecontentId"])?>">
                                     <?}?>
