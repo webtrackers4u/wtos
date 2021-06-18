@@ -1,18 +1,10 @@
 <?
-global $os, $site;
+
+global $os, $site, $onHead;
 $currentPage='';
 if(isset($pageVar['segment'][1]))
 {
     $currentPage=$pageVar['segment'][1];
-}
-//menu
-$onHead = [];
-$onBottom = [];
-$pagecontentLinks=$os->get_pagecontent('seoId ,	externalLink, title  , pagecontentId , openNewTab, icon, onHead, onBottom,  loginRequired',"active=1 and parentPage<1 "," priority asc ",'','');
-while($page=$os->mfa($pagecontentLinks)) {
-    $page["icon"] = $page['icon']!=""?$page['icon']:'fimanager flaticon-001-hand-wash';
-    if ($page["onHead"]==1) {$onHead[] = $page;}
-    if ($page["onBottom"]==1) {$onBottom[] = $page;}
 }
 ?>
 
@@ -41,7 +33,6 @@ while($page=$os->mfa($pagecontentLinks)) {
 
     <script src="<?= $site["themePath"]?>js/uikit.js"></script>
     <script src="<?= $site["themePath"]?>js/uikit-icons.js"></script>
-
 </head>
 <body>
 <header>

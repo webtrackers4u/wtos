@@ -3,6 +3,19 @@ use Library\Classes\Template;
 global $os, $site;
 error_reporting($site['environment']);
 include($site['application'].'os.php');
+/*
+ * Routing
+ */
+//menu
+$onHead = [];
+$onBottom = [];
+$pagecontentLinks=$os->get_pagecontent('seoId ,	externalLink, title  , pagecontentId , openNewTab, icon, onHead, onBottom,  loginRequired',"active=1 and parentPage<1 "," priority asc ",'','');
+while($page=$os->mfa($pagecontentLinks)) {
+    $page["icon"] = $page['icon']!=""?$page['icon']:'fimanager flaticon-001-hand-wash';
+    if ($page["onHead"]==1) {$onHead[] = $page;}
+    if ($page["onBottom"]==1) {$onBottom[] = $page;}
+}
+
 $pageVar['segment']=array();
 $os->wtospage=array();
 $os->sefu()->setExtension('');
@@ -10,7 +23,7 @@ $os->sefu()->setExtension('');
 $pagevar['defaultPage']='wtHome.php';//   to design home page seperately
 $requestPage= $os->sefu->LoadPageName();
 $pageVar['segment']=$os->sefu->getSegments();
-$content=$pagevar['defaultPage'];
+
 // $lang=$os-> getLang();
 $lang='';
 $andLangId='';
@@ -55,24 +68,6 @@ if($os->getSettings('Deactivate Site')!=0){  echo '<style>
 $updateHit="update settings set value=value+1 where keyword='hitCoount'";
 $os->mq($updateHit);
 
-/*********
- * Login logout
- */
-$_REF_URL = urlencode( rtrim($site["server"],"/").$_SERVER["REQUEST_URI"]);
-if ($os->get("logout")=="OK"){
-    $os->Logout();
-    $ref_url = $os->get("ref");
-    if ($ref_url==""){
-        $ref_url = $site["url"];
-    }
-    $os->redirect($ref_url);
-    exit();
-}
-if($os->wtospage["loginRequired"]==1 && !$os->isLogin()){
-    $os->redirect($site["url"]."sign-in?ref=$_REF_URL");
-    exit();
-}
-
 
 
 /*********
@@ -93,5 +88,6 @@ if (file_exists($template)){
 } else {
     print $template." template file not found";
 }
+
 
 

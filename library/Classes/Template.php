@@ -42,5 +42,16 @@ class Template {
         $names = !empty($names)?" AND name IN('".implode("','", $names)."')":"";
         return $os->mq("DELETE FROM pagecontentmeta WHERE pagecontentId='$pagecontentId' $names");
     }
+
+    public static function get_page_by_slug($slug){
+        $slug = ltrim($slug, "/");
+        global $os;
+        $db = Db::instance();
+        $page = $db->query("SELECT * FROM pagecontent WHERE seoId='$slug'")->fetch();
+        $page["meta"] = $db->query("SELECT * FROM pagecontentmeta WHERE pagecontentId='".$page["pagecontentId"]."'")->fetchAll();
+        return $page;
+
+    }
+
 }
 ?>

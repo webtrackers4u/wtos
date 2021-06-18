@@ -1,7 +1,7 @@
 <?php
 
 $site['base']=$_SERVER['DOCUMENT_ROOT'].'/';
-$site['server']='https://'.$_SERVER['SERVER_NAME'].'/';
+$site['server']='http://'.$_SERVER['SERVER_NAME'].'/';
 
 
 if(!in_array($_SERVER['SERVER_ADDR'],array('127.0.0.1','::1')))
@@ -59,10 +59,47 @@ function _d($var){echo '<pre>';print_r($var);echo '</pre>';}
 
 
 /****
- * Vendor
- */
+ * Autoloader
+ ****/
 include "vendor/autoload.php";
-define("DB_HOST",$site["host"]);
-define("DB_NAME",$site["db"]);
-define("DB_USER",$site["user"]);
-define("DB_PASS",$site["pass"]);
+/******
+ * Constant configuration
+ */
+if(!in_array($_SERVER['SERVER_ADDR'],array('127.0.0.1','::1'))) {
+    define("DB_HOST", "localhost");
+    define("DB_PORT", "localhost");
+    define("DB_USER", "root");
+    define("DB_PASS", "12345678");
+    define("DB_NAME", "wtosv20");
+
+    define("BASE_DIR", __DIR__."/");
+    define("BASE_URL", (isset($_SERVER["HTTPS"]) ? "https://" : 'http://') . $_SERVER['SERVER_NAME'] . '/');
+} else {
+    define("DB_HOST", "localhost");
+    define("DB_PORT", "localhost");
+    define("DB_USER", "root");
+    define("DB_PASS", "12345678");
+    define("DB_NAME", "wtosv20");
+
+    define("BASE_DIR", __DIR__."/");
+    define("BASE_URL", (isset($_SERVER["HTTPS"]) ? "https://" : 'http://') . $_SERVER['SERVER_NAME'] . '/');
+}
+
+define("DIR_APP",    realpath(BASE_DIR."wtosApps/"));
+define("DIR_LIB",    realpath(BASE_DIR."library/wtosLibrary/"));
+define("DIR_UPLOAD", realpath(BASE_DIR."wtos-images/"));
+define("DIR_ADMIN",  realpath(BASE_DIR."wtos/"));
+
+define("URL_LIB",    BASE_URL."library/wtosLibrary/");
+define("URL_APP",    BASE_URL."wtosApps/");
+define("URL_WTOS",   BASE_URL."wtos/");
+define("URL_UPLOAD", BASE_URL."wtos-images/");
+
+
+define("LOGIN_KEY","wtos-".DB_NAME);
+define("LOGIN_KEY_ADMIN","wtos-".DB_NAME."-wtos");
+define("ENVIRONMENT","-1");
+
+
+//_d(get_defined_constants(true)["user"]);
+?>
