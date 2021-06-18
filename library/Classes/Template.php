@@ -34,6 +34,12 @@ class Template {
     public static function get_field($name, $pagecontentId){
         global $os;
         $existing = @$os->mfa($os->mq("SELECT * FROM pagecontentmeta WHERE pagecontentId='$pagecontentId' AND name='$name'"))["value"];
+        if($existing){
+            if(@unserialize($existing)){
+                $existing = unserialize($existing);
+            }
+        }
+
         return $existing;
     }
 
