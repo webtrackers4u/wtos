@@ -21,6 +21,7 @@ class Template {
 
     public static function save_field($name, $value, $pagecontentId){
         global $os;
+        $value = is_array($value)?serialize($value):$value;
         $existing = $os->mfa($os->mq("SELECT * FROM pagecontentmeta WHERE pagecontentId='$pagecontentId' AND name='$name'"));
         $query = "";
         if ($existing){
