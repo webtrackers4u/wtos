@@ -247,7 +247,7 @@ if($editRowId)
 
                                     <? if($field->type=="checkbox"){
                                         $values = (array)@$field->values;
-                                        $already_values = Template::get_field($field->name,$pageData["pagecontentId"]);
+                                        $already_values = @(array)Template::get_field($field->name,$pageData["pagecontentId"]);
                                         foreach ($values as $key=>$val){
                                             $no = "fields_".$field->name.rand(0, 100);
                                             ?>
