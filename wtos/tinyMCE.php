@@ -167,8 +167,9 @@ function tmce(id)
 
         //plugins: 'print preview  importcss  searchreplace autolink autosave save directionality  visualblocks visualchars fullscreen image link media  template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime lists wordcount  imagetools textpattern noneditable help  charmap  quickbars  emoticons codesample',
 
-        menubar: 'file edit view insert format tools table tc help',
-        toolbar: 'bold italic underline strikethrough |  fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | subscript superscript | numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample |  ltr rtl |codesample',
+        plugins :'code',
+        menubar: 'file edit view insert format tools table tc help code',
+        toolbar: 'bold italic underline strikethrough |  fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | subscript superscript | numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample |  ltr rtl |codesample | code',
 
         // Example word content CSS (should be your site CSS) this one removes paragraph margins
         //content_css : "css/word.css",
