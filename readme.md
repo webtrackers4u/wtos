@@ -10,7 +10,7 @@
 3. We have introduced PSR-4 Autoloader that means you don't need to back up whole project do backup excluding ```/vendor``` folder. After that run ```composer install``` 
 
 
-4. We've used ```tinimce v5``` through *Composer* that means yoou also dont need to carry old ```/tiny_mce``` folder it is included with composer.
+4. We've used ```tinimce v5``` through *Composer* that means you also don't need to carry old ```/tiny_mce``` folder it is included with composer.
 
 
 5. We have introduced few new static classes inside ```/library/Classes``` ```Session``` ```Request``` ```Db``` and important ```Template```.
