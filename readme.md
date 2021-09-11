@@ -14,3 +14,9 @@
 
 
 5. We have introduced few new static classes inside ```/library/Classes``` ```Session``` ```Request``` ```Db``` and important ```Template```.
+
+
+6. We have integrated integrated ``Medoo`` as ORM library.
+
+
+7. We have  integrated `Tracy` as debugging console. Please go through the documentation to learn more.
