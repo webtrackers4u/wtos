@@ -5,7 +5,9 @@
 	RewriteCond %{REQUEST_FILENAME} !\.(gif|png|jpe?g|ico|swf|js|css|pdf|eot|woff|ttf|svg)$ [NC]
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^(.*)$ index.php?/$1 [L]
+    RewriteRule . index.php [L]
+
+    Options -Indexes
 </IfModule>
 <IfModule !mod_rewrite.c>
     ErrorDocument 404 /index.php

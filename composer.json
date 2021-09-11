@@ -12,11 +12,14 @@
     ],
     "require": {
         "tinymce/tinymce": ">= 5",
-        "ext-json": "*"
+        "ext-json": "*",
+        "catfan/medoo": "^2.1",
+        "tracy/tracy": "^2.8"
     },
     "autoload": {
         "psr-4": {
             "Library\\": "library",
+            "Models\\": "Models",
             "": "library/wtosLibrary"
         }
     },

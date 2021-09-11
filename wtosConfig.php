@@ -1,7 +1,13 @@
 <?php
+use Tracy\Debugger;
+/****
+ * Autoloader
+ ****/
+include "vendor/autoload.php";
+
 
 $site['base']=$_SERVER['DOCUMENT_ROOT'].'/';
-$site['server']='https://'.$_SERVER['SERVER_NAME'].'/';
+$site['server']='http://'.$_SERVER['SERVER_NAME'].'/';
 
 
 if(!in_array($_SERVER['SERVER_ADDR'],array('127.0.0.1','::1')))
@@ -58,13 +64,13 @@ $site['environment']='-1'; // -1 development  // 0 production
 function _d($var){echo '<pre>';print_r($var);echo '</pre>';}
 
 
-/****
- * Autoloader
- ****/
-include "vendor/autoload.php";
+
+
+
 /******
  * Constant configuration
  */
+
 if(!in_array($_SERVER['SERVER_ADDR'],array('127.0.0.1','::1'))) {
     define("DB_HOST", "localhost");
     define("DB_PORT", "localhost");
@@ -89,17 +95,24 @@ define("DIR_APP",    realpath(BASE_DIR."wtosApps/"));
 define("DIR_LIB",    realpath(BASE_DIR."library/wtosLibrary/"));
 define("DIR_UPLOAD", realpath(BASE_DIR."wtos-images/"));
 define("DIR_ADMIN",  realpath(BASE_DIR."wtos/"));
+define("DIR_LOG",  realpath(BASE_DIR."writable/logs"));
 
-define("URL_LIB",    BASE_URL."library/wtosLibrary/");
-define("URL_APP",    BASE_URL."wtosApps/");
-define("URL_WTOS",   BASE_URL."wtos/");
-define("URL_UPLOAD", BASE_URL."wtos-images/");
-
-
-define("LOGIN_KEY","wtos-".DB_NAME);
-define("LOGIN_KEY_ADMIN","wtos-".DB_NAME."-wtos");
-define("ENVIRONMENT","-1");
+const URL_LIB = BASE_URL . "library/wtosLibrary/";
+const URL_APP = BASE_URL . "wtosApps/";
+const URL_WTOS = BASE_URL . "wtos/";
+const URL_UPLOAD = BASE_URL . "wtos-images/";
 
 
-//_d(get_defined_constants(true)["user"]);
+const LOGIN_KEY = "wtos-" . DB_NAME;
+const LOGIN_KEY_ADMIN = "wtos-" . DB_NAME . "-wtos";
+const ENVIRONMENT = "-1";
+
+
+
+//use debug bar
+
+if($site["environment"]=="-1"){
+    Debugger::$strictMode = false;
+}
+Debugger::enable(Debugger::DETECT, DIR_LOG);
 ?>

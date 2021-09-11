@@ -1,8 +1,12 @@
 <?
 use Library\Classes\Template;
+use Tracy\Debugger;
+
 global $os, $site;
 error_reporting($site['environment']);
 include($site['application'].'os.php');
+//show debug bar
+Debugger::$showBar = $site["environment"]=="-1";
 /*
  * Routing
  */
@@ -86,7 +90,7 @@ if (file_exists($template)){
     include $template;
     exit();
 } else {
-    print $template." template file not found";
+    throw new Exception($template." template file not found");
 }
 
 

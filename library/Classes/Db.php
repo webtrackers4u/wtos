@@ -1,86 +1,75 @@
-<?
+<?php
+
 namespace Library\Classes;
 
-class Db{
-    protected static $instance = null;
-
-    final private function __construct() {}
-    final private function __clone() {}
-
+use Medoo\Medoo;
+class Db extends Medoo
+{
+    protected $pagination = [
+        "rows"=> 30,
+        "page"=>1,
+    ];
     /**
-     * @return \PDO
+     * Modify data from the table.
+     *
+     * @param string $table
+     * @param array $data
+     * @param array $where
+     * @return \PDOStatement|null
      */
-    public static function instance() {
-        if (self::$instance === null) {
-            try {
-                self::$instance = new \PDO(
-                    'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME,
-                    DB_USER,
-                    DB_PASS
-                );
-                self::$instance->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-            } catch (\PDOException $e) {
-                die('Database connection could not be established.');
+
+    public function __construct(array $options)
+    {
+        parent::__construct($options);
+        $this->loadAllModels();
+    }
+
+    protected function loadAllModels(){
+        $models = glob(BASE_DIR."/Models/*.php");
+        foreach ($models as $model){
+            require $model;
+            $model = str_replace([".php", BASE_DIR], "", $model);
+            $model_class_name = str_replace("/","\\", $model);
+            $model_name = str_replace("/Models/","", $model);
+            if(class_exists($model_class_name)){
+                $this->$model_name = new $model_class_name($this);
             }
         }
-
-        return self::$instance;
     }
 
-    /**
-     * @return \PDOStatement
-     */
-    public static function q($query) {
-        if (func_num_args() == 1) {
-            return self::instance()->query($query);
+    public function upsert($table, $data, $where=null): ?\PDOStatement
+    {
+        if($this->has($table,$where)){
+            return $this->update($table,$data,$where);
+        } else {
+            return $this->insert($table,$data);
         }
+    }
+    public function paginate(string $table,  $columns = null , $where= null, $pagination=[], $join = null): array
+    {
 
-        $args = func_get_args();
-        return self::instance()->query(self::autoQuote(array_shift($args), $args));
+        $isJoin = $this->isJoin($join);
+        $pagination = array_merge($this->pagination, $pagination);
+        // the offset of the list, based on current page
+        $offset = ($pagination["page"] - 1) * $pagination["rows"];
+        //getting count of all data
+        $total = $isJoin?$this->count($table, $join, "*", $where):$this->count($table, "*", $where);
+        //getting total number of page
+        $pages = ceil ($total / $pagination["rows"]);
+        //generate limit object
+        $where["LIMIT"] =  [$offset, $pagination["rows"]];
+        //getting data
+        $data = $isJoin?$this->select($table, $join, $columns, $where):$this->select($table, $columns, $where);
+
+        $response = [
+            "data"=>$data,
+            "pager"=>[
+                "page"=>$pagination["page"],
+                "pages"=>$pages,
+                "total"=>$total
+            ]
+        ];
+        return $response;
     }
 
-    public static function x($query) {
-        if (func_num_args() == 1) {
-            return self::instance()->exec($query);
-        }
-
-        $args = func_get_args();
-        return self::instance()->exec(self::autoQuote(array_shift($args), $args));
-    }
-
-    public static function autoQuote($query, array $args) {
-        $i = strlen($query) - 1;
-        $c = count($args);
-
-        while ($i--) {
-            if ('?' === $query[$i] && false !== $type = strpos('sia', $query[$i + 1])) {
-                if (--$c < 0) {
-                    throw new \InvalidArgumentException('Too little parameters.');
-                }
-
-                if (0 === $type) {
-                    $replace = self::instance()->quote($args[$c]);
-                } elseif (1 === $type) {
-                    $replace = intval($args[$c]);
-                } elseif (2 === $type) {
-                    foreach ($args[$c] as &$value) {
-                        $value = self::instance()->quote($value);
-                    }
-                    $replace = '(' . implode(',', $args[$c]) . ')';
-                }
-
-                $query = substr_replace($query, $replace, $i, 2);
-            }
-        }
-
-        if ($c > 0) {
-            throw new \InvalidArgumentException('Too many parameters.');
-        }
-
-        return $query;
-    }
-
-    public static function __callStatic($method, $args) {
-        return call_user_func_array(array(self::instance(), $method), $args);
-    }
 }
