@@ -25,8 +25,12 @@ class Template {
         $existing = $os->mfa($os->mq("SELECT * FROM pagecontentmeta WHERE pagecontentId='$pagecontentId' AND name='$name'"));
         $query = "";
         if ($existing){
-            $query = "UPDATE pagecontentmeta SET value='$value'  WHERE pagecontentId='$pagecontentId' AND name='$name'";
-        } else {
+            if($value=="") {
+                $query = "DELETE pagecontentmeta WHERE pagecontentId='$pagecontentId' AND name='$name'";
+            } else {
+                $query = "UPDATE pagecontentmeta SET value='$value'  WHERE pagecontentId='$pagecontentId' AND name='$name'";
+            }
+        } else if($value!="") {
             $query = "INSERT INTO  pagecontentmeta SET value='$value' , pagecontentId='$pagecontentId',  name='$name'";
         }
         return $os->mq($query);

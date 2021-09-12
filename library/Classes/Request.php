@@ -6,7 +6,7 @@ class Request{
     public static function  getMethod(){
         return $_SERVER["REQUEST_METHOD"];
     }
-    public static function getParams(){
+    public static function getQueries(){
         return $_REQUEST;
     }
     public static function getGets(){
@@ -18,11 +18,11 @@ class Request{
     public static function getFiles(){
         return $_FILES;
     }
-    public static function getParam($key){
+    public static function getQuery($key){
         return @$_REQUEST[$key];
     }
     public static function getGet($key){
-        return @$_GET[$key];
+        return $_GET[$key]??false;
     }
     public static function getPost($key){
         return @$_POST[$key];
@@ -30,5 +30,6 @@ class Request{
     public static function getFile($key){
         return @$_FILES[$key];
     }
+
 }
 ?>

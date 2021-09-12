@@ -6,7 +6,7 @@ class Pagination
 {
     const props = [
         "pattern"=> "<li class='[active]' ><a href='?page=[page]'>[label]</a></li>",
-        "container"=>"<ul class='uk-pagination uk-flex-center'>[links]</ul>",
+        "container"=>"<ul class='uk-pagination'>[links]</ul>",
         "active"=>"uk-active",
         "disabled"=>"uk-disabled",
     ];
@@ -18,7 +18,7 @@ class Pagination
         $link = $props["pattern"];
         $link = str_replace("[active]",$prev_active_class, $link);
         $link = str_replace("[page]",$page-1, $link);
-        $link = str_replace("[label]","<span uk-pagination-previous></span> Previous", $link);
+        $link = str_replace("[label]","<span uk-pagination-previous></span>", $link);
         $links[] = $link;
 
         //generate all links
@@ -36,7 +36,7 @@ class Pagination
         $link = $props["pattern"];
         $link = str_replace("[active]",$next_active_class, $link);
         $link = str_replace("[page]",$page+1, $link);
-        $link = str_replace("[label]","Next <span uk-pagination-next></span>", $link);
+        $link = str_replace("[label]","<span uk-pagination-next></span>", $link);
         $links[] = $link;
 
 

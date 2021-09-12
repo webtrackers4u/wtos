@@ -2,10 +2,16 @@
 
 use Library\Classes\Pagination;
 use Library\Classes\Request;
+use Library\Classes\Router;
+use Library\Classes\Tools;
 
 include "__header.php";
 global $os, $pageBody, $site;
 echo stripslashes($os->wtospage['pageCss']);
+//declare router pattern
+$router = new Router("/contact-list/:id");
+//get router params
+$page = $router->getParam("id")?:1;
 ?>
 
 <section class="uk-section banner uk-hidden">
@@ -22,36 +28,54 @@ echo stripslashes($os->wtospage['pageCss']);
         <? $pageBody;?>
 
         <?
-        $page = (int)Request::getGet("page")??1;
-
-
-        $paginated_data = $os->_db->contactus->paginate("*", null, ["page"=>$page, "rows"=>10]);
+        $pagination = ["page"=>$page, "rows"=>10];
+        $paginated_data = $os->_db->contactus->paginate("*", null, $pagination);
         $rows = $paginated_data["data"];
         $pager = $paginated_data["pager"];
         ?>
-        <table class="uk-table uk-table-divider uk-table-striped">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Mobile</th>
-                <th>Details</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?foreach ($rows as $row){?>
+        <div class="uk-card-outline uk-card-default uk-border-rounded">
+            <div class="uk-card-header">
+                <div uk-grid>
+                    <div>
+                        <div class="uk-card-title">
+                            Showing <?= $pager["from"]?> - <?= $pager["to"]?> of <?= $pager["total"]?>
+                        </div>
+                    </div>
+
+                    <div class="uk-width-expand">
+                        <?= Pagination::generateLinks($page, $pager["pages"], [
+                                "pattern"=>"<li class='[active]'><a href='".Tools::base_url("contact-list/[page]")."'>[label]</a></li>",
+                            "container"=>"<ul class='uk-pagination uk-flex-right'>[links]</ul>",
+                        ]); ?>
+                    </div>
+                </div>
+
+            </div>
+            <table class="uk-table uk-table-divider uk-table-striped">
+                <thead>
                 <tr>
-                    <td nowrap=""><?= $row["name"]?></td>
-                    <td><?= $row["email"]?></td>
-                    <td><?= $row["mobile"]?></td>
-                    <td><?= substr($row["details"], 0, 20)?>...</td>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Mobile</th>
+                    <th>Details</th>
                 </tr>
-            <?}?>
-            </tbody>
-        </table>
-        <div class="uk-text-center uk-margin">
-            <?= Pagination::generateLinks($page, $pager["pages"], []); ?>
+                </thead>
+                <tbody>
+                <?
+                foreach ($rows as $row){?>
+                    <tr>
+                        <td nowrap=""><?= $row["name"]?></td>
+                        <td><?= $row["email"]?></td>
+                        <td><?= $row["mobile"]?></td>
+                        <td><?= substr($row["details"], 0, 20)?>...</td>
+                    </tr>
+                <? }
+                //dump($os->_db->log());
+                ?>
+                </tbody>
+            </table>
         </div>
+
     </div>
 </section>
 

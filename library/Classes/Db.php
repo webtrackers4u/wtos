@@ -60,13 +60,15 @@ class Db extends Medoo
         $where["LIMIT"] =  [$offset, $pagination["rows"]];
         //getting data
         $data = $isJoin?$this->select($table, $join, $columns, $where):$this->select($table, $columns, $where);
-
+        //creating response
         $response = [
             "data"=>$data,
-            "pager"=>[
+            "pager"=> [
                 "page"=>$pagination["page"],
                 "pages"=>$pages,
-                "total"=>$total
+                "total"=>$total,
+                "from"=>$offset+1,
+                "to"=> $pagination["page"]==$pages? $total: ($offset+1+$pagination["rows"])
             ]
         ];
         return $response;

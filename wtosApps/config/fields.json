@@ -1,5 +1,5 @@
 {
-  "template-default.php": [
+  "template-[name].php": [
     {
       "name": "home_title",
       "type": "text",

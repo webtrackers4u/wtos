@@ -14,7 +14,8 @@
         "tinymce/tinymce": ">= 5",
         "ext-json": "*",
         "catfan/medoo": "^2.1",
-        "tracy/tracy": "^2.8"
+        "tracy/tracy": "^2.8",
+        "fakerphp/faker": "^1.16"
     },
     "autoload": {
         "psr-4": {
