@@ -1,6 +1,6 @@
 <?
 namespace Library\Classes;
-class Router extends Request {
+class Router {
     var $pattern = "/";
     var $uri = "";
     var $keys = [];
@@ -14,7 +14,7 @@ class Router extends Request {
     protected function generateParams(){
         $list = [];
         foreach($this->keys as $id=> $key){
-            $value = $this->values[$id];
+            $value = @$this->values[$id];
             if(Tools::startsWith($key,":")){
                 $key = str_replace(":","", $key);
                 $list[$key] = $value;
@@ -27,13 +27,12 @@ class Router extends Request {
 
     public function __construct($pattern="/:slug"){
         $this->pattern = $pattern;
-        $this->uri = $_SERVER["REQUEST_URI"];
+        $this->uri = str_replace(BASE_FOLDER, "", $_SERVER["REQUEST_URI"]);
 
         $this->keys = $this->scrumbleURI($this->pattern);
         $this->values = $this->scrumbleURI($this->uri);
         $this->generateParams();
     }
-
     public function getParam($key){
         return @$this->params[$key]?:null;
     }

@@ -78,8 +78,9 @@ if(!in_array($_SERVER['SERVER_ADDR'],array('127.0.0.1','::1'))) {
     define("DB_PASS", "12345678");
     define("DB_NAME", "wtosv20");
 
-    define("BASE_DIR", __DIR__."/");
-    define("BASE_URL", (isset($_SERVER["HTTPS"]) ? "https://" : 'http://') . $_SERVER['SERVER_NAME'] . '/');
+    define("BASE_FOLDER", "");
+
+
 } else {
     define("DB_HOST", "localhost");
     define("DB_PORT", "localhost");
@@ -87,9 +88,11 @@ if(!in_array($_SERVER['SERVER_ADDR'],array('127.0.0.1','::1'))) {
     define("DB_PASS", "12345678");
     define("DB_NAME", "wtosv20");
 
-    define("BASE_DIR", __DIR__."/");
-    define("BASE_URL", (isset($_SERVER["HTTPS"]) ? "https://" : 'http://') . $_SERVER['SERVER_NAME'] . '/');
+    define("BASE_FOLDER", "");
 }
+
+const BASE_DIR = __DIR__ . "/" . BASE_FOLDER;
+define("BASE_URL", (isset($_SERVER["HTTPS"]) ? "https://" : 'http://') . $_SERVER['SERVER_NAME'] . '/' . BASE_FOLDER);
 
 define("DIR_APP",    realpath(BASE_DIR."wtosApps/"));
 define("DIR_LIB",    realpath(BASE_DIR."library/wtosLibrary/"));

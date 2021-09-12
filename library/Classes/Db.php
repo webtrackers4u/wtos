@@ -74,4 +74,11 @@ class Db extends Medoo
         return $response;
     }
 
+    public function selectOne($table, $join, $columns=null, $where=null)
+    {
+        $where=$where?:[];
+        $where["LIMIT"] = [0,1];
+        return @$this->select($table, $join, $columns, $where)[0]?:false;
+    }
+
 }

@@ -7,7 +7,7 @@ global $os, $pageBody, $site;
 echo stripslashes($os->wtospage['pageCss']);
 
 $gallery_id = Request::getGet("id");
-$gallery = $os->_db->gallerycatagory->select("*", ["galleryCatagoryId"=>$gallery_id]);
+$gallery = $os->_db->gallerycatagory->selectOne("*", ["galleryCatagoryId"=>$gallery_id]);
 if(!$gallery){
     $galleries = $os->_db->gallerycatagory->select("*");
     ?>
@@ -48,7 +48,7 @@ if(!$gallery){
     <section class="uk-section banner">
 
         <div class="uk-text-center uk-container" uk-scrollspy="cls: uk-animation-slide-bottom; ">
-            <h1 class=" uk-heading-large uk-text-bolder uk-heading uk-image-text" ><?= $gallery[0]["categoryName"]?></h1>
+            <h1 class=" uk-heading-large uk-text-bolder uk-heading uk-image-text" ><?= $gallery["categoryName"]?></h1>
             <p class="uk-text-large uk-container-small uk-margin-auto"><?= $os->wtospage["excerpt"]?></p class="text-xl">
         </div>
     </section>

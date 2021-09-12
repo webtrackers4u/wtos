@@ -9,9 +9,9 @@ include "__header.php";
 global $os, $pageBody, $site;
 echo stripslashes($os->wtospage['pageCss']);
 //declare router pattern
-$router = new Router("/contact-list/:id");
+$router = new Router("/contact-list/:page");
 //get router params
-$page = $router->getParam("id")?:1;
+$page = $router->getParam("page")?:1;
 ?>
 
 <section class="uk-section banner uk-hidden">
