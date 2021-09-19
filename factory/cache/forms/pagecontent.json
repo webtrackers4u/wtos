@@ -1,0 +1,36 @@
+{
+  "key": "pagecontent",
+  "haedings": "Pages",
+  "ajax_file": "pagecontent_ajax",
+  "main_file": "pagecontent",
+  "fields": {
+    "statue":{
+      "title": "Status",
+      "type": "select",
+      "listing": true,
+      "search": true,
+      "edit": true,
+      "validation": true,
+      "relation": {
+        "type": "table",
+        "keyword": "admin|adminId,name"
+      }
+    },
+    "password":{
+      "title": "Password",
+      "type": "password",
+      "listing": true,
+      "search": true,
+      "edit": true,
+      "validation": true
+    },
+    "name":{
+      "title": "Name",
+      "type": "text",
+      "listing": true,
+      "search": true,
+      "edit": true,
+      "validation": true
+    }
+  }
+}
