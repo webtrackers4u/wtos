@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 19, 2021 at 01:16 PM
+-- Generation Time: Sep 19, 2021 at 01:53 PM
 -- Server version: 8.0.22
 -- PHP Version: 7.3.26
 
@@ -29,20 +29,20 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `accessdetails` (
   `accessdetailsId` int NOT NULL,
-  `name` varchar(80) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `url` varchar(80) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `details` text CHARACTER SET utf8 COLLATE utf8_general_ci,
+  `name` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `url` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `details` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `addedDate` datetime NOT NULL,
-  `provider` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `provider` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `addedBy` int NOT NULL,
-  `company` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `cName` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `cPhone` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `note` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `activestatus` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `company` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `cName` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `cPhone` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `note` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `activestatus` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `domainExp` datetime NOT NULL,
   `softwareExp` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -56,7 +56,7 @@ CREATE TABLE `admin` (
   `adminType` varchar(20) DEFAULT NULL,
   `username` varchar(50) DEFAULT NULL,
   `password` varchar(50) DEFAULT NULL,
-  `address` blob,
+  `address` text,
   `email` varchar(50) DEFAULT NULL,
   `mobileNo` int NOT NULL,
   `addedDate` datetime NOT NULL,
@@ -65,15 +65,15 @@ CREATE TABLE `admin` (
   `modifyBy` int NOT NULL,
   `modifyDate` datetime NOT NULL,
   `access` varchar(200) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `admin`
 --
 
 INSERT INTO `admin` (`adminId`, `name`, `adminType`, `username`, `password`, `address`, `email`, `mobileNo`, `addedDate`, `active`, `addedBy`, `modifyBy`, `modifyDate`, `access`) VALUES
-(26, 0x776562686f757365, 0x53757065722041646d696e, 0x303031, 0x303031, '', 0x343536343536343536, 123456789, '2012-12-15 12:09:37', 0x416374697665, 0, 26, '2016-01-27 01:49:32', 0x4163636573732c436f6e74616374732c52656d696e6465722c4461696c792041637469766974792c466f6c6c6f777570),
-(27, 0x53756d616e2042657261, 0x41646d696e, 0x73756d616e, 0x31323373756d616e, '', '', 0, '2016-12-07 08:50:57', 0x416374697665, 26, 0, '0000-00-00 00:00:00', 0x7b2261646d696e4c6973742e706870223a5b22414444222c2244454c455445222c2245444954222c2256494557225d7d);
+(26, 'webhouse', 'Super Admin', '001', '001', '', '456456456', 123456789, '2012-12-15 12:09:37', 'Active', 0, 26, '2016-01-27 01:49:32', 'Access,Contacts,Reminder,Daily Activity,Followup'),
+(27, 'Suman Bera', 'Admin', 'suman', '123suman', '', '', 0, '2016-12-07 08:50:57', 'Active', 26, 0, '0000-00-00 00:00:00', '{\"adminList.php\":[\"ADD\",\"DELETE\",\"EDIT\",\"VIEW\"]}');
 
 -- --------------------------------------------------------
 
@@ -83,16 +83,16 @@ INSERT INTO `admin` (`adminId`, `name`, `adminType`, `username`, `password`, `ad
 
 CREATE TABLE `contactus` (
   `contactid` int NOT NULL,
-  `name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `email` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `mobile` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `details` text CHARACTER SET utf8 COLLATE utf8_general_ci,
-  `addedBy` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `mobile` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `details` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
+  `addedBy` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `addedDate` datetime NOT NULL,
   `active` tinyint(1) NOT NULL,
-  `image` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `status` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `status` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `contactus`
@@ -197,11 +197,11 @@ INSERT INTO `contactus` (`contactid`, `name`, `email`, `mobile`, `details`, `add
 
 CREATE TABLE `followupcategory` (
   `catId` int NOT NULL,
-  `title` varchar(80) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `title` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `parentId` int NOT NULL,
   `addedDate` datetime NOT NULL,
   `addedBy` mediumint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -211,25 +211,25 @@ CREATE TABLE `followupcategory` (
 
 CREATE TABLE `followupcontact` (
   `id` int NOT NULL,
-  `name` varchar(80) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `address` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `phone` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `shortNote` text CHARACTER SET utf8 COLLATE utf8_general_ci,
-  `followStatus` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `name` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `phone` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `shortNote` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
+  `followStatus` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `addedDate` datetime NOT NULL,
   `catId` int NOT NULL,
   `addedBy` mediumint NOT NULL,
-  `location` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `date` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `location` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `date` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `priority` int NOT NULL DEFAULT '10',
-  `company` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `appDate` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `productName` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `assignTo` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `source` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `company` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `appDate` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `productName` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `assignTo` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `source` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `nextFollowDate` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -240,11 +240,11 @@ CREATE TABLE `followupcontact` (
 CREATE TABLE `followuphistory` (
   `followuphistoryId` int NOT NULL,
   `dated` datetime NOT NULL,
-  `remarks` varchar(250) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `remarks` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `addedBy` int NOT NULL,
   `addedDate` datetime NOT NULL,
   `id` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -258,15 +258,15 @@ CREATE TABLE `gallerycatagory` (
   `active` varchar(10) DEFAULT NULL,
   `addedBy` int NOT NULL,
   `addedDate` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `gallerycatagory`
 --
 
 INSERT INTO `gallerycatagory` (`galleryCatagoryId`, `categoryName`, `active`, `addedBy`, `addedDate`) VALUES
-(10, 0x32303134, 0x496e616374697665, 0, '0000-00-00 00:00:00'),
-(11, 0x32303133, 0x416374697665, 0, '0000-00-00 00:00:00');
+(10, '2014', 'Inactive', 0, '0000-00-00 00:00:00'),
+(11, '2013', 'Active', 0, '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -279,14 +279,14 @@ CREATE TABLE `imageuploader` (
   `title` varchar(255) DEFAULT NULL,
   `image` varchar(255) DEFAULT NULL,
   `addedDate` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `imageuploader`
 --
 
 INSERT INTO `imageuploader` (`imageId`, `title`, `image`, `addedDate`) VALUES
-(16, 0x4e61666973682041686d6564, 0x77746f732d696d616765732f3836303439395f35323537373135362d322e6a706567, '0000-00-00 00:00:00');
+(16, 'Nafish Ahmed', 'wtos-images/860499_52577156-2.jpeg', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -302,14 +302,14 @@ CREATE TABLE `lang` (
   `active` tinyint(1) NOT NULL,
   `addedBy` int NOT NULL,
   `addedDate` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `lang`
 --
 
 INSERT INTO `lang` (`langId`, `title`, `code`, `defaultLang`, `active`, `addedBy`, `addedDate`) VALUES
-(1, 0x456e676c697368, 0x656e, 1, 1, 0, '0000-00-00 00:00:00');
+(1, 'English', 'en', 1, 1, 0, '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -319,24 +319,24 @@ INSERT INTO `lang` (`langId`, `title`, `code`, `defaultLang`, `active`, `addedBy
 
 CREATE TABLE `mobilebills` (
   `mobilebillsId` int NOT NULL,
-  `mobile` varchar(12) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `relationshipno` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `bilno` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `mobile` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `relationshipno` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `bilno` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `billdate` datetime NOT NULL,
-  `billperiod` varchar(25) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `duedate` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `amount` varchar(9) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `billperiod` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `duedate` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `amount` varchar(9) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `bill` float(10,2) NOT NULL,
-  `paidamount` varchar(9) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `paidamount` varchar(9) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `paiddate` datetime NOT NULL,
-  `transno` varchar(25) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `accno` varchar(25) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `note` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `transno` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `accno` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `addedDate` datetime NOT NULL,
   `addedBy` int NOT NULL,
   `modifyDate` datetime NOT NULL,
   `modifyBy` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -347,12 +347,12 @@ CREATE TABLE `mobilebills` (
 CREATE TABLE `note` (
   `noteId` int NOT NULL,
   `catId` int NOT NULL,
-  `subject` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `details` text CHARACTER SET utf8 COLLATE utf8_general_ci,
+  `subject` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `details` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `active` tinyint NOT NULL DEFAULT '1',
   `addedDate` datetime NOT NULL,
-  `addedBy` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `addedBy` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -362,14 +362,14 @@ CREATE TABLE `note` (
 
 CREATE TABLE `noticeboard` (
   `noticeboardId` int NOT NULL,
-  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `link` varchar(250) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `file` varchar(250) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `link` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `file` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `priority` int NOT NULL,
-  `status` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `status` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `addedBy` int NOT NULL,
   `addedDate` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `noticeboard`
@@ -386,35 +386,35 @@ INSERT INTO `noticeboard` (`noticeboardId`, `title`, `link`, `file`, `priority`,
 
 CREATE TABLE `pagecontent` (
   `pagecontentId` int NOT NULL,
-  `title` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `icon` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `excerpt` text CHARACTER SET utf8 COLLATE utf8_general_ci,
-  `content` text CHARACTER SET utf8 COLLATE utf8_general_ci,
+  `title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `icon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `excerpt` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `active` tinyint NOT NULL DEFAULT '1',
-  `metaTag` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `metaDescription` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `metaTag` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `metaDescription` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `addedBy` int NOT NULL,
   `editedBy` int NOT NULL,
   `addedDate` datetime NOT NULL,
-  `parentPage` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `preInclude` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `postInclude` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `seoId` varchar(250) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `externalLink` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `parentPage` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `preInclude` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `postInclude` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `seoId` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `externalLink` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `priority` int NOT NULL,
-  `heading` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `heading` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `onHead` tinyint(1) NOT NULL,
   `onBottom` tinyint(1) NOT NULL,
   `openNewTab` tinyint(1) NOT NULL,
-  `image` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `showImage` tinyint(1) NOT NULL,
   `langId` int NOT NULL,
-  `pageCss` text CHARACTER SET utf8 COLLATE utf8_general_ci,
-  `metaTitle` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `isHome` varchar(5) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `pageCss` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
+  `metaTitle` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `isHome` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `loginRequired` int DEFAULT '0',
   `template` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `pagecontent`
@@ -435,9 +435,9 @@ INSERT INTO `pagecontent` (`pagecontentId`, `title`, `icon`, `excerpt`, `content
 CREATE TABLE `pagecontentmeta` (
   `pagecontentId` int NOT NULL,
   `name` varchar(255) NOT NULL,
-  `value` text CHARACTER SET utf8 COLLATE utf8_general_ci,
+  `value` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `dated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `pagecontentmeta`
@@ -469,12 +469,12 @@ INSERT INTO `pagecontentmeta` (`pagecontentId`, `name`, `value`, `dated`) VALUES
 CREATE TABLE `photogallery` (
   `photoGalleryId` int NOT NULL,
   `galleryCatagoryId` int NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `addedBy` int NOT NULL,
   `addedDate` datetime NOT NULL,
-  `status` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `status` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `photogallery`
@@ -491,17 +491,17 @@ INSERT INTO `photogallery` (`photoGalleryId`, `galleryCatagoryId`, `name`, `titl
 
 CREATE TABLE `rbassessinfo` (
   `rbassessinfo` int NOT NULL,
-  `refCode` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `url` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `status` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `refCode` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `url` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `status` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `rbcountryId` int NOT NULL,
-  `phone` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `email` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `person` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `details` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `phone` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `person` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `details` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `addedBy` int NOT NULL,
   `addedDate` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -511,11 +511,11 @@ CREATE TABLE `rbassessinfo` (
 
 CREATE TABLE `rbcategory` (
   `rbcategoryId` int NOT NULL,
-  `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `cateStatus` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `cateStatus` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `addedBy` int NOT NULL,
   `addedDate` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -525,23 +525,23 @@ CREATE TABLE `rbcategory` (
 
 CREATE TABLE `rbcontact` (
   `rbcontactId` int NOT NULL,
-  `refCode` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `person` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `company` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `phone` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `email` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `refCode` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `person` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `company` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `phone` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `rbcategoryId` int NOT NULL,
   `rblocationId` int NOT NULL,
-  `contactStatus` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `websiteUrl` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `refferBy` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `address` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `postcode` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `remarks` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `priority` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `contactStatus` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `websiteUrl` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `refferBy` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `address` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `postcode` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `remarks` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `priority` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `addedBy` int NOT NULL,
   `addedDate` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -551,12 +551,12 @@ CREATE TABLE `rbcontact` (
 
 CREATE TABLE `rbcountry` (
   `rbcountryId` int NOT NULL,
-  `countryCode` varchar(5) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `countryStatus` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `countryCode` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `countryStatus` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `addedBy` int NOT NULL,
   `addedDate` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `rbcountry`
@@ -575,11 +575,11 @@ INSERT INTO `rbcountry` (`rbcountryId`, `countryCode`, `name`, `countryStatus`, 
 
 CREATE TABLE `rblocation` (
   `rblocationId` int NOT NULL,
-  `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `locationStatus` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `locationStatus` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `addedBy` int NOT NULL,
   `addedDate` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `rblocation`
@@ -597,15 +597,15 @@ INSERT INTO `rblocation` (`rblocationId`, `name`, `locationStatus`, `addedBy`, `
 CREATE TABLE `rbpayment` (
   `rbpaymentId` int NOT NULL,
   `rbreminderId` int NOT NULL,
-  `paidAmount` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `paidAmount` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `paidDate` datetime NOT NULL,
-  `method` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `details` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `remarks` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `method` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `details` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `remarks` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `addedBy` int NOT NULL,
   `addedDate` datetime NOT NULL,
-  `systemNo` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `systemNo` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -615,13 +615,13 @@ CREATE TABLE `rbpayment` (
 
 CREATE TABLE `rbproduct` (
   `rbproductId` int NOT NULL,
-  `refCode` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `productCode` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `model` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `refCode` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `productCode` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `model` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `addedBy` int NOT NULL,
   `addedDate` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -632,9 +632,9 @@ CREATE TABLE `rbproduct` (
 CREATE TABLE `rbreminder` (
   `rbreminderId` int NOT NULL,
   `rbcontactId` int NOT NULL,
-  `refCode` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `reminderType` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `frequency` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `refCode` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `reminderType` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `frequency` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `priorDays` int NOT NULL,
   `registerDate` datetime NOT NULL,
   `fromDate` datetime NOT NULL,
@@ -647,23 +647,23 @@ CREATE TABLE `rbreminder` (
   `totalPayableAmount` float(7,2) NOT NULL,
   `totalPaid` float(7,2) NOT NULL,
   `dueAmount` float(7,2) NOT NULL,
-  `paymentStatus` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `inOutStatus` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `bvSubject` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `paymentStatus` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `inOutStatus` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `bvSubject` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `bvDate` datetime NOT NULL,
-  `bvNo` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `reminderStatus` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `docketNo` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `url` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `remarks` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `doucument1` varchar(250) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `document2` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `bvNo` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `reminderStatus` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `docketNo` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `url` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `remarks` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `doucument1` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `document2` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `rbproductId` int NOT NULL,
   `rbserviceId` int NOT NULL,
-  `ipAddress` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `ipAddress` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `addedBy` int NOT NULL,
   `addedDate` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -673,11 +673,11 @@ CREATE TABLE `rbreminder` (
 
 CREATE TABLE `rbservice` (
   `rbserviceId` int NOT NULL,
-  `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `serviceCode` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `serviceCode` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `addedBy` int NOT NULL,
   `addedDate` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `rbservice`
@@ -699,7 +699,7 @@ CREATE TABLE `settings` (
   `system` tinyint(1) NOT NULL DEFAULT '0',
   `addedBy` int NOT NULL,
   `addedDate` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `settings`
@@ -719,7 +719,7 @@ INSERT INTO `settings` (`settingsId`, `keyword`, `value`, `system`, `addedBy`, `
 (12, 'Deactivate Date', '2030-07-02', 1, 0, '0000-00-00 00:00:00'),
 (13, 'language', '2', 1, 0, '0000-00-00 00:00:00'),
 (14, 'Styles', '<style> </style>', 0, 0, '0000-00-00 00:00:00'),
-(15, 'hitCoount', '1191', 1, 0, '0000-00-00 00:00:00');
+(15, 'hitCoount', '1217', 1, 0, '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -732,17 +732,17 @@ CREATE TABLE `subscription` (
   `accessdetailsId` int NOT NULL,
   `fromDate` datetime NOT NULL,
   `toDate` datetime NOT NULL,
-  `keySalt` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `keySalt` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `paid` tinyint NOT NULL,
-  `note` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `note` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `addedDate` datetime NOT NULL,
   `addedBy` int NOT NULL,
   `modifyDate` datetime NOT NULL,
   `modifyBy` int NOT NULL,
   `active` tinyint NOT NULL,
   `amount` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
