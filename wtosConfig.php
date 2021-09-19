@@ -115,7 +115,7 @@ const ENVIRONMENT = "-1";
 //use debug bar
 
 if($site["environment"]=="-1"){
-    Debugger::$strictMode = false;
+    Debugger::$strictMode = true;
 }
 Debugger::enable(Debugger::DETECT, DIR_LOG);
 ?>

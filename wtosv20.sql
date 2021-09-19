@@ -52,19 +52,19 @@ CREATE TABLE `accessdetails` (
 
 CREATE TABLE `admin` (
   `adminId` int NOT NULL,
-  `name` varbinary(50) DEFAULT NULL,
-  `adminType` varbinary(20) DEFAULT NULL,
-  `username` varbinary(50) DEFAULT NULL,
-  `password` varbinary(50) DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `adminType` varchar(20) DEFAULT NULL,
+  `username` varchar(50) DEFAULT NULL,
+  `password` varchar(50) DEFAULT NULL,
   `address` blob,
-  `email` varbinary(50) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
   `mobileNo` int NOT NULL,
   `addedDate` datetime NOT NULL,
-  `active` varbinary(10) DEFAULT NULL,
+  `active` varchar(10) DEFAULT NULL,
   `addedBy` int NOT NULL,
   `modifyBy` int NOT NULL,
   `modifyDate` datetime NOT NULL,
-  `access` varbinary(200) DEFAULT NULL
+  `access` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -254,8 +254,8 @@ CREATE TABLE `followuphistory` (
 
 CREATE TABLE `gallerycatagory` (
   `galleryCatagoryId` int NOT NULL,
-  `categoryName` varbinary(255) DEFAULT NULL,
-  `active` varbinary(10) DEFAULT NULL,
+  `categoryName` varchar(255) DEFAULT NULL,
+  `active` varchar(10) DEFAULT NULL,
   `addedBy` int NOT NULL,
   `addedDate` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -276,8 +276,8 @@ INSERT INTO `gallerycatagory` (`galleryCatagoryId`, `categoryName`, `active`, `a
 
 CREATE TABLE `imageuploader` (
   `imageId` int NOT NULL,
-  `title` varbinary(255) DEFAULT NULL,
-  `image` varbinary(255) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
   `addedDate` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -296,8 +296,8 @@ INSERT INTO `imageuploader` (`imageId`, `title`, `image`, `addedDate`) VALUES
 
 CREATE TABLE `lang` (
   `langId` int NOT NULL,
-  `title` varbinary(255) DEFAULT NULL,
-  `code` varbinary(20) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `code` varchar(20) DEFAULT NULL,
   `defaultLang` tinyint(1) NOT NULL,
   `active` tinyint(1) NOT NULL,
   `addedBy` int NOT NULL,
