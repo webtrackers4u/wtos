@@ -18,13 +18,13 @@ $tmce_base_url = $site["url"]."vendor/tinymce/tinymce";
             //force_br_newlines : true,
             //force_p_newlines : false,
 
-            plugins: 'codesample print preview  importcss  searchreplace autolink autosave save directionality  visualblocks visualchars fullscreen image link media  template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime lists wordcount  imagetools textpattern noneditable help  charmap  quickbars  emoticons',
+            valid_elements : '*[*]',
+
+            plugins: 'codesample print preview  importcss  searchreplace autolink autosave save directionality  visualblocks visualchars fullscreen image link media  template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime lists wordcount  imagetools textpattern noneditable help  charmap  quickbars  emoticons code',
 
             menubar: 'file edit view insert format tools table tc help',
-            toolbar: 'bold italic underline strikethrough |  fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | subscript superscript | numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample |  ltr rtl | codesample ',
+            toolbar: 'bold italic underline strikethrough |  fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | subscript superscript | numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample |  ltr rtl | codesample | code',
 
-            // Example word content CSS (should be your site CSS) this one removes paragraph margins
-            //content_css : "css/word.css",
 
             // Drop lists for link/image/media/template dialogs
             template_external_list_url : "lists/template_list.js",
@@ -68,8 +68,8 @@ $tmce_base_url = $site["url"]."vendor/tinymce/tinymce";
             inline: true,
             selector: "#"+id,
             forced_root_block : '',
-            force_br_newlines : true,
-            force_p_newlines : false,
+            //force_br_newlines : true,
+            //force_p_newlines : false,
 
             plugins: 'codesample print preview  importcss  searchreplace autolink autosave save directionality  visualblocks visualchars fullscreen image link media  template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime lists wordcount  imagetools textpattern noneditable help  charmap  quickbars  emoticons',
 
@@ -120,8 +120,9 @@ $tmce_base_url = $site["url"]."vendor/tinymce/tinymce";
         mode : "exact",
         selector: ".tmce",
         forced_root_block : '',
-        force_br_newlines : true,
-        force_p_newlines : false,
+        //force_br_newlines : true,
+        //force_p_newlines : false,
+        valid_elements : '*[*]',
 
         //plugins: 'print preview  importcss  searchreplace autolink autosave save directionality  visualblocks visualchars fullscreen image link media  template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime lists wordcount  imagetools textpattern noneditable help  charmap  quickbars  emoticons codesample',
 
