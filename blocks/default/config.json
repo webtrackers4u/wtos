@@ -1,0 +1,64 @@
+{
+  "name": "default",
+  "title": "Default",
+  "description": "This is a default block template.",
+  "fields":[
+    {
+      "name": "text",
+      "type": "text",
+      "label": "Text",
+      "placeholder": "Please enter page title"
+    },
+    {
+      "name": "number",
+      "type": "number",
+      "label": "Number",
+      "placeholder": "Please enter page title"
+    },
+    {
+      "name": "password",
+      "type": "password",
+      "label": "Password",
+      "placeholder": "Please enter page title"
+    },
+    {
+      "name": "rich_text",
+      "type": "rich-text",
+      "label": "Rich Text",
+      "placeholder": "Please enter description no"
+    },
+    {
+      "name": "radio",
+      "type": "radio",
+      "label": "Radio",
+      "placeholder": "Please enter description no",
+      "values": {
+        "Yes": "Yes",
+        "No": "No"
+      }
+    },
+    {
+      "name": "select",
+      "type": "select",
+      "label": "Select",
+      "placeholder": "Please enter description no",
+      "values": {
+        "Yes": "Yes",
+        "No": "No"
+      }
+    },
+    {
+      "name": "checkbox",
+      "type": "checkbox",
+      "label": "Checkbox",
+      "placeholder": "Please enter description no",
+      "values": {
+        "Yes": "Wordpress",
+        "No": "Gmail",
+        "T": "Twitter",
+        "Y": "Youtube",
+        "F": "Facebook"
+      }
+    }
+  ]
+}

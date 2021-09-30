@@ -902,12 +902,8 @@ class wtosLibrary extends wtosBase{
             foreach($keys[0] as $accKey)
             {
 
-
                 $accKeyDataBase=str_replace(array('wtbox-','-wtbox'),'',$accKey);
-
-
-
-                $text= str_replace($accKey,$this->wtBox($accKeyDataBase,$langId=''),$text);
+                $text= str_replace($accKey,\Library\Classes\Block::get_view($accKeyDataBase),$text);
 
             }
 

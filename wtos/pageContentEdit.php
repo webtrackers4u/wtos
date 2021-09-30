@@ -77,8 +77,10 @@ if($os->post('operation'))
 
         $pagecontentId = $os->saveTable($primeryTable,$dataToSave,$primeryField,$rowId);
 
-        foreach($os->post("fields") as $field=>$value){
-            Template::save_field($field, $value, $pagecontentId);
+        if(is_array($os->post("fields"))) {
+            foreach ($os->post("fields") as $field => $value) {
+                Template::save_field($field, $value, $pagecontentId);
+            }
         }
 
 
@@ -212,7 +214,7 @@ if($editRowId)
                                     <? if($field->type=="text"){?>
                                         <input class="uk-input uk-form-small" placeholder="<?= $field->placeholder?>" type="text" name="fields[<?= $field->name?>]" id="fields_<?= $field->name?>" value="<?= Template::get_field($field->name,$pageData["pagecontentId"])?>">
                                     <?}?>
-                                    
+
                                     <? if($field->type=="number"){?>
                                         <input  class="uk-input uk-form-small" placeholder="<?= $field->placeholder?>" type="number" name="fields[<?= $field->name?>]" id="fields_<?= $field->name?>" value="<?= Template::get_field($field->name,$pageData["pagecontentId"])?>">
                                     <?}?>

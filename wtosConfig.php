@@ -108,8 +108,7 @@ const URL_UPLOAD = BASE_URL . "wtos-images/";
 
 const LOGIN_KEY = "wtos-" . DB_NAME;
 const LOGIN_KEY_ADMIN = "wtos-" . DB_NAME . "-wtos";
-const ENVIRONMENT = "-1";
-
+define("ENVIRONMENT", $site['environment']);
 
 
 //use debug bar

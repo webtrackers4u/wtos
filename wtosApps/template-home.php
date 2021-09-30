@@ -1,4 +1,7 @@
 <?
+
+use Library\Classes\Block;
+
 include "__header.php";
 global $os, $pageBody, $site;
 echo stripslashes($os->wtospage['pageCss']);
