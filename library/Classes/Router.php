@@ -27,7 +27,7 @@ class Router {
 
     public function __construct($pattern="/:slug"){
         $this->pattern = $pattern;
-        $this->uri = str_replace(BASE_FOLDER, "", $_SERVER["REQUEST_URI"]);
+        $this->uri = str_replace(\BASE_FOLDER, "", $_SERVER["REQUEST_URI"]);
 
         $this->keys = $this->scrumbleURI($this->pattern);
         $this->values = $this->scrumbleURI($this->uri);
