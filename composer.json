@@ -16,7 +16,8 @@
         "catfan/medoo": "^2.1",
         "tracy/tracy": "^2.8",
         "fakerphp/faker": "^1.16",
-        "twig/twig": "^3.0"
+        "twig/twig": "^3.0",
+        "php": "^7.3"
     },
     "autoload": {
         "psr-4": {
