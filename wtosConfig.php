@@ -93,6 +93,8 @@ define("DIR_APP",    realpath(BASE_DIR."wtosApps/"));
 define("DIR_LIB",    realpath(BASE_DIR."library/wtosLibrary/"));
 define("DIR_UPLOAD", realpath(BASE_DIR."wtos-images/"));
 define("DIR_ADMIN",  realpath(BASE_DIR."wtos/"));
+define("DIR_LOG",  realpath(BASE_DIR."writable/logs"));
+
 
 define("URL_LIB",    BASE_URL."library/wtosLibrary/");
 define("URL_APP",    BASE_URL."wtosApps/");
@@ -110,5 +112,8 @@ use Tracy\Debugger;
 if($site["environment"]=="-1"){
     Debugger::$strictMode = true;
 }
-Debugger::enable(Debugger::DETECT, __DIR__ . '/writable/logs');
+if(ENVIRONMENT=="-1"){
+    Debugger::enable(Debugger::DEVELOPMENT, DIR_LOG);
+    Debugger::$strictMode = TRUE;
+}
 ?>
