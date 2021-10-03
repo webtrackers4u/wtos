@@ -76,6 +76,7 @@ define("DB_PORT", $site["port"]);
 define("DB_USER", $site["user"]);
 define("DB_PASS", $site["pass"]);
 define("DB_NAME", $site["db"]);
+define("BASE_FOLDER", $site["folder"]);
 
 
 const BASE_DIR = __DIR__ . "/";
@@ -86,7 +87,7 @@ define("DIR_ADMIN",  realpath(BASE_DIR."wtos/"));
 define("DIR_LOG",  realpath(BASE_DIR."writable/logs"));
 
 
-define("BASE_URL", (isset($_SERVER["HTTPS"]) ? "https://" : 'https://') . $_SERVER['SERVER_NAME'] . '/');
+define("BASE_URL", (isset($_SERVER["HTTPS"]) ? "https://" : 'https://') . $_SERVER['SERVER_NAME'] . '/'. BASE_FOLDER);
 const URL_LIB = BASE_URL . "library/wtosLibrary/";
 const URL_APP = BASE_URL . "wtosApps/";
 const URL_WTOS = BASE_URL . "wtos/";
