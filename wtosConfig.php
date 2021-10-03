@@ -1,7 +1,7 @@
 <?php
 
 $site['base']=$_SERVER['DOCUMENT_ROOT'].'/';
-$site['server']=(isset($_SERVER["HTTPS"]) ? "https://" : 'http://') . $_SERVER['SERVER_NAME'] . '/';
+$site['server']=(isset($_SERVER["HTTPS"]) ? "https://" : 'https://') . $_SERVER['SERVER_NAME'] . '/';
 
 
 if(!in_array($_SERVER['SERVER_ADDR'],array('127.0.0.1','::1')))
@@ -86,7 +86,7 @@ define("DIR_ADMIN",  realpath(BASE_DIR."wtos/"));
 define("DIR_LOG",  realpath(BASE_DIR."writable/logs"));
 
 
-define("BASE_URL", (isset($_SERVER["HTTPS"]) ? "https://" : 'http://') . $_SERVER['SERVER_NAME'] . '/');
+define("BASE_URL", (isset($_SERVER["HTTPS"]) ? "https://" : 'https://') . $_SERVER['SERVER_NAME'] . '/');
 const URL_LIB = BASE_URL . "library/wtosLibrary/";
 const URL_APP = BASE_URL . "wtosApps/";
 const URL_WTOS = BASE_URL . "wtos/";
