@@ -603,7 +603,7 @@ class wtosLibrary extends wtosBase{
 
     }
 
-    function andOrQuery($andOr=' and ',$value,$field,$willCard='=',$resetValue='')
+    function andOrQuery($andOr=' and ',$value="",$field="",$willCard='=',$resetValue='')
     {
         $val=$value;
         $andFLD=($val!=$resetValue )? " $andOr $field='$val'":$resetValue;
