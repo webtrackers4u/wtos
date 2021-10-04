@@ -50,7 +50,7 @@ class Block{
         $config = self::get_configuration($block,$path);
         if(!$config) return "";
         $fields = $config->fields;
-        $default_values = is_array($values)?$values:(array)@unserialize($values)?:[];
+        $default_values = is_array($values)?$values:@unserialize($values)??[];
         ?>
         <div class="uk-card uk-card-outline uk-card-default  uk-card-small">
             <div class="uk-card-header">
