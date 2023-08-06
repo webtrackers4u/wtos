@@ -1,19 +1,19 @@
-<?
+<?php
 global $site, $os;
-$login_response = $os->processLogin('username','password','admin');
+$login_response = $os->processLogin('username', 'password', 'admin');
 
 ?>
-<?php if($os->isLogin()){
-    $os->redirect($site['url-wtos'].'dashBoard.php');
+<?php if($os->isLogin()) {
+    $os->redirect(URL_WTOS.'dashBoard.php');
     exit();
     ?>
 
     <?php
 
 } ?>
-<?php if(!$os->isLogin()){
-    if($os->post('SystemLogin')=='SystemLogin'){
-        if(!$login_response){
+<?php if(!$os->isLogin()) {
+    if($os->post('SystemLogin')=='SystemLogin') {
+        if(!$login_response) {
             ?>
             <script>
                 UIkit.notification({
@@ -23,7 +23,7 @@ $login_response = $os->processLogin('username','password','admin');
                     timeout: 5000
                 });
             </script>
-            <?
+            <?php
 
         }
     }
@@ -67,10 +67,10 @@ $login_response = $os->processLogin('username','password','admin');
                         <td class="uk-visible@s">
 
                             <a href="http://webtrackers.co.in/" title="Powered By Webtrackers4u" target="_blank">
-                                <img src="<?php echo $site['url-wtos'] ?>images/poweredBywebtrackers4u.png" alt="" width="20"   style="margin:0 0 0 5px; border:none;"/></a>
+                                <img src="<?php echo URL_WTOS ?>images/poweredBywebtrackers4u.png" alt="" width="20"   style="margin:0 0 0 5px; border:none;"/></a>
                         </td>
 
-                        <td>Copyright &copy; 2011 <? echo $os->adminTitle ?> All rights reserved</td>
+                        <td>Copyright &copy; 2011 <?php echo $os->adminTitle ?> All rights reserved</td>
                     </tr>
                 </table>
 

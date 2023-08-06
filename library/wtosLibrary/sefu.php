@@ -1,4 +1,4 @@
-<?
+<?php
 
 /**
 
@@ -12,239 +12,211 @@
 
 
 
-class sefu{
-	var $sefuParams=array();
-	function __construct($ext='')
-	{
-		global $site;
-		$this->sefuParams['active']=true;
+class sefu
+{
+    public $sefuParams=array();
+    public function __construct($ext='')
+    {
+        global $site;
+        $this->sefuParams['active']=true;
 
-		$this->sefuParams['baseUrl']= $site['url'];
+        $this->sefuParams['baseUrl']= BASE_URL;
 
-		$this->sefuParams['suffix']='';
+        $this->sefuParams['suffix']='';
 
-		$this->sefuParams['queryStr']= $_SERVER['REQUEST_URI'];
+        $this->sefuParams['queryStr']= $_SERVER['REQUEST_URI'];
 
-		$this->sefuParams['segment']=array();
+        $this->sefuParams['segment']=array();
 
-		$this->sefuParams['segmentPage']=array();
+        $this->sefuParams['segmentPage']=array();
 
 
 
-		$this->setParams('suffix',$ext);
+        $this->setParams('suffix', $ext);
 
-		$this->sefuParams['pageSeperator']=' - ';
+        $this->sefuParams['pageSeperator']=' - ';
 
-		$this->splitSegment();
+        $this->splitSegment();
 
 
 
-	}
+    }
 
-	function setExtension($ext='')
+    public function setExtension($ext='')
+    {
 
-	{
+        $this->setParams('suffix', $ext);
 
-		$this->setParams('suffix',$ext);
+        $this->splitSegment();
 
-		$this->splitSegment();
+        return $this;
 
-		return $this;
 
 
+    }
 
-	}
+    public function setParams($name, $value)
+    {
 
-	function setParams($name,$value)
+        if(!empty($name)) {
 
-	{
+            $this->sefuParams[$name]=$value;
 
-		if(!empty($name))
+        }
 
-		{
+    }
 
-			$this->sefuParams[$name]=$value;
 
-		}
 
-	}
+    public function getParams($name)
+    {
 
+        if(!empty($name)) {
 
+            return   $this->sefuParams[$name];
 
-	function getParams($name)
+        }
 
-	{
 
-		if(!empty($name))
 
-		{
+    }
 
-			return   $this->sefuParams[$name];
+    public function splitSegment()
+    {
+        global $wtSystemFolder;
 
-		}
 
 
+        $request_uri = $this->sefuParams['queryStr'];
+        $request_uri = explode("?", $request_uri)[0];
+        $request_uri = substr($request_uri, strlen($wtSystemFolder));
 
-	}
 
-	function splitSegment()
+        $this->sefuParams['segment']=explode('/', $request_uri);
 
-	{
-		global $wtSystemFolder;
+        //_d($this->sefuParams); exit();
 
+        $seg=$this->sefuParams['segment'];
 
+        if(count($seg)>0 && is_array($seg)) {
 
-		$request_uri = $this->sefuParams['queryStr'];
-		$request_uri = explode("?",$request_uri)[0];
-		$request_uri = substr($request_uri,strlen($wtSystemFolder));
-		
+            $noSeg=count($seg);
 
-		$this->sefuParams['segment']=explode('/',$request_uri);
+            for($i=0;$i<=$noSeg;$i++) {
 
-		//_d($this->sefuParams); exit();
 
-		$seg=$this->sefuParams['segment'];
 
-		if(count($seg)>0 && is_array($seg))
+                if(!isset($seg[$i]) || trim($seg[$i])=='') {
 
-		{
+                    unset($seg[$i]);
 
-			$noSeg=count($seg);
+                }
 
-			for($i=0;$i<=$noSeg;$i++)
 
-			{
 
+            }
 
+        }
 
-				if(!isset($seg[$i]) || trim($seg[$i])=='')
 
-				{
 
-					unset($seg[$i]);
+        $this->sefuParams['segment']=$seg;
 
-				}
+        $this->sefuParams['segment']=str_replace($this->sefuParams['suffix'], '', $this->sefuParams['segment']);
 
 
 
-			}
 
-		}
 
+    }
 
+    public function getSegments()
+    {
 
-		$this->sefuParams['segment']=$seg;
 
-		$this->sefuParams['segment']=str_replace($this->sefuParams['suffix'], '', $this->sefuParams['segment']);
 
 
 
+        return  $this->sefuParams['segment'];
 
 
-	}
 
-	function getSegments()
+    }
 
-	{
+    public function addSuffix($str)
+    {
 
+        if($this->sefuParams['suffix'] != '') {
 
+            $str=$str.$this->sefuParams['suffix'];
 
+        }
 
+        return $str;
 
-		return  $this->sefuParams['segment'];
 
 
+    }
 
-	}
+    public function getLink($str, $print=false)
+    {
 
-	function addSuffix($str)
+        $str= $this->sefuParams['baseUrl'].$this->addSuffix($str);
 
-	{
+        if($print) {
+            echo $str;
+        } else {
+            return $str;
+        }
 
-		if($this->sefuParams['suffix'] != '')
+    }
 
-		{
+    public function l($str, $print=false)
+    {
 
-			$str=$str.$this->sefuParams['suffix'];
+        return $this->getLink($str, $print);
 
-		}
+    }
 
-		return $str;
 
 
 
-	}
 
-	function getLink($str,$print=false)
+    public function LoadPageName()
+    {
 
-	{
+        $filename='';
 
-		$str= $this->sefuParams['baseUrl'].$this->addSuffix($str);
+        $seg=$this->sefuParams['segment'];
 
-		if($print){echo $str;}
+        $noofseg=count($seg);
 
-		else{ return $str; }
+        if(!empty($seg[1])) {
 
-	}
+            $filenameStr=$seg[1];
 
-	function l($str,$print=false)
 
-	{
 
-		return $this->getLink($str,$print);
+            $filenameA=explode($this->sefuParams['pageSeperator'], $filenameStr);
 
-	}
+            $this->sefuParams['segmentPage']=$filenameA;
 
+            $filename=$filenameA[0];
 
 
 
+        }
 
-	function LoadPageName()
 
-	{
 
-		$filename='';
+        return $filename;
 
-		$seg=$this->sefuParams['segment'];
 
-		$noofseg=count($seg);
 
-		if(!empty($seg[1]))
-
-		{
-
-			$filenameStr=$seg[1];
-
-
-
-			$filenameA=explode($this->sefuParams['pageSeperator'],$filenameStr);
-
-			$this->sefuParams['segmentPage']=$filenameA;
-
-			$filename=$filenameA[0];
-
-
-
-		}
-
-
-
-		return $filename;
-
-
-
-	}
+    }
 
 
 
 
 
 }
-
-
-
-
-
-
-
-?>

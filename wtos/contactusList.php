@@ -1,70 +1,73 @@
-<? 
+<?php
 /*
    # wtos version : 1.1
-   # Edit page: contactusEdit.php 
-   #  
+   # Edit page: contactusEdit.php
+   #
 */
 include('wtosConfigLocal.php');
-include($site['root-wtos'].'top.php');
+include(DIR_ADMIN.'top.php');
 $pluginName='';
 $os->loadPluginConstant($pluginName);
 
- 
-?><? 
+
+?><?php
 
 $editPage='contactusEdit.php';
 $listPage='contactusList.php';
 $primeryTable='contactus';
 $primeryField='contactid';
 $pageHeader='List contactus';
-$editPageLink=$os->pluginLink($pluginName).$editPage.'?'.$os->addParams(array(),array()).'editRowId=';
-$listPageLink=$os->pluginLink($pluginName).$listPage.'?'.$os->addParams(array(),array());
+$editPageLink=$os->pluginLink($pluginName).$editPage.'?'.$os->addParams(array(), array()).'editRowId=';
+$listPageLink=$os->pluginLink($pluginName).$listPage.'?'.$os->addParams(array(), array());
 
 
 ##  delete row
-if($os->get('operation')=='deleteRow')
-{
-       if($os->deleteRow($primeryTable,$primeryField,$os->get('delId')))
-	   {
-	     $flashMsg='Data Deleted Successfully';
-		 
-		  $os->flashMessage($primeryTable,$flashMsg);
-		  $os->redirect($site['url-wtos'].$listPage);
-		  
-	   }
+if($os->get('operation')=='deleteRow') {
+    if($os->deleteRow($primeryTable, $primeryField, $os->get('delId'))) {
+        $flashMsg='Data Deleted Successfully';
+
+        $os->flashMessage($primeryTable, $flashMsg);
+        $os->redirect(URL_WTOS.$listPage);
+
+    }
 }
- 
+
 
 ##  fetch row
 
 /* searching */
 
-$andnameA=  $os->andField('name_s','name',$primeryTable,'%');
-   $name_s=$andnameA['value']; $andname=$andnameA['andField'];	 
-$andemailA=  $os->andField('email_s','email',$primeryTable,'%');
-   $email_s=$andemailA['value']; $andemail=$andemailA['andField'];	 
-$andmobileA=  $os->andField('mobile_s','mobile',$primeryTable,'%');
-   $mobile_s=$andmobileA['value']; $andmobile=$andmobileA['andField'];	 
-$anddetailsA=  $os->andField('details_s','details',$primeryTable,'%');
-   $details_s=$anddetailsA['value']; $anddetails=$anddetailsA['andField'];	 
-$andstatusA=  $os->andField('status_s','status',$primeryTable,'=');
-   $status_s=$andstatusA['value']; $andstatus=$andstatusA['andField'];	 
+$andnameA=  $os->andField('name_s', 'name', $primeryTable, '%');
+$name_s=$andnameA['value'];
+$andname=$andnameA['andField'];
+$andemailA=  $os->andField('email_s', 'email', $primeryTable, '%');
+$email_s=$andemailA['value'];
+$andemail=$andemailA['andField'];
+$andmobileA=  $os->andField('mobile_s', 'mobile', $primeryTable, '%');
+$mobile_s=$andmobileA['value'];
+$andmobile=$andmobileA['andField'];
+$anddetailsA=  $os->andField('details_s', 'details', $primeryTable, '%');
+$details_s=$anddetailsA['value'];
+$anddetails=$anddetailsA['andField'];
+$andstatusA=  $os->andField('status_s', 'status', $primeryTable, '=');
+$status_s=$andstatusA['value'];
+$andstatus=$andstatusA['andField'];
 
-$searchKey=$os->setNget('searchKey',$primeryTable);
+$searchKey=$os->setNget('searchKey', $primeryTable);
 $whereFullQuery='';
-if($searchKey!=''){
-$whereFullQuery ="and ( name like '%$searchKey%' Or email like '%$searchKey%' Or mobile like '%$searchKey%' Or details like '%$searchKey%' Or status like '%$searchKey%' )";
+if($searchKey!='') {
+    $whereFullQuery ="and ( name like '%$searchKey%' Or email like '%$searchKey%' Or mobile like '%$searchKey%' Or details like '%$searchKey%' Or status like '%$searchKey%' )";
 
 }
 
 $listingQuery=" select * from $primeryTable where $primeryField>0   $whereFullQuery    $andname  $andemail  $andmobile  $anddetails  $andstatus   order by  $primeryField desc  ";
 
 ##  fetch row
- 
-$resource=$os->pagingQuery($listingQuery,$os->showPerPage);
+
+$resource=$os->pagingQuery($listingQuery, $os->showPerPage);
 $records=$resource['resource'];
 
- 
+
 $os->showFlash($os->flashMessage($primeryTable));
 ?>
 
@@ -83,16 +86,16 @@ $os->showFlash($os->flashMessage($primeryTable));
 							
 							
 	Search Key  
-  <input type="text" id="searchKey"  value="<? echo $searchKey ?>" />   &nbsp;
+  <input type="text" id="searchKey"  value="<?php echo $searchKey ?>" />   &nbsp;
      
 	  
 	 
    <div style="display:none" id="advanceSearchDiv">
          
- Name: <input type="text" class="wtTextClass" name="name_s" id="name_s" value="<? echo $name_s?>" /> &nbsp;  Email: <input type="text" class="wtTextClass" name="email_s" id="email_s" value="<? echo $email_s?>" /> &nbsp;  Mobile: <input type="text" class="wtTextClass" name="mobile_s" id="mobile_s" value="<? echo $mobile_s?>" /> &nbsp;  Details: <input type="text" class="wtTextClass" name="details_s" id="details_s" value="<? echo $details_s?>" /> &nbsp;  Status:
+ Name: <input type="text" class="wtTextClass" name="name_s" id="name_s" value="<?php echo $name_s?>" /> &nbsp;  Email: <input type="text" class="wtTextClass" name="email_s" id="email_s" value="<?php echo $email_s?>" /> &nbsp;  Mobile: <input type="text" class="wtTextClass" name="mobile_s" id="mobile_s" value="<?php echo $mobile_s?>" /> &nbsp;  Details: <input type="text" class="wtTextClass" name="details_s" id="details_s" value="<?php echo $details_s?>" /> &nbsp;  Status:
 	
-	<select name="status" id="status_s" class="textbox fWidth" ><option value="">Select Status</option>	<? 
-										  $os->onlyOption($os->contactUsStatus,$status_s);	?></select>	
+	<select name="status" id="status_s" class="textbox fWidth" ><option value="">Select Status</option>	<?php
+                                          $os->onlyOption($os->contactUsStatus, $status_s);	?></select>	
   
   </div>
 							
@@ -109,7 +112,7 @@ $os->showFlash($os->flashMessage($primeryTable));
 			  <span class="listHeader"> <?php  echo $pageHeader; ?> </span>
 			  
 			  	 <a href="" style="margin-left:50px; text-decoration:none;"><input type="button" value="Refesh" style="cursor:pointer; text-decoration:none;" /></a>    
-			   <a href="javascript:void(0)" style="text-decoration:none; display:none;" onclick="os.editRecord('<? echo $editPageLink?>0') "><input type="button" value="Add New Record" style="cursor:pointer;text-decoration:none;"/></a>
+			   <a href="javascript:void(0)" style="text-decoration:none; display:none;" onclick="os.editRecord('<?php echo $editPageLink?>0') "><input type="button" value="Add New Record" style="cursor:pointer;text-decoration:none;"/></a>
 					</div>	
 			</td>
 			</tr>	
@@ -119,7 +122,7 @@ $os->showFlash($os->flashMessage($primeryTable));
 					
 			  <td  class="middle" >
 			  
-			  <div class="pagingLinkCss">Total:<b><? echo $os->val($resource,'totalRec'); ?></b>  &nbsp;&nbsp; <?php  echo $resource['links'];?>		</div>	
+			  <div class="pagingLinkCss">Total:<b><?php echo $os->val($resource, 'totalRec'); ?></b>  &nbsp;&nbsp; <?php  echo $resource['links'];?>		</div>	
 			  
 			  <!--  ggggggggggggggg   -->
 			  
@@ -147,23 +150,23 @@ $os->showFlash($os->flashMessage($primeryTable));
 											
 							
 							<?php
-							 $serial=$os->val($resource,'serial');  
-							 while(  $record=$os->mfa($records )){ 
-							 $serial++;
-							   $rowId=$record[$primeryField];
-							 
-								
-							
-							 ?>							
+                             $serial=$os->val($resource, 'serial');
+while($record=$os->mfa($records)) {
+    $serial++;
+    $rowId=$record[$primeryField];
+
+
+
+    ?>							
 							<tr  class="trListing" >
 								<td><?php echo $serial?>      </td>
 								
 								 <td class="actionLink" style="display:none;">                   
                        
 						
-						<? if($os->access('wtEdit')){ ?> <a href="javascript:void(0)" onclick="os.editRecord('<?   echo $editPageLink ?><?php echo $rowId  ?>')">Edit</a><? } ?>	 
+						<?php if($os->access('wtEdit')) { ?> <a href="javascript:void(0)" onclick="os.editRecord('<?php   echo $editPageLink ?><?php echo $rowId  ?>')">Edit</a><?php } ?>	 
 						 
-					<? if($os->access('wtDelete')){ ?> 	<a href="javascript:void(0)" onclick="os.deleteRecord('<?php echo  $rowId ?>') ">Delete</a><? } ?>	 
+					<?php if($os->access('wtDelete')) { ?> 	<a href="javascript:void(0)" onclick="os.deleteRecord('<?php echo  $rowId ?>') ">Delete</a><?php } ?>	 
 						 
 						
 						
@@ -176,8 +179,8 @@ $os->showFlash($os->flashMessage($primeryTable));
   <td><?php echo $record['email']?> </td>  
   <td><?php echo $record['mobile']?> </td>  
   <td><?php echo $record['details']?> </td>  
- <!-- <td><img src="<?php  echo $site['url'].$record['image']; ?>"  height="70" width="70" /></td>  -->
-  <td> <? echo $os->val($os->contactUsStatus,$record['status']); ?> </td> 
+ <!-- <td><img src="<?php  echo BASE_URL.$record['image']; ?>"  height="70" width="70" /></td>  -->
+  <td> <?php echo $os->val($os->contactUsStatus, $record['status']); ?> </td> 
   
 								 
 														
@@ -185,9 +188,9 @@ $os->showFlash($os->flashMessage($primeryTable));
 				 
                             
 							
-							<?php 
-							} 
-							 ?>
+							<?php
+}
+?>
 							
 							
 							
@@ -237,5 +240,5 @@ window.location='<?php echo $listPageLink; ?>name_s='+name_sVal +'&email_s='+ema
 	</script>
 	
 	 
-<? include($site['root-wtos'].'bottom.php'); ?>
+<?php include(DIR_ADMIN.'bottom.php'); ?>
     

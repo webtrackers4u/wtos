@@ -10,7 +10,8 @@ class Model
     protected $table = '';
 
 
-    public function __construct($_db){
+    public function __construct($_db)
+    {
         $this->_db = $_db;
     }
     public function __call($method, $args)

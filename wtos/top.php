@@ -1,11 +1,11 @@
-<?
+<?php
 global $site, $os;
-include($site['root-wtos'].'wtosCommon.php');
+include(DIR_ADMIN.'wtosCommon.php');
 ?>
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-gb">
 <head>
-    <? include('wtosHeader.php'); ?>
+    <?php include('wtosHeader.php'); ?>
 
 </head>
 <body>
@@ -45,7 +45,7 @@ include($site['root-wtos'].'wtosCommon.php');
 
                     <ul class="uk-nav uk-dropdown-nav uk-nav-divider profile-nav">
                         <li><a href="#">My Profile</a></li>
-                        <li><a href="<? echo $site['url-wtos'] ?>dashBoard.php?logout=logout" style="color: #830101">Logout</a></li>
+                        <li><a href="<?php echo URL_WTOS ?>dashBoard.php?logout=logout" style="color: #830101">Logout</a></li>
                     </ul>
 
                 </div>
@@ -53,12 +53,12 @@ include($site['root-wtos'].'wtosCommon.php');
             </div>
         </div>
     </div>
-    <div class="main-menu-container uk-box-shadow-small"><? include('osLinks.php') ?></div>
+    <div class="main-menu-container uk-box-shadow-small"><?php include('osLinks.php') ?></div>
 </header>
 
 <div class="sidebar sidebar-left" style="display:none;"> <!-- animated slider -->
     <div class="block">
-        <?php if($os->isLogin()){ ?><a class="tlinkCss logout" href="?logout=logout" style="text-decoration:none; color:#FF0000">Logout</a> <?php }?>
+        <?php if($os->isLogin()) { ?><a class="tlinkCss logout" href="?logout=logout" style="text-decoration:none; color:#FF0000">Logout</a> <?php }?>
     </div>
     <div class="toggler">
         <img src="images/arrow.png"/>

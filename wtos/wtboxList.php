@@ -1,4 +1,4 @@
-<?
+<?php
 /*
    # wtos version : 1.1
    # Edit page: wtboxEdit.php
@@ -6,31 +6,29 @@
 */
 global $os, $site;
 include('wtosConfigLocal.php');
-include($site['root-wtos'].'top.php');
+include(DIR_ADMIN.'top.php');
 $pluginName='';
 $os->loadPluginConstant($pluginName);
 
 
-?><?
+?><?php
 
 $editPage='wtboxEdit.php';
 $listPage='wtboxList.php';
 $primeryTable='wtbox';
 $primeryField='wtboxId';
 $pageHeader='List wtbox';
-$editPageLink=$os->pluginLink($pluginName).$editPage.'?'.$os->addParams(array(),array()).'editRowId=';
-$listPageLink=$os->pluginLink($pluginName).$listPage.'?'.$os->addParams(array(),array());
+$editPageLink=$os->pluginLink($pluginName).$editPage.'?'.$os->addParams(array(), array()).'editRowId=';
+$listPageLink=$os->pluginLink($pluginName).$listPage.'?'.$os->addParams(array(), array());
 
 
 ##  delete row
-if($os->get('operation')=='deleteRow')
-{
-    if($os->deleteRow($primeryTable,$primeryField,$os->get('delId')))
-    {
+if($os->get('operation')=='deleteRow') {
+    if($os->deleteRow($primeryTable, $primeryField, $os->get('delId'))) {
         $flashMsg='Data Deleted Successfully';
 
-        $os->flashMessage($primeryTable,$flashMsg);
-        $os->redirect($site['url-wtos'].$listPage);
+        $os->flashMessage($primeryTable, $flashMsg);
+        $os->redirect(URL_WTOS.$listPage);
 
     }
 }
@@ -40,14 +38,16 @@ if($os->get('operation')=='deleteRow')
 
 /* searching */
 
-$andtitleA=  $os->andField('title_s','title',$primeryTable,'%');
-$title_s=$andtitleA['value']; $andtitle=$andtitleA['andField'];
-$andaccessKeyA=  $os->andField('accessKey_s','accessKey',$primeryTable,'%');
-$accessKey_s=$andaccessKeyA['value']; $andaccessKey=$andaccessKeyA['andField'];
+$andtitleA=  $os->andField('title_s', 'title', $primeryTable, '%');
+$title_s=$andtitleA['value'];
+$andtitle=$andtitleA['andField'];
+$andaccessKeyA=  $os->andField('accessKey_s', 'accessKey', $primeryTable, '%');
+$accessKey_s=$andaccessKeyA['value'];
+$andaccessKey=$andaccessKeyA['andField'];
 
-$searchKey=$os->setNget('searchKey',$primeryTable);
+$searchKey=$os->setNget('searchKey', $primeryTable);
 $whereFullQuery='';
-if($searchKey!=''){
+if($searchKey!='') {
     $whereFullQuery ="and ( title like '%$searchKey%' Or accessKey like '%$searchKey%' )";
 
 }
@@ -56,7 +56,7 @@ $listingQuery=" select * from $primeryTable where $primeryField>0   $whereFullQu
 
 ##  fetch row
 
-$resource=$os->pagingQuery($listingQuery,$os->showPerPage);
+$resource=$os->pagingQuery($listingQuery, $os->showPerPage);
 $records=$resource['resource'];
 
 
@@ -69,28 +69,28 @@ $os->showFlash($os->flashMessage($primeryTable));
     <div class="uk-grid-small uk-grid-match" uk-grid >
         <div>
             Search Key
-            <input type="text" id="searchKey"  value="<? echo $searchKey ?>" class="uk-input uk-form-small" />
+            <input type="text" id="searchKey"  value="<?php echo $searchKey ?>" class="uk-input uk-form-small" />
         </div>
 
         <div class="uk-hidden">
             Title:
-            <input type="text" name="title_s" id="title_s" value="<? echo $title_s?>" class="uk-input uk-form-small"/>
+            <input type="text" name="title_s" id="title_s" value="<?php echo $title_s?>" class="uk-input uk-form-small"/>
         </div>
         <div class="uk-hidden">
             Access Key:
-            <input type="text" name="accessKey_s" id="accessKey_s" value="<? echo $accessKey_s?>" class="uk-input uk-form-small"/>
+            <input type="text" name="accessKey_s" id="accessKey_s" value="<?php echo $accessKey_s?>" class="uk-input uk-form-small"/>
         </div>
         <div class="">
             <div class="uk-flex-bottom uk-flex">
                 <a class="uk-button uk-button-primary uk-button-small" href="javascript:void(0)" onclick="javascript:searchText()" style="text-decoration:none;">Search</a>
                 <a class="uk-button uk-button-primary uk-button-small uk-margin-small-left" href="javascript:void(0)" onclick="javascript:searchReset()"  style="text-decoration:none;">Reset</a>
-                <a class="uk-button uk-button-secondary uk-button-small uk-margin-small-left" href="javascript:void(0)" onclick="os.editRecord('<? echo $editPageLink?>0') ">Add New Record</a>
+                <a class="uk-button uk-button-secondary uk-button-small uk-margin-small-left" href="javascript:void(0)" onclick="os.editRecord('<?php echo $editPageLink?>0') ">Add New Record</a>
             </div>
 
         </div>
 
     </div>
-    <div class="pagingLinkCss uk-margin-small">Total:<b><? echo $os->val($resource,'totalRec'); ?></b>  &nbsp;&nbsp; <?php  echo $resource['links'];?></div>
+    <div class="pagingLinkCss uk-margin-small">Total:<b><?php echo $os->val($resource, 'totalRec'); ?></b>  &nbsp;&nbsp; <?php  echo $resource['links'];?></div>
     <div class="uk-card uk-card-outline uk-card-default">
         <table  class="uk-table uk-table-small uk-table-striped uk-table-hover">
             <thead>
@@ -110,21 +110,21 @@ $os->showFlash($os->flashMessage($primeryTable));
 
 
             <?php
-            $serial=$os->val($resource,'serial');
-            while(  $record=$os->mfa($records )){
-                $serial++;
-                $rowId=$record[$primeryField];
+            $serial=$os->val($resource, 'serial');
+while($record=$os->mfa($records)) {
+    $serial++;
+    $rowId=$record[$primeryField];
 
 
 
-                ?>
+    ?>
                 <tr>
                     <td><?php echo $serial?>      </td>
 
                     <td>
-                        <? if($os->access('wtEdit')){ ?> <a href="javascript:void(0)" onclick="os.editRecord('<?   echo $editPageLink ?><?php echo $rowId  ?>')">Edit</a><? } ?>
+                        <?php if($os->access('wtEdit')) { ?> <a href="javascript:void(0)" onclick="os.editRecord('<?php   echo $editPageLink ?><?php echo $rowId  ?>')">Edit</a><?php } ?>
                         \
-                        <? if($os->access('wtDelete')){ ?> <a class="uk-text-danger" href="javascript:void(0)" onclick="os.deleteRecord('<?php echo  $rowId ?>') ">Delete</a><? } ?>
+                        <?php if($os->access('wtDelete')) { ?> <a class="uk-text-danger" href="javascript:void(0)" onclick="os.deleteRecord('<?php echo  $rowId ?>') ">Delete</a><?php } ?>
                     </td>
 
                     <td><?= $record['title']?> </td>
@@ -132,14 +132,14 @@ $os->showFlash($os->flashMessage($primeryTable));
                         <?= $record['accessKey']?><br>
                         <small class="uk-text-primary">wtbox-<?php echo $record['accessKey']?>-wtbox</small>
                     </td>
-                    <td><?= $os->rowByField('title','lang','langId',$record['langId']); ?></td>
+                    <td><?= $os->rowByField('title', 'lang', 'langId', $record['langId']); ?></td>
                     <td class="uk-hidden"><?= $record['content']?></td>
                     <td><?= $record['block']?> </td>
                     <td><?= $record['active']?> </td>
                 </tr>
                 <?php
-            }
-            ?>
+}
+?>
 
             </tbody>
 
@@ -179,5 +179,5 @@ $os->showFlash($os->flashMessage($primeryTable));
 </script>
 
 
-<? include($site['root-wtos'].'bottom.php'); ?>
+<?php include(DIR_ADMIN.'bottom.php'); ?>
 

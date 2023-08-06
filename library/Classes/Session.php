@@ -1,5 +1,7 @@
-<?
+<?php
+
 namespace Library\Classes;
+
 class Session
 {
     /**
@@ -21,8 +23,9 @@ class Session
      */
     public static function write($key, $value)
     {
-        if (!is_string($key))
+        if (!is_string($key)) {
             throw new \Exception('Session key must be string value');
+        }
         self::_init();
         $_SESSION[$key] = $value;
         self::_age();
@@ -53,8 +56,9 @@ class Session
      */
     public static function read($key, $child = false)
     {
-        if (!is_string($key))
+        if (!is_string($key)) {
             throw new \Exception('Session key must be string value');
+        }
         self::_init();
         if (isset($_SESSION[$key])) {
             self::_age();
@@ -93,8 +97,9 @@ class Session
      */
     public static function delete($key)
     {
-        if (!is_string($key))
+        if (!is_string($key)) {
             throw new \Exception('Session key must be string value');
+        }
         self::_init();
         unset($_SESSION[$key]);
         self::_age();
@@ -206,9 +211,14 @@ class Session
             // Note: This will destroy the session, and not just the session data!
             if (ini_get("session.use_cookies")) {
                 $params = session_get_cookie_params();
-                setcookie(session_name(), '', time() - 42000,
-                    $params["path"], $params["domain"],
-                    $params["secure"], $params["httponly"]
+                setcookie(
+                    session_name(),
+                    '',
+                    time() - 42000,
+                    $params["path"],
+                    $params["domain"],
+                    $params["secure"],
+                    $params["httponly"]
                 );
             }
 
@@ -226,8 +236,9 @@ class Session
     {
         if (function_exists('session_status')) {
             // PHP 5.4.0+
-            if (session_status() == PHP_SESSION_DISABLED)
+            if (session_status() == PHP_SESSION_DISABLED) {
                 throw new \Exception();
+            }
         }
 
         if ('' === session_id()) {
@@ -254,9 +265,12 @@ class Session
             //}
 
             $params = session_get_cookie_params();
-            session_set_cookie_params($params['lifetime'],
-                $params['path'], $params['domain'],
-                $secure, $httponly
+            session_set_cookie_params(
+                $params['lifetime'],
+                $params['path'],
+                $params['domain'],
+                $secure,
+                $httponly
             );
 
             return session_start();

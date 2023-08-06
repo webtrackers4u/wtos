@@ -1,4 +1,4 @@
-<?
+<?php
 /*
    # wtos version : 1.1
    # List Page : wtboxList.php
@@ -8,10 +8,10 @@
 use Library\Classes\Block;
 
 include('wtosConfigLocal.php');
-include($site['root-wtos'].'top.php');
+include(DIR_ADMIN.'top.php');
 $pluginName='';
 $os->loadPluginConstant($pluginName);
-?><?
+?><?php
 
 $editPage='wtboxEdit.php';
 $listPage='wtboxList.php';
@@ -20,22 +20,19 @@ $primeryField='wtboxId';
 $pageHeader='Add new wtbox';
 
 
-$editPageLink=$os->pluginLink($pluginName).$editPage.'?'.$os->addParams(array(),array()).'editRowId=';
-$listPageLink=$os->pluginLink($pluginName).$listPage.'?'.$os->addParams(array(),array());
+$editPageLink=$os->pluginLink($pluginName).$editPage.'?'.$os->addParams(array(), array()).'editRowId=';
+$listPageLink=$os->pluginLink($pluginName).$listPage.'?'.$os->addParams(array(), array());
 $tmpVar='';
 $editRowId=$os->get('editRowId');
-if($editRowId)
-{
+if($editRowId) {
     $pageHeader='Edit  wtbox';
 }
 
 
 ##  update row
-if($os->post('operation'))
-{
+if($os->post('operation')) {
 
-    if($os->post('operation')=='updateField')
-    {
+    if($os->post('operation')=='updateField') {
         $rowId=$os->post('rowId');
         #---- edit section ----#
 
@@ -51,16 +48,16 @@ if($os->post('operation'))
         $dataToSave["block_values"] = addslashes(@serialize($os->post('block_values')));
 
 
-        if($rowId < 1){
+        if($rowId < 1) {
             $dataToSave['addedDate']=$os->now();
             $dataToSave['addedBy']=$os->userDetails['adminId'];
         }
 
-        $os->save($primeryTable,$dataToSave,$primeryField,$rowId);
+        $os->save($primeryTable, $dataToSave, $primeryField, $rowId);
 
-        $flashMsg=($rowId)?'Record Updated Successfully':'Record Added Successfully';
+        $flashMsg=($rowId) ? 'Record Updated Successfully' : 'Record Added Successfully';
 
-        $os->flashMessage($primeryTable,$flashMsg);
+        $os->flashMessage($primeryTable, $flashMsg);
 
         $os->redirect($os->post('redirectLink'));
         #---- edit section end ----#
@@ -72,9 +69,8 @@ if($os->post('operation'))
 
 
 $pageData='';
-if($editRowId)
-{
-    $os->data=$os->rowByField('',$primeryTable,$primeryField,$editRowId);
+if($editRowId) {
+    $os->data=$os->rowByField('', $primeryTable, $primeryField, $editRowId);
 }
 
 
@@ -87,9 +83,9 @@ $os->showFlash($os->flashMessage($primeryTable));
 
     <h3><?php  echo $pageHeader; ?></h3>
 
-    <form  action="<? echo $editPageLink ?>" method="post"   enctype="multipart/form-data" id="submitFormDataId">
+    <form  action="<?php echo $editPageLink ?>" method="post"   enctype="multipart/form-data" id="submitFormDataId">
 
-        <input type="hidden" name="redirectLink"  value="<? echo $os->server('HTTP_REFERER'); ?>" />
+        <input type="hidden" name="redirectLink"  value="<?php echo $os->server('HTTP_REFERER'); ?>" />
         <input type="hidden" name="rowId" value="<?php   echo  $os->getVal($primeryField) ;?>" />
         <input type="hidden" name="operation" value="updateField" />
         <div class="uk-card uk-card-default uk-card-outline uk-card-small uk-margin">
@@ -110,35 +106,35 @@ $os->showFlash($os->flashMessage($primeryTable));
                     <div>
                         <label>Language </label>
                          <select name="langId" id="langId" class="uk-select uk-form-small" >
-                             <option value="">Select Language</option>		  	<?
+                             <option value="">Select Language</option>		  	<?php
 
-                                $os->optionsHTML($os->getVal('langId'),'langId','title','lang');?>
+                                $os->optionsHTML($os->getVal('langId'), 'langId', 'title', 'lang');?>
                             </select>
                     </div>
 
                     <div>
                         <label>Container </label>
-                        <select name="container" id="container" class="uk-select uk-form-small" ><option value="">Select Container</option>	<?
-                            $os->onlyOption($os->boxContainer,$os->getVal('container'));?>
+                        <select name="container" id="container" class="uk-select uk-form-small" ><option value="">Select Container</option>	<?php
+                            $os->onlyOption($os->boxContainer, $os->getVal('container'));?>
                         </select>
                     </div>
                     <div class="uk-width-1-1 uk-hidden">
                         <label>Css </label>
                         <textarea  name="css" id="css"  class="uk-textarea uk-form-small"><?php echo $os->getVal('css') ?></textarea>
                     </div>
-                    <div class="uk-width-1-1 <?= $os->getVal('block')!=""?"uk-hidden":""?>">
+                    <div class="uk-width-1-1 <?= $os->getVal('block')!="" ? "uk-hidden" : ""?>">
                         <label>Content </label>
                         <textarea  name="content" id="content" class="uk-textarea uk-form-small" style="min-height: 150px"><?php echo $os->getVal('content') ?></textarea>
                     </div>
                     <div  class="uk-hidden">
                         <label>Tinymce </label>
-                            <select name="tinymce" id="tinymce" class="uk-select uk-form-small" ><option value="">Select Tinymce</option>	<?
-                                $os->onlyOption($os->boxYesNo,$os->getVal('tinymce'));?></select>
+                            <select name="tinymce" id="tinymce" class="uk-select uk-form-small" ><option value="">Select Tinymce</option>	<?php
+                                $os->onlyOption($os->boxYesNo, $os->getVal('tinymce'));?></select>
                     </div>
                     <div>
                         <label>Active </label>
-                            <select name="active" id="active" class="uk-select uk-form-small" ><option value="">Select Active</option>	<?
-                                $os->onlyOption($os->boxActive,$os->getVal('active'));?></select>
+                            <select name="active" id="active" class="uk-select uk-form-small" ><option value="">Select Active</option>	<?php
+                                $os->onlyOption($os->boxActive, $os->getVal('active'));?></select>
                     </div>
 
 
@@ -147,7 +143,7 @@ $os->showFlash($os->flashMessage($primeryTable));
 
                         <select name="block" id="block" class="uk-select uk-form-small" >
                             <option value="">Select Block</option>
-                            <? $os->onlyOption(Block::get_blocks(),$os->getVal('block'));?>
+                            <?php $os->onlyOption(Block::get_blocks(), $os->getVal('block'));?>
 
                         </select>
 
@@ -157,9 +153,9 @@ $os->showFlash($os->flashMessage($primeryTable));
         </div>
 
         <div>
-            <?
+            <?php
             Block::render_form($os->getVal('block'), "block_values", $os->getVal("block_values"));
-            ?>
+?>
         </div>
 
 
@@ -170,16 +166,16 @@ $os->showFlash($os->flashMessage($primeryTable));
 
 
 
-            <? if($os->access('wtEdit')){ ?>
+            <?php if($os->access('wtEdit')) { ?>
                 <input type="button" class="uk-button uk-button-small uk-button-primary"  value="Save" onclick="submitFormData()" />
-            <? } ?>
-            <input type="button" class="uk-button uk-button-small uk-button-danger"   value="Back to List" onclick="javascript:window.location='<? echo $listPageLink ?>';" />
+            <?php } ?>
+            <input type="button" class="uk-button uk-button-small uk-button-danger"   value="Back to List" onclick="javascript:window.location='<?php echo $listPageLink ?>';" />
         </div>
 
     </form>
 </div>
 
-<? include('tinyMCE.php'); ?>
+<?php include('tinyMCE.php'); ?>
 <script>
     function submitFormData()
     {
@@ -194,5 +190,5 @@ $os->showFlash($os->flashMessage($primeryTable));
 </script>
 
 
-<? include($site['root-wtos'].'bottom.php'); ?>
+<?php include(DIR_ADMIN.'bottom.php'); ?>
 

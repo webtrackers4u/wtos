@@ -1,8 +1,8 @@
-<? 
+<?php
 include('wtosConfigLocal.php');
-include($site['root-wtos'].'top.php');
+include(DIR_ADMIN.'top.php');
 ?>
-<? 
+<?php
 $totalQ=$os->mq("Select count(*) c from pagecontent");
 $totalQ=$os->mfa($totalQ);
 $totalPage=$totalQ['c'];
@@ -15,7 +15,7 @@ $totalQ=$os->mq("Select count(*) c from contactus");
 $totalQ=$os->mfa($totalQ);
 $totalEnquery=$totalQ['c'];
 
-$hitCoount=$os->rowByField('value','settings','keyword','hitCoount');
+$hitCoount=$os->rowByField('value', 'settings', 'keyword', 'hitCoount');
 ?>
 <style>
 .dashBox{ float:left; border:1px solid #666666; margin:5px; padding:3px; border-bottom:2px solid #333333;border-right:2px solid #333333; height:150px; width:200px;-moz-border-radius:5px; -webkit-border-radius:5px;border-radius:5px; background-color:#FFFFFF;}
@@ -28,24 +28,24 @@ $hitCoount=$os->rowByField('value','settings','keyword','hitCoount');
   <tr>
    <td> <b>&radic;</b></td>
     <td>Total No of pages </td>
-    <td><? echo $totalPage; ?></td>
+    <td><?php echo $totalPage; ?></td>
   </tr>
   <tr>
    <td> <b>&radic;</b></td>
     <td>Total No of Admin </td>
-    <td><? echo $totalAdmin; ?></td>
+    <td><?php echo $totalAdmin; ?></td>
   </tr>
   
   <tr>
    <td> <b>&radic;</b></td>
     <td>Total No of Hit </td>
-    <td><? echo $hitCoount; ?></td>
+    <td><?php echo $hitCoount; ?></td>
   </tr>
   
    <tr>
    <td> <b>&radic;</b></td>
     <td>Total No of Enquery </td>
-    <td><? echo $totalEnquery; ?></td>
+    <td><?php echo $totalEnquery; ?></td>
   </tr>
   
   
@@ -73,4 +73,4 @@ $hitCoount=$os->rowByField('value','settings','keyword','hitCoount');
 
 <div style="height:20px; padding:50px 0px 0px 5px;">For any help contact admin@webtrackers.co.in </div>
  
-<? include($site['root-wtos'].'bottom.php'); ?>
+<?php include(DIR_ADMIN.'bottom.php'); ?>

@@ -1,60 +1,57 @@
 <?php
 global $os;
 $msgEnquery='';
- 
-if($os->post('querySubmit')=='queryValues')
-{
-$msgEnquery='<span style="color:#FF0000">  Sorry your message failed  please try agin </span>';
-if($os->post('fullname')!='' && $os->post('email')!='')
-		{
-		$image='';
-		//	$image=$os->UploadPhoto('image',$site['root'].'wtos-images');
-			if($image!='')
-			{
-				$dataToSave['image']='wtos-images/'.$image;
-				$attachments=$site['url'].$dataToSave['image'];
-			} 
-			
-			# save to data base  888
-			
-			$dataToSave['name']=$os->post('fullname'); 
-			$dataToSave['email']=$os->post('email'); 
-			$dataToSave['mobile']=$os->post('mobile'); 
-			$dataToSave['details']=$os->post('details'); 
-			$dataToSave['addedDate']=$os->now(); 
-			$dataToSave['status']='New';
-			$os->save('contactus',$dataToSave);		
-				# save to data base  888 end	
-			$os->startOB();
-			?>
+
+if($os->post('querySubmit')=='queryValues') {
+    $msgEnquery='<span style="color:#FF0000">  Sorry your message failed  please try agin </span>';
+    if($os->post('fullname')!='' && $os->post('email')!='') {
+        $image='';
+        //	$image=$os->UploadPhoto('image',BASE_DIR.'wtos-images');
+        if($image!='') {
+            $dataToSave['image']='wtos-images/'.$image;
+            $attachments=BASE_URL.$dataToSave['image'];
+        }
+
+        # save to data base  888
+
+        $dataToSave['name']=$os->post('fullname');
+        $dataToSave['email']=$os->post('email');
+        $dataToSave['mobile']=$os->post('mobile');
+        $dataToSave['details']=$os->post('details');
+        $dataToSave['addedDate']=$os->now();
+        $dataToSave['status']='New';
+        $os->save('contactus', $dataToSave);
+        # save to data base  888 end
+        $os->startOB();
+        ?>
 
 <table width="400" border="0" cellpadding="5" cellspacing="2" >
   <tr>
-    <td style="font-size:15px; font-weight:bold;">Message From  <? echo $site['url']; ?> Contact </td>
+    <td style="font-size:15px; font-weight:bold;">Message From  <?php echo BASE_URL; ?> Contact </td>
   </tr>
   <tr>
-    <td>  Name: <strong><? echo $os->post('fullname')?></strong> <br /><br />
+    <td>  Name: <strong><?php echo $os->post('fullname')?></strong> <br /><br />
  
-			Email : <? echo $os->post('email')?> <br /><br />
+			Email : <?php echo $os->post('email')?> <br /><br />
 			
-			Mobile no : <? echo $os->post('mobile')?> <br /><br />
-			Query : <? echo $os->post('details')?> <br /><br />
-		<!--	Attachment : <? echo $attachments?> <br />-->
+			Mobile no : <?php echo $os->post('mobile')?> <br /><br />
+			Query : <?php echo $os->post('details')?> <br /><br />
+		<!--	Attachment : <?php echo $attachments?> <br />-->
       &nbsp;</td>
   </tr>
   
 </table>
-<?
-			
-		 
-		    $body=$os->getOB();
-			$os->sendMail($os->getSettings('email'),$os->post('email'),$os->post('fullname'),$os->post('fullname').'  Contacting You ',$body);
-		    $msgEnquery=' Message sent successfully . Thanks for your time  ';
-		}
+<?php
+
+
+        $body=$os->getOB();
+        $os->sendMail($os->getSettings('email'), $os->post('email'), $os->post('fullname'), $os->post('fullname').'  Contacting You ', $body);
+        $msgEnquery=' Message sent successfully . Thanks for your time  ';
+    }
 
 
 }
- 
+
 
 ?>
 	<style>
@@ -70,7 +67,7 @@ if($os->post('fullname')!='' && $os->post('email')!='')
 							border:1px solid #CCCCCC;
 							border-bottom:2px solid #CCCCCC;
 							border-right:2px solid #CCCCCC;
-							behavior: url(<?php  echo $site['url']; ?>ie-css3.htc); 
+							behavior: url(<?php  echo BASE_URL; ?>ie-css3.htc); 
 							color:#333333;
 							width:200px;
 							height:27px;
@@ -90,7 +87,7 @@ if($os->post('fullname')!='' && $os->post('email')!='')
 					<form action="" method="post" id="contactUs" enctype="multipart/form-data">
 					 <table border="0" cellspacing="0" cellpadding="0">
 					 <tr>
-    <td><div class="msgs"><? echo $msgEnquery; ?> </div>  </td>
+    <td><div class="msgs"><?php echo $msgEnquery; ?> </div>  </td>
   </tr>
   <tr>
     <td class="txts">Name <br /><input type="text" name="fullname" id="fullname" class="curveboxF" /></td>

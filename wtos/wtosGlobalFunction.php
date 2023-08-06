@@ -1,8 +1,9 @@
 <?php
+
 # these properties only for common purpose ( backend , front, and ,plugin)
 class librarySettings extends wtosLibrary
 {
-    var $icons = array("home",
+    public $icons = array("home",
         "sign-in",
         "sign-out",
         "user",
@@ -147,5 +148,3 @@ class librarySettings extends wtosLibrary
         "youtube",
     );
 }
-
-?>

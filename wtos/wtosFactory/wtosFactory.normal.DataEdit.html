@@ -5,7 +5,7 @@
    #  
 */
 include('WTF_config_directory');
-include($site['root-wtos'].'top.php');
+include(DIR_ADMIN.'top.php');
 $pluginName='WTF_plugin';
 $os->loadPluginConstant($pluginName);
 ?><?
@@ -126,5 +126,5 @@ function submitFormData()
 }
 </script>
  
-<? include($site['root-wtos'].'bottom.php'); ?>
+<? include(DIR_ADMIN.'bottom.php'); ?>
  

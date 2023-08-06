@@ -1,85 +1,82 @@
-<?
+<?php
 /*
    # wtos version : 1.1
-   # List Page : contactusList.php 
-   #  
+   # List Page : contactusList.php
+   #
 */
 include('wtosConfigLocal.php');
-include($site['root-wtos'].'top.php');
+include(DIR_ADMIN.'top.php');
 $pluginName='';
 $os->loadPluginConstant($pluginName);
-?><?
+?><?php
 
 $editPage='contactusEdit.php';
 $listPage='contactusList.php';
 $primeryTable='contactus';
 $primeryField='contactid';
 $pageHeader='Add new contactus';
- 
- 
-$editPageLink=$os->pluginLink($pluginName).$editPage.'?'.$os->addParams(array(),array()).'editRowId=';
-$listPageLink=$os->pluginLink($pluginName).$listPage.'?'.$os->addParams(array(),array());
+
+
+$editPageLink=$os->pluginLink($pluginName).$editPage.'?'.$os->addParams(array(), array()).'editRowId=';
+$listPageLink=$os->pluginLink($pluginName).$listPage.'?'.$os->addParams(array(), array());
 $tmpVar='';
 $editRowId=$os->get('editRowId');
-if($editRowId)
-{
- $pageHeader='Edit  contactus';
+if($editRowId) {
+    $pageHeader='Edit  contactus';
 }
 
 
 ##  update row
-if($os->post('operation'))
-{
+if($os->post('operation')) {
 
-	 if($os->post('operation')=='updateField')
-	 {
-	  $rowId=$os->post('rowId');
-	  
-	  #---- edit section ----#
-	 	 	 	 	 	 	 	 	 	 	 	 	 	  	 	 	 	 	 	 	 	 	    	  	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	  	 	  	 	 	
- $dataToSave['name']=addslashes($os->post('name')); 
- $dataToSave['email']=addslashes($os->post('email')); 
- $dataToSave['mobile']=addslashes($os->post('mobile')); 
- $dataToSave['details']=addslashes($os->post('details')); 
- $image=$os->UploadPhoto('image',$site['root'].'wtos-images');
-				   	if($image!=''){
-					$dataToSave['image']='wtos-images/'.$image;}
- $dataToSave['status']=addslashes($os->post('status')); 
+    if($os->post('operation')=='updateField') {
+        $rowId=$os->post('rowId');
 
-																																															
-																																															           if($rowId < 1){
-			$dataToSave['addedDate']=$os->now();
-			$dataToSave['addedBy']=$os->userDetails['adminId'];
-			}
-																																															
-																																															
-		
-		
-	  $os->saveTable($primeryTable,$dataToSave,$primeryField,$rowId);
-	 
-	 
-	  $flashMsg=($rowId)?'Record Updated Successfully':'Record Added Successfully';
-	  
-	  $os->flashMessage($primeryTable,$flashMsg);
-	  
-	   $os->redirect($os->post('redirectLink'));
-	  #---- edit section end ----#
-	
-	 }
-	
-	
+        #---- edit section ----#
+
+        $dataToSave['name']=addslashes($os->post('name'));
+        $dataToSave['email']=addslashes($os->post('email'));
+        $dataToSave['mobile']=addslashes($os->post('mobile'));
+        $dataToSave['details']=addslashes($os->post('details'));
+        $image=$os->UploadPhoto('image', BASE_DIR.'wtos-images');
+        if($image!='') {
+            $dataToSave['image']='wtos-images/'.$image;
+        }
+        $dataToSave['status']=addslashes($os->post('status'));
+
+
+        if($rowId < 1) {
+            $dataToSave['addedDate']=$os->now();
+            $dataToSave['addedBy']=$os->userDetails['adminId'];
+        }
+
+
+
+
+        $os->saveTable($primeryTable, $dataToSave, $primeryField, $rowId);
+
+
+        $flashMsg=($rowId) ? 'Record Updated Successfully' : 'Record Added Successfully';
+
+        $os->flashMessage($primeryTable, $flashMsg);
+
+        $os->redirect($os->post('redirectLink'));
+        #---- edit section end ----#
+
+    }
+
+
 }
 
 
 $pageData='';
-if($editRowId)
-  {
-    
-	   $os->data=$os->rowByField('',$primeryTable,$primeryField,$editRowId);
-	    
-  }
+if($editRowId) {
 
-  
+    $os->data=$os->rowByField('', $primeryTable, $primeryField, $editRowId);
+
+}
+
+
 $os->showFlash($os->flashMessage($primeryTable));
 ?>
  
@@ -93,7 +90,7 @@ $os->showFlash($os->flashMessage($primeryTable));
 			 <div class="formsection">
 						<h3><?php  echo $pageHeader; ?></h3>
 						
-						<form  action="<? echo $editPageLink ?>" method="post"   enctype="multipart/form-data" id="submitFormDataId">
+						<form  action="<?php echo $editPageLink ?>" method="post"   enctype="multipart/form-data" id="submitFormDataId">
 						
 						<fieldset class="cFielSets"  >
 						<legend  class="cLegend">Details</legend>
@@ -119,7 +116,7 @@ $os->showFlash($os->flashMessage($primeryTable));
 	  									<td>image </td>
 										<td>
 										
-										<img id="imagePreview" src="<?php echo $site['url']?><?php echo $os->getVal('image');?>  " height="100"  />		
+										<img id="imagePreview" src="<?php echo BASE_URL?><?php echo $os->getVal('image');?>  " height="100"  />		
 										<input type="file" name="image" value=""  id="image" onchange="os.readURL(this,'imagePreview') " style="display:none;"/><br>
 										
 										 <span style="cursor:pointer; color:#FF0000;" onclick="os.clicks('image');">Edit Image</span>
@@ -131,8 +128,8 @@ $os->showFlash($os->flashMessage($primeryTable));
 	  									<td>Status </td>
 										<td>  
 	
-	<select name="status" id="status" class="textbox fWidth" ><option value="">Select Status</option>	<? 
-										 $os->onlyOption($os->contactUsStatus,$os->getVal('status'));?></select>	 </td>						
+	<select name="status" id="status" class="textbox fWidth" ><option value="">Select Status</option>	<?php
+                                         $os->onlyOption($os->contactUsStatus, $os->getVal('status'));?></select>	 </td>						
 										</tr>
                         </table>
 						</fieldset>
@@ -142,9 +139,9 @@ $os->showFlash($os->flashMessage($primeryTable));
 						
 						 
 						
-					<? if($os->access('wtEdit')){ ?> 	<input type="button" class="submit"  value="Save" onclick="submitFormData()" />	 <? } ?>	 
-                        <input type="button" class="submit"  value="Back to List" onclick="javascript:window.location='<? echo $listPageLink ?>';" />	
-						<input type="hidden" name="redirectLink"  value="<? echo $os->server('HTTP_REFERER'); ?>" />
+					<?php if($os->access('wtEdit')) { ?> 	<input type="button" class="submit"  value="Save" onclick="submitFormData()" />	 <?php } ?>	 
+                        <input type="button" class="submit"  value="Back to List" onclick="javascript:window.location='<?php echo $listPageLink ?>';" />	
+						<input type="hidden" name="redirectLink"  value="<?php echo $os->server('HTTP_REFERER'); ?>" />
 						<input type="hidden" name="rowId" value="<?php   echo  $os->getVal($primeryField) ;?>" />
                         <input type="hidden" name="operation" value="updateField" />
 						</form>
@@ -167,5 +164,5 @@ function submitFormData()
 }
 </script>
  
-<? include($site['root-wtos'].'bottom.php'); ?>
+<?php include(DIR_ADMIN.'bottom.php'); ?>
  

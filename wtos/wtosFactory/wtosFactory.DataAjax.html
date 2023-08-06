@@ -5,7 +5,7 @@
    #  
 */
 include('WTF_config_directory');
-include($site['root-wtos'].'wtosCommon.php');
+include(DIR_ADMIN.'wtosCommon.php');
 $pluginName='WTF_plugin';
 $os->loadPluginConstant($pluginName);
 
@@ -117,7 +117,7 @@ if($os->get('WTF_editKey')=='OK')
 		}
 		
 		 
-          $qResult=$os->save('WTF_table',$dataToSave,'WTF_primery',$WTF_primery);///    allowed char '\*#@/"~$^.,()|+_-=:££ 	
+          $qResult=$os->save('WTF_table',$dataToSave,'WTF_primery',$WTF_primery);///    allowed char '\*#@/"~$^.,()|+_-=:ï¿½ï¿½ 	
 		if($qResult)  
 				{
 		if($WTF_primery>0 ){ $mgs= " Data updated Successfully";}

@@ -5,13 +5,13 @@
    #  
 */
 include('WTF_config_directory');
-include($site['root-wtos'].'top.php');
+include(DIR_ADMIN.'top.php');
 ?><?
 $pluginName='WTF_plugin';
 $listHeader='WTF_H_viewPage';
 $ajaxFilePath= 'WTF_ajaxPage';
 $os->loadPluginConstant($pluginName);
-$loadingImage=$site['url-wtos'].'images/loadingwt.gif';
+$loadingImage=URL_WTOS.'images/loadingwt.gif';
  
 ?>
   
@@ -217,4 +217,4 @@ function wtAjaxPagination(pageId,pageNo)// pagination function
 
   
  
-<? include($site['root-wtos'].'bottom.php'); ?>
+<? include(DIR_ADMIN.'bottom.php'); ?>

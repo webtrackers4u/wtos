@@ -1,4 +1,4 @@
-<?
+<?php
 global $os, $site;
 ?>
 <!DOCTYPE html>
@@ -13,15 +13,15 @@ global $os, $site;
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 
-    <link rel="shortcut icon"  href="<?= $site["url"]."favicon.ico"?>"  />
-    <link rel="icon"  href="<?= $site["url"]."favicon.ico"?>"  />
+    <link rel="shortcut icon"  href="<?= BASE_URL."favicon.ico"?>"  />
+    <link rel="icon"  href="<?= BASE_URL."favicon.ico"?>"  />
     <title>Page not found</title>
 
-    <link rel="stylesheet" href="<?= $site["themePath"]?>css/uikit.css" />
-    <link rel="stylesheet" type="text/css" href="<?= $site["themePath"]?>css/style.css">
+    <link rel="stylesheet" href="<?= URL_APP?>css/uikit.css" />
+    <link rel="stylesheet" type="text/css" href="<?= URL_APP?>css/style.css">
 
-    <script src="<?= $site["themePath"]?>js/uikit.js"></script>
-    <script src="<?= $site["themePath"]?>js/uikit-icons.js"></script>
+    <script src="<?= URL_APP?>js/uikit.js"></script>
+    <script src="<?= URL_APP?>js/uikit-icons.js"></script>
 
 </head>
 </html>
@@ -31,7 +31,7 @@ global $os, $site;
         <h3>Ops! The page could not be found.</h3>
         <p style="text-transform: lowercase">SORRY BUT THE PAGE YOU ARE LOOKING FOR DOES NOT EXIST, HAVE BEEN REMOVED. NAME CHANGED OR IS TEMPORARILY UNAVAILABLE</p>
 
-        <a class="uk-button uk-button-primary" href="<?= $site["url"]?>">Go back to homepage <span uk-icon="arrow-right"></span></a>
+        <a class="uk-button uk-button-primary" href="<?= BASE_URL?>">Go back to homepage <span uk-icon="arrow-right"></span></a>
     </div>
 </div>
 

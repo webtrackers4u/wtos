@@ -1,25 +1,27 @@
-<?
+<?php
 /*
    # wtos version : 1.1
-   # main ajax process page : wtossettingsAjax.php 
-   #  
+   # main ajax process page : wtossettingsAjax.php
+   #
 */
 include('wtosConfigLocal.php');
-include($site['root-wtos'].'top.php');
-?><?
+include(DIR_ADMIN.'top.php');
+?><?php
 $pluginName='';
 $listHeader='List settings';
 $ajaxFilePath= 'wtossettingsAjax.php';
 $os->loadPluginConstant($pluginName);
-$loadingImage=$site['url-wtos'].'images/loadingwt.gif';
- 
+$loadingImage=URL_WTOS.'images/loadingwt.gif';
+
 ?>
-    <? if($os->get('system')==1  ){ 
-			         echo '<!-- session_id='.session_id() .' session_id -->';
-					 }
-			  if($os->get('session_id')!=session_id()){ exit();}
-			 
-			  ?>
+    <?php if($os->get('system')==1) {
+        echo '<!-- session_id='.session_id() .' session_id -->';
+    }
+              if($os->get('session_id')!=session_id()) {
+                  exit();
+              }
+
+?>
 
  <table class="container">
 				<tr>
@@ -37,11 +39,11 @@ $loadingImage=$site['url-wtos'].'images/loadingwt.gif';
   <tr>
     <td width="470" height="470" valign="top" class="ajaxViewMainTableTD">
 	<div>
-	<? if($os->access('wtDelete')){ ?><input type="button" value="Delete" onclick="WT_settingsDeleteRowById('');" /><? } ?>	 
+	<?php if($os->access('wtDelete')) { ?><input type="button" value="Delete" onclick="WT_settingsDeleteRowById('');" /><?php } ?>	 
 	&nbsp;&nbsp;
 	&nbsp; <input type="button" value="New" onclick="javascript:window.location='';" />
 	 
-	&nbsp;<? if($os->access('wtEdit')){ ?> <input type="button" value="Save" onclick="WT_settingsEditAndSave();" /><? } ?>	 
+	&nbsp;<?php if($os->access('wtEdit')) { ?> <input type="button" value="Save" onclick="WT_settingsEditAndSave();" /><?php } ?>	 
 	<table width="100%" border="0" cellspacing="1" cellpadding="1" class="ajaxEditForm">	
 	 
 <tr >
@@ -56,14 +58,14 @@ $loadingImage=$site['url-wtos'].'images/loadingwt.gif';
 	</table>
 	
 	
-	<input type="hidden"  id="showPerPage" value="<? echo $os->showPerPage; ?>" />					
+	<input type="hidden"  id="showPerPage" value="<?php echo $os->showPerPage; ?>" />					
 	<input type="hidden"  id="settingsId" value="0" />	
 	<input type="hidden"  id="WT_settingspagingPageno" value="1" />							
-	<? if($os->access('wtDelete')){ ?><input type="button" value="Delete" onclick="WT_settingsDeleteRowById('');" />	<? } ?>	  
+	<?php if($os->access('wtDelete')) { ?><input type="button" value="Delete" onclick="WT_settingsDeleteRowById('');" />	<?php } ?>	  
 	&nbsp;&nbsp;
 	&nbsp; <input type="button" value="New" onclick="javascript:window.location='';" />
 	 
-	&nbsp; <? if($os->access('wtEdit')){ ?><input type="button" value="Save" onclick="WT_settingsEditAndSave();" /><? } ?>	 
+	&nbsp; <?php if($os->access('wtEdit')) { ?><input type="button" value="Save" onclick="WT_settingsEditAndSave();" /><?php } ?>	 
 	</div>	
 	
 	 
@@ -116,9 +118,9 @@ formdata.append('value_s',value_sVal );
 	formdata.append('showPerPage',os.getVal('showPerPage') );
 	var WT_settingspagingPageno=os.getVal('WT_settingspagingPageno');
 	var url='wtpage='+WT_settingspagingPageno;
-	url='<? echo $ajaxFilePath ?>?WT_settingsListing=OK&'+url;
+	url='<?php echo $ajaxFilePath ?>?WT_settingsListing=OK&'+url;
 	os.animateMe.div='div_busy';
-	os.animateMe.html='<div class="loadImage"><img  src="<? echo $loadingImage?>"  /> <div class="loadText">&nbsp;Please wait. Working...</div></div>';	
+	os.animateMe.html='<div class="loadImage"><img  src="<?php echo $loadingImage?>"  /> <div class="loadText">&nbsp;Please wait. Working...</div></div>';	
 	os.setAjaxHtml('WT_settingsListDiv',url,formdata);
 		
 }
@@ -150,9 +152,9 @@ var valueVal= os.getVal('value');
 
 	 var   settingsId=os.getVal('settingsId');
 	 formdata.append('settingsId',settingsId );
-  	var url='<? echo $ajaxFilePath ?>?WT_settingsEditAndSave=OK&';
+  	var url='<?php echo $ajaxFilePath ?>?WT_settingsEditAndSave=OK&';
 	os.animateMe.div='div_busy';
-	os.animateMe.html='<div class="loadImage"><img  src="<? echo $loadingImage?>"  /> <div class="loadText">&nbsp;Please wait. Working...</div></div>';	
+	os.animateMe.html='<div class="loadImage"><img  src="<?php echo $loadingImage?>"  /> <div class="loadText">&nbsp;Please wait. Working...</div></div>';	
 	os.setAjaxFunc('WT_settingsReLoadList',url,formdata);
 
 }	
@@ -175,9 +177,9 @@ function WT_settingsGetById(settingsId) // get record by table primery id
 {
 	var formdata = new FormData();	 
 	formdata.append('settingsId',settingsId );
-	var url='<? echo $ajaxFilePath ?>?WT_settingsGetById=OK&';
+	var url='<?php echo $ajaxFilePath ?>?WT_settingsGetById=OK&';
 	os.animateMe.div='div_busy';
-	os.animateMe.html='<div class="loadImage"><img  src="<? echo $loadingImage?>"  /> <div class="loadText">&nbsp;Please wait. Working...</div></div>';	
+	os.animateMe.html='<div class="loadImage"><img  src="<?php echo $loadingImage?>"  /> <div class="loadText">&nbsp;Please wait. Working...</div></div>';	
 	os.setAjaxFunc('WT_settingsFillData',url,formdata);
 				
 }
@@ -208,9 +210,9 @@ function WT_settingsDeleteRowById(settingsId) // delete record by table id
 	
 	formdata.append('settingsId',settingsId );
 	
-	var url='<? echo $ajaxFilePath ?>?WT_settingsDeleteRowById=OK&';
+	var url='<?php echo $ajaxFilePath ?>?WT_settingsDeleteRowById=OK&';
 	os.animateMe.div='div_busy';
-	os.animateMe.html='<div class="loadImage"><img  src="<? echo $loadingImage?>"  /> <div class="loadText">&nbsp;Please wait. Working...</div></div>';	
+	os.animateMe.html='<div class="loadImage"><img  src="<?php echo $loadingImage?>"  /> <div class="loadText">&nbsp;Please wait. Working...</div></div>';	
 	os.setAjaxFunc('WT_settingsDeleteRowByIdResults',url,formdata);
 	}
  
@@ -238,4 +240,4 @@ function wtAjaxPagination(pageId,pageNo)// pagination function
 
   
  
-<? include($site['root-wtos'].'bottom.php'); ?>
+<?php include(DIR_ADMIN.'bottom.php'); ?>

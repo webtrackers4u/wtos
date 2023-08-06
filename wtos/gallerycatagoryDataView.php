@@ -1,18 +1,18 @@
-<?
+<?php
 /*
    # wtos version : 1.1
-   # main ajax process page : gallerycatagoryAjax.php 
-   #  
+   # main ajax process page : gallerycatagoryAjax.php
+   #
 */
 include('wtosConfigLocal.php');
-include($site['root-wtos'].'top.php');
-?><?
+include(DIR_ADMIN.'top.php');
+?><?php
 $pluginName='';
 $listHeader='List gallerycatagory';
 $ajaxFilePath= 'gallerycatagoryAjax.php';
 $os->loadPluginConstant($pluginName);
-$loadingImage=$site['url-wtos'].'images/loadingwt.gif';
- 
+$loadingImage=URL_WTOS.'images/loadingwt.gif';
+
 ?>
   
 
@@ -32,11 +32,11 @@ $loadingImage=$site['url-wtos'].'images/loadingwt.gif';
   <tr>
     <td width="470" height="470" valign="top" class="ajaxViewMainTableTD">
 	<div>
-	<? if($os->access('wtDelete')){ ?><input type="button" value="Delete" onclick="WT_gallerycatagoryDeleteRowById('');" /><? } ?>	 
+	<?php if($os->access('wtDelete')) { ?><input type="button" value="Delete" onclick="WT_gallerycatagoryDeleteRowById('');" /><?php } ?>	 
 	&nbsp;&nbsp;
 	&nbsp; <input type="button" value="New" onclick="javascript:window.location='';" />
 	 
-	&nbsp;<? if($os->access('wtEdit')){ ?> <input type="button" value="Save" onclick="WT_gallerycatagoryEditAndSave();" /><? } ?>	 
+	&nbsp;<?php if($os->access('wtEdit')) { ?> <input type="button" value="Save" onclick="WT_gallerycatagoryEditAndSave();" /><?php } ?>	 
 	<table width="100%" border="0" cellspacing="1" cellpadding="1" class="ajaxEditForm">	
 	 
 <tr >
@@ -46,22 +46,22 @@ $loadingImage=$site['url-wtos'].'images/loadingwt.gif';
 	  									<td>Status </td>
 										<td>  
 	
-	<select name="active" id="active" class="textbox fWidth" ><option value="">Select Status</option>	<? 
-										  $os->onlyOption($os->galleryCatagoryActive);	?></select>	 </td>						
+	<select name="active" id="active" class="textbox fWidth" ><option value="">Select Status</option>	<?php
+                                          $os->onlyOption($os->galleryCatagoryActive);	?></select>	 </td>						
 										</tr>	
 									
 		 								
 	</table>
 	
 	
-	<input type="hidden"  id="showPerPage" value="<? echo $os->showPerPage; ?>" />					
+	<input type="hidden"  id="showPerPage" value="<?php echo $os->showPerPage; ?>" />					
 	<input type="hidden"  id="galleryCatagoryId" value="0" />	
 	<input type="hidden"  id="WT_gallerycatagorypagingPageno" value="1" />							
-	<? if($os->access('wtDelete')){ ?><input type="button" value="Delete" onclick="WT_gallerycatagoryDeleteRowById('');" />	<? } ?>	  
+	<?php if($os->access('wtDelete')) { ?><input type="button" value="Delete" onclick="WT_gallerycatagoryDeleteRowById('');" />	<?php } ?>	  
 	&nbsp;&nbsp;
 	&nbsp; <input type="button" value="New" onclick="javascript:window.location='';" />
 	 
-	&nbsp; <? if($os->access('wtEdit')){ ?><input type="button" value="Save" onclick="WT_gallerycatagoryEditAndSave();" /><? } ?>	 
+	&nbsp; <?php if($os->access('wtEdit')) { ?><input type="button" value="Save" onclick="WT_gallerycatagoryEditAndSave();" /><?php } ?>	 
 	</div>	
 	
 	 
@@ -78,8 +78,8 @@ $loadingImage=$site['url-wtos'].'images/loadingwt.gif';
          
  Album: <input type="text" class="wtTextClass" name="categoryName_s" id="categoryName_s" value="" /> &nbsp;  Status:
 	
-	<select name="active" id="active_s" class="textbox fWidth" ><option value="">Select Status</option>	<? 
-										  $os->onlyOption($os->galleryCatagoryActive);	?></select>	
+	<select name="active" id="active_s" class="textbox fWidth" ><option value="">Select Status</option>	<?php
+                                          $os->onlyOption($os->galleryCatagoryActive);	?></select>	
    
   </div>
    
@@ -118,9 +118,9 @@ formdata.append('active_s',active_sVal );
 	formdata.append('showPerPage',os.getVal('showPerPage') );
 	var WT_gallerycatagorypagingPageno=os.getVal('WT_gallerycatagorypagingPageno');
 	var url='wtpage='+WT_gallerycatagorypagingPageno;
-	url='<? echo $ajaxFilePath ?>?WT_gallerycatagoryListing=OK&'+url;
+	url='<?php echo $ajaxFilePath ?>?WT_gallerycatagoryListing=OK&'+url;
 	os.animateMe.div='div_busy';
-	os.animateMe.html='<div class="loadImage"><img  src="<? echo $loadingImage?>"  /> <div class="loadText">&nbsp;Please wait. Working...</div></div>';	
+	os.animateMe.html='<div class="loadImage"><img  src="<?php echo $loadingImage?>"  /> <div class="loadText">&nbsp;Please wait. Working...</div></div>';	
 	os.setAjaxHtml('WT_gallerycatagoryListDiv',url,formdata);
 		
 }
@@ -152,9 +152,9 @@ var activeVal= os.getVal('active');
 
 	 var   galleryCatagoryId=os.getVal('galleryCatagoryId');
 	 formdata.append('galleryCatagoryId',galleryCatagoryId );
-  	var url='<? echo $ajaxFilePath ?>?WT_gallerycatagoryEditAndSave=OK&';
+  	var url='<?php echo $ajaxFilePath ?>?WT_gallerycatagoryEditAndSave=OK&';
 	os.animateMe.div='div_busy';
-	os.animateMe.html='<div class="loadImage"><img  src="<? echo $loadingImage?>"  /> <div class="loadText">&nbsp;Please wait. Working...</div></div>';	
+	os.animateMe.html='<div class="loadImage"><img  src="<?php echo $loadingImage?>"  /> <div class="loadText">&nbsp;Please wait. Working...</div></div>';	
 	os.setAjaxFunc('WT_gallerycatagoryReLoadList',url,formdata);
 
 }	
@@ -177,9 +177,9 @@ function WT_gallerycatagoryGetById(galleryCatagoryId) // get record by table pri
 {
 	var formdata = new FormData();	 
 	formdata.append('galleryCatagoryId',galleryCatagoryId );
-	var url='<? echo $ajaxFilePath ?>?WT_gallerycatagoryGetById=OK&';
+	var url='<?php echo $ajaxFilePath ?>?WT_gallerycatagoryGetById=OK&';
 	os.animateMe.div='div_busy';
-	os.animateMe.html='<div class="loadImage"><img  src="<? echo $loadingImage?>"  /> <div class="loadText">&nbsp;Please wait. Working...</div></div>';	
+	os.animateMe.html='<div class="loadImage"><img  src="<?php echo $loadingImage?>"  /> <div class="loadText">&nbsp;Please wait. Working...</div></div>';	
 	os.setAjaxFunc('WT_gallerycatagoryFillData',url,formdata);
 				
 }
@@ -210,9 +210,9 @@ function WT_gallerycatagoryDeleteRowById(galleryCatagoryId) // delete record by 
 	
 	formdata.append('galleryCatagoryId',galleryCatagoryId );
 	
-	var url='<? echo $ajaxFilePath ?>?WT_gallerycatagoryDeleteRowById=OK&';
+	var url='<?php echo $ajaxFilePath ?>?WT_gallerycatagoryDeleteRowById=OK&';
 	os.animateMe.div='div_busy';
-	os.animateMe.html='<div class="loadImage"><img  src="<? echo $loadingImage?>"  /> <div class="loadText">&nbsp;Please wait. Working...</div></div>';	
+	os.animateMe.html='<div class="loadImage"><img  src="<?php echo $loadingImage?>"  /> <div class="loadText">&nbsp;Please wait. Working...</div></div>';	
 	os.setAjaxFunc('WT_gallerycatagoryDeleteRowByIdResults',url,formdata);
 	}
  
@@ -240,4 +240,4 @@ function wtAjaxPagination(pageId,pageNo)// pagination function
 
   
  
-<? include($site['root-wtos'].'bottom.php'); ?>
+<?php include(DIR_ADMIN.'bottom.php'); ?>

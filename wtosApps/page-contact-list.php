@@ -1,4 +1,4 @@
-<?
+<?php
 
 use Library\Classes\Pagination;
 use Library\Classes\Request;
@@ -11,7 +11,7 @@ echo stripslashes($os->wtospage['pageCss']);
 //declare router pattern
 $router = new Router("/contact-list/:page");
 //get router params
-$page = $router->getParam("page")?:1;
+$page = $router->getParam("page") ?: 1;
 ?>
 
 <section class="uk-section banner uk-hidden">
@@ -25,14 +25,14 @@ $page = $router->getParam("page")?:1;
 
 <section class="uk-section-default uk-section">
     <div class="uk-container">
-        <? $pageBody;?>
+        <?php $pageBody;?>
 
-        <?
+        <?php
         $pagination = ["page"=>$page, "rows"=>10];
-        $paginated_data = $os->_db->contactus->paginate("*", null, $pagination);
-        $rows = $paginated_data["data"];
-        $pager = $paginated_data["pager"];
-        ?>
+$paginated_data = $os->_db->contactus->paginate("*", null, $pagination);
+$rows = $paginated_data["data"];
+$pager = $paginated_data["pager"];
+?>
         <div class="uk-card-outline uk-card-default uk-border-rounded">
             <div class="uk-card-header">
                 <div uk-grid>
@@ -44,9 +44,9 @@ $page = $router->getParam("page")?:1;
 
                     <div class="uk-width-expand">
                         <?= Pagination::generateLinks($page, $pager["pages"], [
-                                "pattern"=>"<li class='[active]'><a href='".Tools::base_url("contact-list/[page]")."'>[label]</a></li>",
-                            "container"=>"<ul class='uk-pagination uk-flex-right'>[links]</ul>",
-                        ]); ?>
+                        "pattern"=>"<li class='[active]'><a href='".Tools::base_url("contact-list/[page]")."'>[label]</a></li>",
+                    "container"=>"<ul class='uk-pagination uk-flex-right'>[links]</ul>",
+                ]); ?>
                     </div>
                 </div>
 
@@ -61,17 +61,17 @@ $page = $router->getParam("page")?:1;
                 </tr>
                 </thead>
                 <tbody>
-                <?
-                foreach ($rows as $row){?>
+                <?php
+        foreach ($rows as $row) {?>
                     <tr>
                         <td nowrap=""><?= $row["name"]?></td>
                         <td><?= $row["email"]?></td>
                         <td><?= $row["mobile"]?></td>
                         <td><?= substr($row["details"], 0, 20)?>...</td>
                     </tr>
-                <? }
-                //dump($os->_db->log());
-                ?>
+                <?php }
+        //dump($os->_db->log());
+?>
                 </tbody>
             </table>
         </div>
@@ -80,5 +80,5 @@ $page = $router->getParam("page")?:1;
 </section>
 
 
-<? include "__footer.php"?>
+<?php include "__footer.php"?>
 

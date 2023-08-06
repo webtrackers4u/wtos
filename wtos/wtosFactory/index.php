@@ -1,16 +1,14 @@
-<? 
-if(isset($_POST['codeCheck']))
-{
-  if($_POST['codeCheck']=='ok'){
-  
-   if($_POST['code']=='OK')
-   {
-    header('location:wtosFactoryForm.php');
-   
-  
-  }
-  
-  }
+<?php
+if(isset($_POST['codeCheck'])) {
+    if($_POST['codeCheck']=='ok') {
+
+        if($_POST['code']=='OK') {
+            header('location:wtosFactoryForm.php');
+
+
+        }
+
+    }
 
 }
 

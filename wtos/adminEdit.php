@@ -1,14 +1,14 @@
-<?
+<?php
 /*
    # wtos version : 1.1
    # List Page : adminList.php
    #
 */
 include('wtosConfigLocal.php');
-include($site['root-wtos'].'top.php');
+include(DIR_ADMIN.'top.php');
 $pluginName='';
 $os->loadPluginConstant($pluginName);
-?><?
+?><?php
 
 $editPage='adminEdit.php';
 $listPage='adminList.php';
@@ -17,26 +17,25 @@ $primeryField='adminId';
 $pageHeader='Add new admin';
 
 
-$editPageLink=$os->pluginLink($pluginName).$editPage.'?'.$os->addParams(array(),array()).'editRowId=';
-$listPageLink=$os->pluginLink($pluginName).$listPage.'?'.$os->addParams(array(),array());
+$editPageLink=$os->pluginLink($pluginName).$editPage.'?'.$os->addParams(array(), array()).'editRowId=';
+$listPageLink=$os->pluginLink($pluginName).$listPage.'?'.$os->addParams(array(), array());
 
-if($os->userDetails['adminType']!='Super Admin'){ exit(); }
+if($os->userDetails['adminType']!='Super Admin') {
+    exit();
+}
 
 $tmpVar='';
 $editRowId=$os->get('editRowId');
-if($editRowId)
-{
+if($editRowId) {
     $pageHeader='Edit  admin';
 }
 
 
 ##  update row
-if($os->post('operation'))
-{
+if($os->post('operation')) {
 
 
-    if($os->post('operation')=='updateField')
-    {
+    if($os->post('operation')=='updateField') {
 
 
 
@@ -53,7 +52,7 @@ if($os->post('operation'))
         $dataToSave['mobileNo']=addslashes($os->post('mobileNo'));
         $dataToSave['active']=addslashes($os->post('active'));
         $dataToSave['access'] = addslashes(json_encode($os->post("access")));
-        if($rowId < 1){
+        if($rowId < 1) {
             $dataToSave['addedDate']=$os->now();
             $dataToSave['addedBy']=$os->userDetails['adminId'];
         }
@@ -61,12 +60,12 @@ if($os->post('operation'))
 
 
 
-        $os->saveTable($primeryTable,$dataToSave,$primeryField,$rowId);
+        $os->saveTable($primeryTable, $dataToSave, $primeryField, $rowId);
 
 
-        $flashMsg=($rowId)?'Record Updated Successfully':'Record Added Successfully';
+        $flashMsg=($rowId) ? 'Record Updated Successfully' : 'Record Added Successfully';
 
-        $os->flashMessage($primeryTable,$flashMsg);
+        $os->flashMessage($primeryTable, $flashMsg);
 
         $os->redirect($os->post('redirectLink'));
         #---- edit section end ----#
@@ -78,10 +77,9 @@ if($os->post('operation'))
 
 
 $pageData='';
-if($editRowId)
-{
+if($editRowId) {
 
-    $os->data=$os->rowByField('',$primeryTable,$primeryField,$editRowId);
+    $os->data=$os->rowByField('', $primeryTable, $primeryField, $editRowId);
 
 }
 
@@ -94,7 +92,7 @@ $os->showFlash($os->flashMessage($primeryTable));
 
 
 
-    <form  action="<? echo $editPageLink ?>" method="post"   enctype="multipart/form-data" id="submitFormDataId">
+    <form  action="<?php echo $editPageLink ?>" method="post"   enctype="multipart/form-data" id="submitFormDataId">
 
         <div class="uk-grid uk-grid-small" uk-grid>
             <div>
@@ -115,8 +113,8 @@ $os->showFlash($os->flashMessage($primeryTable));
                                 <td>Admin Type </td>
                                 <td>
 
-                                    <select name="adminType" id="adminType" class="uk-select uk-form-small" ><option value="">Select Admin Type</option>	<?
-                                        $os->onlyOption($os->adminType,$os->getVal('adminType'));?></select>	 </td>
+                                    <select name="adminType" id="adminType" class="uk-select uk-form-small" ><option value="">Select Admin Type</option>	<?php
+                                        $os->onlyOption($os->adminType, $os->getVal('adminType'));?></select>	 </td>
                             </tr><tr >
                                 <td>Username </td>
                                 <td><input value="<?php echo $os->getVal('username') ?>" type="text" name="username" id="username" class="uk-input uk-form-small"/> </td>
@@ -136,8 +134,8 @@ $os->showFlash($os->flashMessage($primeryTable));
                                 <td>Active </td>
                                 <td>
 
-                                    <select name="active" id="active" class="uk-select uk-form-small" ><option value="">Select Active</option>	<?
-                                        $os->onlyOption($os->adminActive,$os->getVal('active'));?></select>	 </td>
+                                    <select name="active" id="active" class="uk-select uk-form-small" ><option value="">Select Active</option>	<?php
+                                        $os->onlyOption($os->adminActive, $os->getVal('active'));?></select>	 </td>
                             </tr>
 
                         </table>
@@ -152,37 +150,37 @@ $os->showFlash($os->flashMessage($primeryTable));
                     <div>
                         <table class="uk-table uk-table-small uk-table-divider">
 
-                            <?
+                            <?php
                             $ac_body = "";
-                            $ac_heads = [];
-                            ob_start();
-                            $access = (array)@json_decode($os->getVal("access"), JSON_OBJECT_AS_ARRAY);
-                            $access_keys = array_keys($access);
-                            foreach ($os->osLinks as $link=>$label){
-                                $id = str_replace(".php","_php", strtolower($link));
-                                ?>
+$ac_heads = [];
+ob_start();
+$access = (array)@json_decode($os->getVal("access"), JSON_OBJECT_AS_ARRAY);
+$access_keys = array_keys($access);
+foreach ($os->osLinks as $link=>$label) {
+    $id = str_replace(".php", "_php", strtolower($link));
+    ?>
                                 <tr>
                                     <td>
                                         <?= $label?>
                                     </td>
-                                    <? foreach (@explode("|",@$os->osLinksAccess[$link]) as $access){
+                                    <?php foreach (@explode("|", @$os->osLinksAccess[$link]) as $access) {
                                         $ac_heads[$access] = $access;
                                         ?>
                                         <td>
                                             <label>
                                                 <input name="access[<?= $link?>][]" value="<?= $access?>"
-                                                    <?= in_array($access, (array)@$access[$link])?"checked":($os->isSuperAdmin()?"":"disabled")?>
+                                                    <?= in_array($access, (array)@$access[$link]) ? "checked" : ($os->isSuperAdmin() ? "" : "disabled")?>
                                                        type="checkbox">
-                                                <?= ucfirst(strtolower(str_replace("_"," ", $access))); ?>
+                                                <?= ucfirst(strtolower(str_replace("_", " ", $access))); ?>
                                             </label>
                                         </td>
                                     <?}?>
                                 </tr>
                             <?}?>
-                            <?
+                            <?php
                             $ac_body = ob_get_contents();
-                            ob_end_clean();
-                            ?>
+ob_end_clean();
+?>
 
                             <tr>
                                 <td>Link</td>
@@ -211,11 +209,11 @@ $os->showFlash($os->flashMessage($primeryTable));
 
 
         <div class="uk-margin-small">
-        <? if($os->access('wtEdit')){ ?>
+        <?php if($os->access('wtEdit')) { ?>
             <button type="button" class="uk-button uk-button-small uk-button-primary"  value="Save" onclick="submitFormData()" >Save</button>
-        <? } ?>
-        <button type="button" class="uk-button uk-button-small uk-button-danger"  value="Back to List" onclick="javascript:window.location='<? echo $listPageLink ?>';" >Cancel</button>
-        <input type="hidden" name="redirectLink"  value="<? echo $os->server('HTTP_REFERER'); ?>" />
+        <?php } ?>
+        <button type="button" class="uk-button uk-button-small uk-button-danger"  value="Back to List" onclick="javascript:window.location='<?php echo $listPageLink ?>';" >Cancel</button>
+        <input type="hidden" name="redirectLink"  value="<?php echo $os->server('HTTP_REFERER'); ?>" />
         <input type="hidden" name="rowId" value="<?php   echo  $os->getVal($primeryField) ;?>" />
         <input type="hidden" name="operation" value="updateField" />
         </div>
@@ -231,4 +229,4 @@ $os->showFlash($os->flashMessage($primeryTable));
     }
 </script>
 
-<? include($site['root-wtos'].'bottom.php'); ?>
+<?php include(DIR_ADMIN.'bottom.php'); ?>

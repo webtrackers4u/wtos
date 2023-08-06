@@ -69,10 +69,10 @@ neeed to check relation
 	  									<td>Property </td>
 										<td colspan="10"><select name="propertyId" id="propertyId" class="textbox fWidth" >
 							
-							 		<?
-							
-							 $os->optionsHTML('','propertyId','title','property');
-							?>
+							 		<?php
+
+                             $os->optionsHTML('', 'propertyId', 'title', 'property');
+							 		?>
 							</select>
   
 										</td>						
@@ -84,10 +84,10 @@ neeed to check relation
 										<td><select name="tenantId" id="tenantId" class="textbox fWidth" >
 										<option></option>
 							
-							 		<?
-							
-							 $os->optionsHTML('','memberId','firstName','member '," status='TENANT' and memberType like 'Existing%' ");
-							?>
+							 		<?php
+
+							 		 $os->optionsHTML('', 'memberId', 'firstName', 'member ', " status='TENANT' and memberType like 'Existing%' ");
+							 		?>
 							</select>
   
 										</td>						
@@ -95,10 +95,10 @@ neeed to check relation
 	  									<td>Landlord </td>
 										<td><select name="landlordId" id="landlordId" class="textbox fWidth" >
 							<option></option>
-							 		<?
-							
-							 $os->optionsHTML('','memberId','firstName','member '," status='LANDLORD'");
-							?>
+							 		<?php
+
+							 		 $os->optionsHTML('', 'memberId', 'firstName', 'member ', " status='LANDLORD'");
+							 		?>
 							</select>
   
 										</td>						
@@ -159,8 +159,8 @@ neeed to check relation
 											<tr >
 											
 											<td>Status </td>
-										<td><select name="status" id="status" class="textbox fWidth" >	<? 
-										  $os->onlyOption($os->agreementStatus,'');	?></select>	
+										<td><select name="status" id="status" class="textbox fWidth" >	<?php
+							 		              $os->onlyOption($os->agreementStatus, '');	?></select>	
   
 										</td>	
 	  									<td>Holding Deposite </td>
@@ -188,8 +188,8 @@ neeed to check relation
 										<td><input value="" type="text" name="rentAmountLandlord" id="rentAmountLandlord" class="textbox fWidth"/>
 										</td>	
 										 <td>Type </td>
-										<td><select name="type" id="type" class="textbox fWidth" >	<? 
-										  $os->onlyOption($os->agreementType,$pageData['type']);	?></select>	
+										<td><select name="type" id="type" class="textbox fWidth" >	<?php
+							 		              $os->onlyOption($os->agreementType, $pageData['type']);	?></select>	
   
 										</td>			
 	  													

@@ -1,5 +1,6 @@
-<?
+<?php
+
 session_start();
 include('wtosConfig.php'); // load configuration
-include($site['application'].'wtTemplate.php');
+include(DIR_APP.'/wtTemplate.php');
 exit();

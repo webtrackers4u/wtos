@@ -1,31 +1,29 @@
-<? 
-$pCont= $os->rowByField('person,phone,email','rbcontact','rbcontactId',$record['rbcontactId']);
-# -- 8-11-2016 for like search from diferent table using a Searchstr or search key - 
-$rbcontactIds= $os->searchKeyGetIds($searchKey,'rbcontact','rbcontactId',$whereCondition='',$searchFields='');  
-	$orrbcontactId='';
-	if($rbcontactIds!='')
-	{
-	   $orrbcontactId= " or  rbcontactId IN ( $rbcontactIds) ";  // add this to search query 
-	}
+<?php
+$pCont= $os->rowByField('person,phone,email', 'rbcontact', 'rbcontactId', $record['rbcontactId']);
+# -- 8-11-2016 for like search from diferent table using a Searchstr or search key -
+$rbcontactIds= $os->searchKeyGetIds($searchKey, 'rbcontact', 'rbcontactId', $whereCondition='', $searchFields='');
+$orrbcontactId='';
+if($rbcontactIds!='') {
+    $orrbcontactId= " or  rbcontactId IN ( $rbcontactIds) ";  // add this to search query
+}
+
+
+?>
 	
-	
-	?>
-	
-	<?   
+	<?php
    //// login curl capcha
-   
-    
-	if($os->validateFormToken('login'))
-	{
-	
-	      $os->processLogin('username','password','admin'); 
-	 
-	 }
- 
- 
- ?><?  $wtToken=$os->randomFormToken('login');
+
+
+if($os->validateFormToken('login')) {
+
+    $os->processLogin('username', 'password', 'admin');
+
+}
+
+
+?><?php  $wtToken=$os->randomFormToken('login');
 ?>	
-<input type="hidden" name="<? echo $wtToken['name'] ?>" value="<? echo $wtToken['value'] ?>" />
+<input type="hidden" name="<?php echo $wtToken['name'] ?>" value="<?php echo $wtToken['value'] ?>" />
 -----------------------------------------------------------------------------------------------------
 
 get all data from linked table id 

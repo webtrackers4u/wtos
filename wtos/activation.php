@@ -4,38 +4,36 @@ session_start();
 include('wtosConfigLocal.php');
 include('wtos.php');
 $activationKey='test';
-$code= $os->get('activationCode');    
+$code= $os->get('activationCode');
 
-	
-	  
-	  function dAK($code,$key='')
-	  {
-	   global $os,$site;
-	     if($code!=''){
-					   $code=base64_decode(strrev($code)); 
-					   $code=str_replace($key,'',$code);
-					   $code=strrev($code);
-					   if(strlen($code)==8)
-					   {
-						   $code=substr($code,0,4).'-'.substr($code,4,2).'-'.substr($code,6,2);
-					  	 $codeBase64=strrev(base64_encode(strrev($code))); 
-						  $os->mq("update settings set value='$codeBase64' where keyword='Validate WtosDate' ");
-						 
-						  echo '<span class="validCode">Activation successful.Subscription valid  upto '.$code.'  </span>';
-						  ?>
+
+
+function dAK($code, $key='')
+{
+    global $os,$site;
+    if($code!='') {
+        $code=base64_decode(strrev($code));
+        $code=str_replace($key, '', $code);
+        $code=strrev($code);
+        if(strlen($code)==8) {
+            $code=substr($code, 0, 4).'-'.substr($code, 4, 2).'-'.substr($code, 6, 2);
+            $codeBase64=strrev(base64_encode(strrev($code)));
+            $os->mq("update settings set value='$codeBase64' where keyword='Validate WtosDate' ");
+
+            echo '<span class="validCode">Activation successful.Subscription valid  upto '.$code.'  </span>';
+            ?>
 						  
-						  &nbsp;&nbsp;<a style="cursor:pointer; text-decoration:none;" href="<? echo $site['url-wtos'] ?>" >Login </a>
-						  <? 
-						  $os->Logout();
-						 return $code;
-					   }else
-					   {
-					
-						echo '<span class="invalidCode">Invalid code</span>';
-					   }
-	     
-		          }
-		 }
+						  &nbsp;&nbsp;<a style="cursor:pointer; text-decoration:none;" href="<?php echo URL_WTOS ?>" >Login </a>
+						  <?php
+            $os->Logout();
+            return $code;
+        } else {
+
+            echo '<span class="invalidCode">Invalid code</span>';
+        }
+
+    }
+}
 
 ?>
 <html>
@@ -61,7 +59,7 @@ $code= $os->get('activationCode');
 
 
 </table>
-<div class="activeationText"><? dAK($code,$activationKey) ;   ?></div>
+<div class="activeationText"><?php dAK($code, $activationKey) ;   ?></div>
        
 </form>
 
@@ -69,13 +67,13 @@ $code= $os->get('activationCode');
 
 
 
-<? }
-    
+<?php }
 
 
 
 
- ?>
+
+?>
 
 </div>
 	</body>

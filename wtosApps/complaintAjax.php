@@ -1,41 +1,45 @@
-<?
+<?php
 session_start();
 include('../wtosConfig.php'); // load configuration
 include('os.php'); // load wtos Library
 global $os, $site;
-?><?
-if($os->get('get_district_by_state_by_pin')=='OK' && $os->post('get_district_by_state_by_pin')=='OK'){
+?><?php
+if($os->get('get_district_by_state_by_pin')=='OK' && $os->post('get_district_by_state_by_pin')=='OK') {
     $pin_id=$os->post('pin_id');
     $district_id=$os->post('district_id');
     $pin=$os->post('pin');
     $pin=trim($pin);
     $record=array();
-    if($pin!=''){
+    if($pin!='') {
         $dataQuery=" select * from post_code   where post_code='$pin' limit 1 ";
         $rsResults=$os->mq($dataQuery);
-        $record=$os->mfa( $rsResults);
+        $record=$os->mfa($rsResults);
     }
 
-    $district=$os->val($record,'district');
-    echo $district;echo '##';echo $district_id;;
+    $district=$os->val($record, 'district');
+    echo $district;
+    echo '##';
+    echo $district_id;
+    ;
     exit();
 }
-if($os->get('upload_doc')=='OK'&&$os->post('upload_doc')=='OKS'){
-    $image=$os->UploadPhoto('image',$site['root'].'upload_document');
+if($os->get('upload_doc')=='OK'&&$os->post('upload_doc')=='OKS') {
+    $image=$os->UploadPhoto('image', BASE_DIR.'upload_document');
     $doc_title=$os->post('doc_title');
     $file_size = $_FILES['image']['size'];
     $file_type = $_FILES['image']['type'];
-    if($image!=''){
-        $img_link='upload_document/'.$image;}
-    $rand_no=rand(1,10000);
+    if($image!='') {
+        $img_link='upload_document/'.$image;
+    }
+    $rand_no=rand(1, 10000);
     ?>
     <tr id="con_<?echo $rand_no;?>">
         <td style="width:50px; padding: 3px 0">
-            <?if(explode("/",$file_type)[0]=="image"){?>
-                <img src="<?echo $site['url'].$img_link?>" style="width: 35px; height: 35px; object-fit: cover; border: 1px solid #e5e5e5">
+            <?if(explode("/", $file_type)[0]=="image") {?>
+                <img src="<?echo BASE_URL.$img_link?>" style="width: 35px; height: 35px; object-fit: cover; border: 1px solid #e5e5e5">
             <?} else { ?>
                 <div class="uk-flex uk-flex-middle uk-flex-center" style="height: 35px; width: 35px; font-size: 11px; color: var(--color-primary-dark); background-color: #fafafa; border: 1px solid #e5e5e5">
-                <?= strtoupper(explode("/",$file_type)[1]);?>
+                <?= strtoupper(explode("/", $file_type)[1]);?>
                 </div>
             <?}?>
 
@@ -45,7 +49,7 @@ if($os->get('upload_doc')=='OK'&&$os->post('upload_doc')=='OKS'){
             <div >
                 <small class="color-acent" style="font-size: 11px"><?= round($file_size/1024)."KB"?></small>
                 &bull;
-                <small class="color-acent" style="font-size: 11px"><?= strtoupper(explode("/",$file_type)[1])?></small>
+                <small class="color-acent" style="font-size: 11px"><?= strtoupper(explode("/", $file_type)[1])?></small>
             </div>
             <input type="hidden"  name="doc[<?echo $rand_no?>][doc_title]" class="uk-input uk-form-small" value="<?echo $doc_title?>" />
             <input type="hidden" name="doc[<?echo $rand_no?>][doc_url]" value="<?echo $img_link?>" />
@@ -60,7 +64,7 @@ if($os->get('upload_doc')=='OK'&&$os->post('upload_doc')=='OKS'){
 
 
 
-if($os->get('WT_complaintEditAndSave')=='OK'){
+if($os->get('WT_complaintEditAndSave')=='OK') {
     $complaint_id=$os->post('complaint_id');
     $dataToSave['applicant_name']=addslashes($os->post('applicant_name'));
     $dataToSave['applicant_father_husband']=addslashes($os->post('applicant_father_husband'));
@@ -89,7 +93,7 @@ if($os->get('WT_complaintEditAndSave')=='OK'){
     $dataToSave['victim_guardian']=addslashes($os->post('victim_guardian'));
 
 
-    $victim_dob_a=explode('-',$os->post('victim_dob'));
+    $victim_dob_a=explode('-', $os->post('victim_dob'));
     $dataToSave['victim_dob']=$os->saveDate($victim_dob_a[2].'-'.$victim_dob_a[1].'-'.$victim_dob_a[0]);
     $dataToSave['victim_gender']=addslashes($os->post('victim_gender'));
     $dataToSave['victim_address']=addslashes($os->post('victim_address'));
@@ -101,8 +105,8 @@ if($os->get('WT_complaintEditAndSave')=='OK'){
     $dataToSave['victim_disabled']=addslashes($os->post('victim_disabled'));
     $dataToSave['victim_condition']=addslashes($os->post('victim_condition'));
 
-   $incident_date_a=explode('-',$os->post('incident_date'));
-   $dataToSave['incident_date']=$os->saveDate($incident_date_a[2].'-'.$incident_date_a[1].'-'.$incident_date_a[0]);
+    $incident_date_a=explode('-', $os->post('incident_date'));
+    $dataToSave['incident_date']=$os->saveDate($incident_date_a[2].'-'.$incident_date_a[1].'-'.$incident_date_a[0]);
     $dataToSave['incident_place']=addslashes($os->post('incident_place'));
     $dataToSave['incident_place_recovery']=addslashes($os->post('incident_place_recovery'));
     $dataToSave['incident_other_details']=addslashes($os->post('incident_other_details'));
@@ -125,7 +129,7 @@ if($os->get('WT_complaintEditAndSave')=='OK'){
 
 
 
-    $qResult=$os->save('complaint',$dataToSave,'complaint_id',$complaint_id);///    allowed char '\*#@/"~$^.,()|+_-=:��
+    $qResult=$os->save('complaint', $dataToSave, 'complaint_id', $complaint_id);///    allowed char '\*#@/"~$^.,()|+_-=:��
     //Member save section//
 
     // $dataToSave['complaint_no']=CONCAT('A/',DATE_FORMAT($os->now(), '%d%m%Y'),'/',$qResult);
@@ -144,16 +148,21 @@ if($os->get('WT_complaintEditAndSave')=='OK'){
     $dataToSave2['pin']=addslashes($os->post('applicant_pin'));
     //$dataToSave2['mobile_no']=addslashes($os->post('applicant_contact'));
     $dataToSave2['email']=addslashes($os->post('applicant_email'));
-    $os->save('member',$dataToSave2,'member_id',$member_id);
+    $os->save('member', $dataToSave2, 'member_id', $member_id);
     //end member save section//
-    if($qResult){
-        if($complaint_id>0 ){ $mgs= "Record updated Successfully.";}
-        if($complaint_id<1 ){ $mgs= "We have received your complaint. Please track your complaint."; $complaint_id=  $qResult;}
+    if($qResult) {
+        if($complaint_id>0) {
+            $mgs= "Record updated Successfully.";
+        }
+        if($complaint_id<1) {
+            $mgs= "We have received your complaint. Please track your complaint.";
+            $complaint_id=  $qResult;
+        }
         $mgs=$complaint_id."#-#".$mgs;
 
 
         $document_a=$os->post('doc');
-        if(is_array($document_a)&&count($document_a)>0){
+        if(is_array($document_a)&&count($document_a)>0) {
             $dataToSave3['dated']=$os->now();
             $dataToSave3['complaint_id']=$complaint_id;
             $dataToSave3['uploaded_by']=$member_id;
@@ -169,8 +178,8 @@ if($os->get('WT_complaintEditAndSave')=='OK'){
         }
 
 
-        $image=$os->UploadPhoto('image_2',$site['root'].'upload_document');
-        if($image!=''){
+        $image=$os->UploadPhoto('image_2', BASE_DIR.'upload_document');
+        if($image!='') {
             $dataToSave4['doc_url']='upload_document/'.$image;
             $dataToSave4['doc_title']='DOB Supporting Doc';
             $dataToSave4['dated']=$os->now();
@@ -179,13 +188,12 @@ if($os->get('WT_complaintEditAndSave')=='OK'){
             $dataToSave4['forward_id']=0;
             $dataToSave4['note']='';
             $dataToSave4['doc_type']='DOB Proved Document';
-             $os->save("upload_document", $dataToSave4);
+            $os->save("upload_document", $dataToSave4);
         }
 
 
 
-    }
-    else{
+    } else {
         $mgs="Error#-#Problem Saving Data.";
     }
     echo $mgs;

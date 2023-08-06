@@ -1,4 +1,4 @@
-<? 
+<?php
 $tableList=tablesInDb();
 ?>
 
@@ -12,7 +12,7 @@ $tableList=tablesInDb();
 </style>
 <form action="" method="post">
 <input type="text" name="pluginNameNew" placeholder="Plugin name" class="widthF"/>
-<select name="tableNew"><? $os->onlyOption($tableList) ?></select>
+<select name="tableNew"><?php $os->onlyOption($tableList) ?></select>
 <input type="text" name="formNameNew" placeholder="Form name" class="widthF" />
 <input type="hidden" name="createNewForm" value="ok" />
 <input type="submit" value="OK" />
@@ -23,94 +23,87 @@ $tableList=tablesInDb();
     <td>
 	<div style="height:450px; overflow-y:scroll;">
 
-<? 
-$rootpluginStore=$site['root-plugin'].'wtosFactory/forms';
-if($os->post('createNewForm')=='ok' && $os->post('pluginNameNew')!='' && $os->post('formNameNew')!='')
-{
-		$pluginNameNew=$os->post('pluginNameNew');
-		$tableNew=$os->post('tableNew');
-		$formNameNew=$os->post('formNameNew');
-		if($tableNew=='')
-		{
-		
-		$tableNew=str_replace(" ",'',$formNameNew);
-		}
-		
-		$formDataFile=$pluginNameNew.'.'.$tableNew.'.'.$formNameNew.'.wtos';
-		
-		$formDataFileLoc=$rootpluginStore.'/'.$formDataFile;
-		$handleformDataFile = fopen($formDataFileLoc, "w");
-		 fwrite($handleformDataFile,'wtos ');
-		fclose($handleformDataFile);
-		
+<?php
+$rootpluginStore=DIR_PLUGIN.'wtosFactory/forms';
+if($os->post('createNewForm')=='ok' && $os->post('pluginNameNew')!='' && $os->post('formNameNew')!='') {
+    $pluginNameNew=$os->post('pluginNameNew');
+    $tableNew=$os->post('tableNew');
+    $formNameNew=$os->post('formNameNew');
+    if($tableNew=='') {
+
+        $tableNew=str_replace(" ", '', $formNameNew);
+    }
+
+    $formDataFile=$pluginNameNew.'.'.$tableNew.'.'.$formNameNew.'.wtos';
+
+    $formDataFileLoc=$rootpluginStore.'/'.$formDataFile;
+    $handleformDataFile = fopen($formDataFileLoc, "w");
+    fwrite($handleformDataFile, 'wtos ');
+    fclose($handleformDataFile);
+
 
 
 }
 
 
 $filesForms = new RecursiveIteratorIterator(
-						new RecursiveDirectoryIterator($rootpluginStore),
-						RecursiveIteratorIterator::LEAVES_ONLY
-					);
-					$formDataFileCurrent=$os->get('formDataFile');
-					foreach ($filesForms as $name => $file)
-					{
-						// Skip directories (they would be added automatically)
-						
-						$fileNameStr=$file->getFilename();
-						$dfF=explode('.',$fileNameStr);
-						if (!$file->isDir())
-						{
-						
-						 $fileClass='fileClass';
-						 if($formDataFileCurrent==$fileNameStr)
-						 {
-						  $fileClass='fileClassSelected';
-						 }
-						
-						?>
-						<div class="<? echo  $fileClass ?>"><a style="text-decoration:none;" href="?formDataFile=<? echo $fileNameStr ?>"><? echo $fileNameStr ?>	</a> </div>
+    new RecursiveDirectoryIterator($rootpluginStore),
+    RecursiveIteratorIterator::LEAVES_ONLY
+);
+$formDataFileCurrent=$os->get('formDataFile');
+foreach ($filesForms as $name => $file) {
+    // Skip directories (they would be added automatically)
+
+    $fileNameStr=$file->getFilename();
+    $dfF=explode('.', $fileNameStr);
+    if (!$file->isDir()) {
+
+        $fileClass='fileClass';
+        if($formDataFileCurrent==$fileNameStr) {
+            $fileClass='fileClassSelected';
+        }
+
+        ?>
+						<div class="<?php echo  $fileClass ?>"><a style="text-decoration:none;" href="?formDataFile=<?php echo $fileNameStr ?>"><?php echo $fileNameStr ?>	</a> </div>
 							
-							<? 
-						}
-					}
-					
-					?>
+							<?php
+    }
+}
+
+?>
 					</div>
 					</td>
     <td>&nbsp;
 	<div style="height:450px; overflow-y:scroll;">
-	<? $tableList=tablesInDb();
-	foreach( $tableList as $tableItem)
-	{
-	
-	 $fieldsInTable=fieldsInTable($tableItem);
-	  ?>
-	  <b><? echo $tableItem; ?></b><br />
+	<?php $tableList=tablesInDb();
+foreach($tableList as $tableItem) {
+
+    $fieldsInTable=fieldsInTable($tableItem);
+    ?>
+	  <b><?php echo $tableItem; ?></b><br />
 	  <div style="padding-left:10px;" >
-	  <? 
-	
-	foreach( $fieldsInTable as $fieldsItem)
-	{
-	
-	 
-	  ?>
-	  <? echo $fieldsItem; ?><br />
+	  <?php
+
+    foreach($fieldsInTable as $fieldsItem) {
+
+
+        ?>
+	  <?php echo $fieldsItem; ?><br />
 	  
-	  <? 
-	
-	
-	
-	}
-	
-	?>
+	  <?php
+
+
+
+    }
+
+    ?>
 	</div>
 	
-	<?
-	
-	}
-	
-	?>
+	<?php
+
+}
+
+?>
 	</div>
 	
 	</td>

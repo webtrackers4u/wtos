@@ -1,4 +1,4 @@
-<?
+<?php
 
 use Library\Classes\Block;
 
@@ -18,10 +18,10 @@ echo stripslashes($os->wtospage['pageCss']);
 
 <section class="uk-section-default uk-section">
     <div class="uk-container">
-        <? echo $pageBody;?>
+        <?php echo $pageBody;?>
     </div>
 </section>
 
 
-<? include "__footer.php"?>
+<?php include "__footer.php"?>
 

@@ -1,7 +1,7 @@
-<? 
+<?php
 include('../../wtosConfig.php');
-include($site['root-wtos'].'top.php');
-?><?  
+include(DIR_ADMIN.'top.php');
+?><?php
 $listHeader='List Wtosfactory';
 $primeryTable='wtosfactory';
 $primeryField='wtosfactoryId';
@@ -232,4 +232,4 @@ function WT_wtosfactoryDeleteRowById(wtosfactoryId)
 </script>
 
   
-	<? include($site['root-wtos'].'bottom.php'); ?>
+	<?php include(DIR_ADMIN.'bottom.php'); ?>

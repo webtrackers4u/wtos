@@ -1,4 +1,4 @@
-<?
+<?php
 
 /**
 
@@ -6,769 +6,686 @@
 
  *@author mizanur82@gmail.com
 
- * @package    paging 
+ * @package    paging
 
  */
 
 
 
-class paging{
+class paging
+{
+    public $showPerPage=50;
 
+    public $showPages=105;
 
+    public function __construct($showPerPage=50)
+    {
 
-var $showPerPage=50;
+        if($showPerPage>0) {
 
-var $showPages=105;
+            $this->showPerPage=$showPerPage;
 
-    function   __construct($showPerPage=50)
+        }
 
-	{
+        return $this;
 
-	    if($showPerPage>0)
 
-	    {
 
-	     $this->showPerPage=$showPerPage;
+    }
 
-	      }
 
-		  return $this;
 
-	
+    public function page($total, $showPerPage='')
+    {
 
-	}
 
 
+        if($showPerPage<1) {
 
-   function page($total,$showPerPage='')
+            $showPerPage=$this->showPerPage;
 
-	{
+        }
 
-	
 
-	 if($showPerPage<1)
 
-	 {
+        $pageCount=1;
 
-	     $showPerPage=$this->showPerPage;
+        if($total>0) {
 
-	 }
+            $pageCount=ceil($total/$showPerPage);
 
-	
+        }
 
-	    $pageCount=1;
 
-		if($total>0)
 
-		{
+        return $pageCount;
 
-		 $pageCount=ceil($total/$showPerPage);
 
-		}
 
-		
 
-		return $pageCount;
 
-	
+    }
 
-	
+    public function pageLink($total, $showPerPage='', $seoUrl=false, $ajax=false)
+    {
 
-	}
+        $res['links']='';
 
-	function pageLink($total,$showPerPage='',$seoUrl=false,$ajax=false)
+        $res['pageNo']=1;
 
-	{
+        $res['limit']='';
 
-	    $res['links']='';
 
-		$res['pageNo']=1;
 
-		$res['limit']='';
+        $linkChar='';
 
-		
+        if($showPerPage<1) {
 
-		$linkChar='';
+            $showPerPage=$this->showPerPage;
 
-		if($showPerPage<1)
+        }
 
-		{
+        $res['showPerPage']=$showPerPage;
 
-		   $showPerPage=$this->showPerPage;
+        if($showPerPage<1) {
 
-		}
+            $showPerPage=$this->showPerPage;
 
-		$res['showPerPage']=$showPerPage;
+        }
 
-		if($showPerPage<1)
 
-		{
 
-		   $showPerPage=$this->showPerPage;
 
-		}
 
-		
+        $pageId='wtpage';
 
-		
+        $pageNo=0;
 
-		$pageId='wtpage';
+        $link='';
 
-	    $pageNo=0; 
+        $selectedLink='';
 
-		$link='';
+        $linkUrl='';
 
-		$selectedLink='';
+        $totalPage=0;
 
-		$linkUrl='';
+        $prev='Prev';
 
-		$totalPage=0;
+        $next='Next';
 
-		$prev='Prev';
+        $totalPage=$this->page($total, $showPerPage);
 
-		$next='Next';
+        $loopstart=1;
 
-		$totalPage=$this->page($total,$showPerPage);
+        $loopend=$totalPage;
 
-		$loopstart=1;
+        $showPages=ceil($this->showPages/2);
 
-		$loopend=$totalPage;
 
-		$showPages=ceil($this->showPages/2);
 
-		
+        $link=$_SERVER["REQUEST_URI"];
 
-		$link=$_SERVER["REQUEST_URI"];
 
-		
 
-		$linkMatch=preg_match("/".$pageId."=[0-9]*/",$link,$match);
+        $linkMatch=preg_match("/".$pageId."=[0-9]*/", $link, $match);
 
-		if(isset($match[0]))
+        if(isset($match[0])) {
 
-		{
 
-		 
 
-		 $pageNo=(int)str_replace($pageId.'=','',$match[0]);
+            $pageNo=(int)str_replace($pageId.'=', '', $match[0]);
 
-		 
 
-		}
 
-		if($pageNo<1)
+        }
 
-		{
+        if($pageNo<1) {
 
-		$pageNo=1;
+            $pageNo=1;
 
-		}
+        }
 
-	 		 
 
-		
 
-		
 
-	 
 
-		 if($seoUrl)
 
-		 {		 
 
-		 $link=preg_replace("/\/".$pageId."=[0-9]*/","",$link);
 
-		 		 
 
-		 }else
+        if($seoUrl) {
 
-		 {
+            $link=preg_replace("/\/".$pageId."=[0-9]*/", "", $link);
 
-		
 
-		  $link=preg_replace("/&".$pageId."=[0-9]*/","",$link);
 
-		 
+        } else {
 
-		 }
 
-		 
 
-		 if(substr($link, -4)=='.php')
+            $link=preg_replace("/&".$pageId."=[0-9]*/", "", $link);
 
-		{
 
-		  $link=$link;  // backendLink
 
-		
+        }
 
-		}
 
-		 
 
-		 if(substr($link, -1)=='/')
+        if(substr($link, -4)=='.php') {
 
-		 {
+            $link=$link;  // backendLink
 
-		  $link=substr($link, 0, -1); 
 
-		   $link=$link.'/home';  // default link at root 666
 
-		 }
+        }
 
-		 
 
-		 
 
-		  if(!$seoUrl)
+        if(substr($link, -1)=='/') {
 
-		  {
+            $link=substr($link, 0, -1);
 
-		 
+            $link=$link.'/home';  // default link at root 666
 
-			  if(substr($link, -4, -1)=='.ph')
+        }
 
-			 {
 
-			  $link= $link.'?';
 
-			 }
 
-		 
 
-		  
+        if(!$seoUrl) {
 
-		  }
 
-		  
 
-		  
+            if(substr($link, -4, -1)=='.ph') {
 
-		  
+                $link= $link.'?';
 
-		  if($totalPage>1)
+            }
 
-		  {
 
-		    $linkUrl='';$linkChar=='';
 
-		    $linkChar=($seoUrl)? '/':'&';
 
-			$res=array();
 
-			ob_start();
+        }
+
+
+
+
+
+
+
+        if($totalPage>1) {
+
+            $linkUrl='';
+            $linkChar=='';
+
+            $linkChar=($seoUrl) ? '/' : '&';
+
+            $res=array();
+
+            ob_start();
+
+
+
+            if($pageNo>1) {
+
+                $prevPage=$pageNo-1;
+
+
+
+                $finalLink=' href="'.$link.$linkChar.$pageId."=".$prevPage.'" ';
+
+
+
+
+
+                if($ajax) {
+
+                    $finalLink=' href="javascript:void(0)"  onclick="wtAjaxPagination(\''.$pageId.'\',\''.$prevPage.'\')"       ';
+
+                }
+
+
+
+                ?><a <?php echo  $finalLink ?>><?php echo $prev ?></a><?php
+
+            } else {
+
+                ?><a   href="javascript:void(0)"  style="color:#CCCCCC; cursor:auto;"><?php echo $prev ?></a><?php
+
+            }
+
+
+
+            # show pages ----
+
+            if($this->showPages>0) {
+
+                $loopstart=$pageNo-$showPages;
+
+                $loopend=$pageNo+$showPages;
+
+            }
+
+
+
+            $loopstart=($loopstart<1) ? 1 : $loopstart;
+
+            $loopend=($loopend>$totalPage) ? $totalPage : $loopend;
+
+
+
+            #show pages
+
+
+
+
+
+
+
+
+
+            for($i=$loopstart;$i<=$loopend ;$i++) {
+
+                $selectedLink='';
+
+
+
+                $linkUrl=$link.$linkChar.$pageId."=$i";
+
+
+
+                $selectedLink=($pageNo==$i) ? 'class="selected"' : '';
+
+
+
+
+
+                $finalLink=' href="'.$link.$linkChar.$pageId."=".$i.'" ';
+
+                if($ajax) {
+
+                    $finalLink=' href="javascript:void(0)"  onclick="wtAjaxPagination(\''.$pageId.'\',\''.$i.'\')"       ';
+
+                }
+
+
+
+                ?>
+
+			<a <?php echo $selectedLink; ?> <?php echo  $finalLink ?> ><?php echo $i ?></a>
 
 			
 
-			if($pageNo>1){	
+			<?php
 
-			$prevPage=$pageNo-1;
 
-			
 
-			  $finalLink=' href="'.$link.$linkChar.$pageId."=".$prevPage.'" ';
+            }
 
-			  
 
-			 
 
-			  if($ajax)
+            if($pageNo<$totalPage) {
 
-			  {
+                $nextPage=$pageNo+1;
 
-			  $finalLink=' href="javascript:void(0)"  onclick="wtAjaxPagination(\''.$pageId.'\',\''.$prevPage.'\')"       ';
 
-			  }
 
-			
+                $finalLink=' href="'.$link.$linkChar.$pageId."=".$nextPage.'" ';
 
-			?><a <? echo  $finalLink ?>><?php echo $prev ?></a><?php
+                if($ajax) {
 
-			}else
+                    $finalLink=' href="javascript:void(0)"  onclick="wtAjaxPagination(\''.$pageId.'\',\''.$nextPage.'\')"       ';
 
-			{
+                }
 
-			?><a   href="javascript:void(0)"  style="color:#CCCCCC; cursor:auto;"><?php echo $prev ?></a><?php
+                ?><a  <?php echo  $finalLink ?>><?php echo $next ?></a><?php
 
-			}
+            } else {
 
-			
+                ?><a   href="javascript:void(0)" style="color:#CCCCCC; cursor:auto;"><?php echo $next ?></a><?php
 
-			# show pages ----
+            }
 
-			if($this->showPages>0)
 
-			{
 
-			   $loopstart=$pageNo-$showPages;
+            $res['links']=ob_get_clean();
 
-			    $loopend=$pageNo+$showPages;
+            $res['showPerPage']=$showPerPage;
 
-			}
+            $res['pageNo']=$pageNo;
 
-			
+            $limit=($pageNo-1)*$showPerPage;
 
-			$loopstart=($loopstart<1)?1:$loopstart;
+            $res['limit']="$limit , $showPerPage";
 
-			$loopend=($loopend>$totalPage)?$totalPage:$loopend;
+            $res['serial']=$limit;
 
-			
+            return $res;
 
-			#show pages 
 
-			
 
-			
 
-			
 
-			
+        }
 
-		    for($i=$loopstart;$i<=$loopend ;$i++)
+        return $res;
 
-			{
+    }
 
-			$selectedLink='';
 
-			  
 
-			$linkUrl=$link.$linkChar.$pageId."=$i";
+    public function pageLink__notused($total, $showPerPage='', $seoUrl=false, $ajax=false)
+    {
 
-			 			
 
-			$selectedLink=($pageNo==$i)?'class="selected"':'';
 
-			 	
+        $res['links']='';
 
-				
+        $res['pageNo']=1;
 
-			 $finalLink=' href="'.$link.$linkChar.$pageId."=".$i.'" ';
+        $res['limit']='';
 
-			  if($ajax)
 
-			  {
 
-			  $finalLink=' href="javascript:void(0)"  onclick="wtAjaxPagination(\''.$pageId.'\',\''.$i.'\')"       ';
+        $linkChar='';
 
-			  }	
+        if($showPerPage<1) {
 
-				
+            $showPerPage=$this->showPerPage;
 
-			?>
+        }
 
-			<a <?php echo $selectedLink; ?> <? echo  $finalLink ?> ><?php echo $i ?></a>
+        $res['showPerPage']=$showPerPage;
 
-			
 
-			<?php 
 
-			
+        $pageId='wtpage';
 
-			}
+        $pageNo=0;
 
-			 
+        $link='';
 
-			if($pageNo<$totalPage){	
+        $selectedLink='';
 
-			$nextPage=$pageNo+1;
+        $linkUrl='';
 
-			
+        $totalPage=0;
 
-			$finalLink=' href="'.$link.$linkChar.$pageId."=".$nextPage.'" ';
+        $prev='Prev';
 
-			  if($ajax)
+        $next='Next';
 
-			  {
+        $totalPage=$this->page($total, $showPerPage);
 
-			  $finalLink=' href="javascript:void(0)"  onclick="wtAjaxPagination(\''.$pageId.'\',\''.$nextPage.'\')"       ';
+        $loopstart=1;
 
-			  }	
+        $loopend=$totalPage;
 
-			?><a  <? echo  $finalLink ?>><?php echo $next ?></a><?php
+        $showPages=ceil($this->showPages/2);
 
-			}
 
-			else
 
-			{
+        $link=$_SERVER["REQUEST_URI"];
 
-			?><a   href="javascript:void(0)" style="color:#CCCCCC; cursor:auto;"><?php echo $next ?></a><?php
 
-			}
 
-			
+        $linkMatch=preg_match("/".$pageId."=[0-9]*/", $link, $match);
 
-			$res['links']=ob_get_clean();
 
-			$res['showPerPage']=$showPerPage;
 
-			$res['pageNo']=$pageNo;
+        if(isset($match[0])) {
 
-			  $limit=($pageNo-1)*$showPerPage;
 
-			$res['limit']="$limit , $showPerPage";
 
-		    $res['serial']=$limit;
+            $pageNo=(int)str_replace($pageId.'=', '', $match[0]);
 
-		    return $res;
 
-		 
 
-		  
+        }
 
-		  }
+        if($pageNo<1) {
 
-	  return $res;
+            $pageNo=1;
 
-	}
+        }
 
-	
 
-	function pageLink__notused($total,$showPerPage='',$seoUrl=false,$ajax=false)
 
-	{
 
-	    
 
-		$res['links']='';
 
-		$res['pageNo']=1;
 
-		$res['limit']='';
 
-		
 
-		$linkChar='';
+        if($seoUrl) {
 
-		if($showPerPage<1)
+            $link=preg_replace("/\/".$pageId."=[0-9]*/", "", $link);
 
-		{
 
-		   $showPerPage=$this->showPerPage;
 
-		}
+        } else {
 
-		$res['showPerPage']=$showPerPage;
 
-		
 
-		$pageId='wtpage';
+            $link=preg_replace("/&".$pageId."=[0-9]*/", "", $link);
 
-	    $pageNo=0; 
 
-		$link='';
 
-		$selectedLink='';
+        }
 
-		$linkUrl='';
 
-		$totalPage=0;
 
-		$prev='Prev';
 
-		$next='Next';
 
-		$totalPage=$this->page($total,$showPerPage);
 
-		$loopstart=1;
 
-		$loopend=$totalPage;
+        if(substr($link, -4)=='.php') {
 
-		$showPages=ceil($this->showPages/2);
+            $link=$link;  // backendLink
 
-		
 
-		 $link=$_SERVER["REQUEST_URI"];
 
-		
+        } elseif(substr($link, -1)=='/') {
 
-		$linkMatch=preg_match("/".$pageId."=[0-9]*/",$link,$match);
+            $link=substr($link, 0, -1);
 
-	 
+            $link=$link.'/home';  // default link at root 666
 
-		if(isset($match[0]))
+        }
 
-		{
 
-		 
 
-		 $pageNo=(int)str_replace($pageId.'=','',$match[0]);
 
-		 
 
-		}
 
-		if($pageNo<1)
 
-		{
 
-		$pageNo=1;
 
-		}
 
-	 		 
 
-		
+        if(!$seoUrl) {
 
-		
 
-	 
 
-		 if($seoUrl)
+            if(substr($link, -4, -1)=='.ph') {
 
-		 {		 
+                $link= $link.'?';
 
-		 $link=preg_replace("/\/".$pageId."=[0-9]*/","",$link);
+            }
 
-		 		 
 
-		 }else
 
-		 {
 
-		
 
-		  $link=preg_replace("/&".$pageId."=[0-9]*/","",$link);
+        }
 
-		 
 
-		 }
 
-		 
 
-		 
 
-		 
 
-		if(substr($link, -4)=='.php')
 
-		{
+        if($totalPage>1) {
 
-		  $link=$link;  // backendLink
 
-		
 
-		}
 
-		 
 
-		else if(substr($link, -1)=='/')
+            $linkUrl='';
+            $linkChar=='';
 
-		 {
+            $linkChar=($seoUrl) ? '/' : '&';
 
-		   $link=substr($link, 0, -1); 
+            $res=array();
 
-		   $link=$link.'/home';  // default link at root 666
+            ob_start();
 
-		 }
 
-		 
 
-		 
+            if($pageNo>1) {
 
-		 
+                $prevPage=$pageNo-1;
 
-		 
+                ?><a   href="<?php echo $link.$linkChar.$pageId."=$prevPage"; ?>"><?php echo $prev ?></a><?php
 
-		 
+            } else {
 
-		  if(!$seoUrl)
+                ?><a   href="javascript:void(0)" style="color:#CCCCCC; cursor:auto;"><?php echo $prev ?></a><?php
 
-		  {
+            }
 
-		 
 
-			  if(substr($link, -4, -1)=='.ph')
 
-			 {
+            # show pages ----
 
-			  $link= $link.'?';
+            if($this->showPages>0) {
 
-			 }
+                $loopstart=$pageNo-$showPages;
 
-		 
+                $loopend=$pageNo+$showPages;
 
-		  
+            }
 
-		  }
 
-		  
 
-		  
+            $loopstart=($loopstart<1) ? 1 : $loopstart;
 
-		  
+            $loopend=($loopend>$totalPage) ? $totalPage : $loopend;
 
-		  if($totalPage>1)
 
-		  {
 
-		    
+            #show pages
 
-		 
 
-		    $linkUrl='';$linkChar=='';
 
-		    $linkChar=($seoUrl)? '/':'&';
 
-			$res=array();
 
-			ob_start();
 
-			
 
-			if($pageNo>1){	
 
-			$prevPage=$pageNo-1;
 
-			?><a   href="<?php echo $link.$linkChar.$pageId."=$prevPage"; ?>"><?php echo $prev ?></a><?php
+            for($i=$loopstart;$i<=$loopend ;$i++) {
 
-			}else
+                $selectedLink='';
 
-			{
 
-			?><a   href="javascript:void(0)" style="color:#CCCCCC; cursor:auto;"><?php echo $prev ?></a><?php
 
-			}
+                $linkUrl=$link.$linkChar.$pageId."=$i";
 
-			
 
-			# show pages ----
 
-			if($this->showPages>0)
+                $selectedLink=($pageNo==$i) ? 'class="selected"' : '';
 
-			{
 
-			   $loopstart=$pageNo-$showPages;
 
-			    $loopend=$pageNo+$showPages;
-
-			}
-
-			
-
-			$loopstart=($loopstart<1)?1:$loopstart;
-
-			$loopend=($loopend>$totalPage)?$totalPage:$loopend;
-
-			
-
-			#show pages 
-
-			
-
-			
-
-			
-
-			
-
-		    for($i=$loopstart;$i<=$loopend ;$i++)
-
-			{
-
-			$selectedLink='';
-
-			  
-
-			$linkUrl=$link.$linkChar.$pageId."=$i";
-
-			 			
-
-			$selectedLink=($pageNo==$i)?'class="selected"':'';
-
-			 	
-
-			?>
+                ?>
 
 			<a <?php echo $selectedLink; ?>  href="<?php echo $linkUrl ?>"><?php echo $i ?></a>
 
 			
 
-			<?php 
+			<?php
 
-			
 
-			}
 
-			 
+            }
 
-			if($pageNo<$totalPage){	
 
-			$nextPage=$pageNo+1;
 
-			?><a   href="<?php echo $link.$linkChar.$pageId."=$nextPage"; ?>"><?php echo $next ?></a><?php
+            if($pageNo<$totalPage) {
 
-			}
+                $nextPage=$pageNo+1;
 
-			else
+                ?><a   href="<?php echo $link.$linkChar.$pageId."=$nextPage"; ?>"><?php echo $next ?></a><?php
 
-			{
+            } else {
 
-			?><a   href="javascript:void(0)" style="color:#CCCCCC; cursor:auto;"><?php echo $next ?></a><?php
+                ?><a   href="javascript:void(0)" style="color:#CCCCCC; cursor:auto;"><?php echo $next ?></a><?php
 
-			}
+            }
 
-			
 
-			$res['links']=ob_get_clean();
 
-			$res['showPerPage']=$showPerPage;
+            $res['links']=ob_get_clean();
 
-			$res['pageNo']=$pageNo;
+            $res['showPerPage']=$showPerPage;
 
-			  $limit=($pageNo-1)*$showPerPage;
+            $res['pageNo']=$pageNo;
 
-			$res['limit']="$limit , $showPerPage";
+            $limit=($pageNo-1)*$showPerPage;
 
-		    return $res;
+            $res['limit']="$limit , $showPerPage";
 
-		 
+            return $res;
 
-		  
 
-		  }
 
-		   return $res;
 
-	
 
-	}
+        }
 
-	
+        return $res;
 
-	function pagingQuery_notused($query,$showPerPage='',$seoUrl=true) 
 
-	{
 
-	   
+    }
 
-	    /*if($showPerPage<1)
 
-		{
 
-		   $showPerPage=$this->showPerPage;
+    public function pagingQuery_notused($query, $showPerPage='', $seoUrl=true)
+    {
 
-		}
 
-		$p=$this->mq('select count(*) t '. stristr($query, 'from'));
 
-		$rs=$this->mfa($p);
+        /*if($showPerPage<1)
 
-		$res=$this->pageLink($rs['t'],$showPerPage,$seoUrl);
+        {
 
-		$p=$this->mq($query." Limit  ".$res['limit']);
+           $showPerPage=$this->showPerPage;
 
-		$res['resource']=$p;
+        }
 
-		return $res;
+        $p=$this->mq('select count(*) t '. stristr($query, 'from'));
 
-		 */
+        $rs=$this->mfa($p);
 
-	
+        $res=$this->pageLink($rs['t'],$showPerPage,$seoUrl);
 
-	
+        $p=$this->mq($query." Limit  ".$res['limit']);
 
-	}
+        $res['resource']=$p;
+
+        return $res;
+
+         */
+
+
+
+
+
+    }
 
 
 
@@ -776,7 +693,7 @@ var $showPages=105;
 
 
 
-	
+
 
 
 

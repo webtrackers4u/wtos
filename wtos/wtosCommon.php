@@ -1,29 +1,24 @@
-<? 
+<?php
 session_start();
-error_reporting($site['environment']);
-include($site['root-wtos'].'wtos.php');
+error_reporting(ENVIRONMENT);
+include(DIR_ADMIN.'wtos.php');
 
-$os->userDetails =$os->session($os->loginKey,'logedUser');
- 
-if($os->session($os->loginKey,'logedUser','active')!='Active')
-{  
-             $os->Logout();
- }
+$os->userDetails =$os->session($os->loginKey, 'logedUser');
 
-if($os->get('logout')=="logout")
-{
-	 $os->Logout();	 
+if($os->session($os->loginKey, 'logedUser', 'active')!='Active') {
+    $os->Logout();
 }
- 
-if($os->CurrentPageName()!='index.php')
-{
-	 if(!$os->isLogin())  {	 ?>
+
+if($os->get('logout')=="logout") {
+    $os->Logout();
+}
+
+if($os->CurrentPageName()!='index.php') {
+    if(!$os->isLogin()) {	 ?>
 	 <script type="text/javascript" language="javascript">
-       window.location="<?php echo $site['url-wtos'].''?>";
+       window.location="<?php echo URL_WTOS.''?>";
      </script>
-	 <? 
-	  exit();  }
+	 <?php
+     exit();
+    }
 }
-
-   
-

@@ -3,12 +3,14 @@
 namespace Library\Classes;
 
 use Medoo\Medoo;
+
 class Db extends Medoo
 {
     protected $pagination = [
         "rows"=> 30,
         "page"=>1,
     ];
+    protected $models = [];
     /**
      * Modify data from the table.
      *
@@ -24,28 +26,30 @@ class Db extends Medoo
         $this->loadAllModels();
     }
 
-    protected function loadAllModels(){
+    protected function loadAllModels()
+    {
         $models = glob(BASE_DIR."/Models/*.php");
-        foreach ($models as $model){
+        foreach ($models as $model) {
             require $model;
             $model = str_replace([".php", BASE_DIR], "", $model);
-            $model_class_name = str_replace("/","\\", $model);
-            $model_name = str_replace("/Models/","", $model);
-            if(class_exists($model_class_name)){
-                $this->$model_name = new $model_class_name($this);
+            $model_class_name = str_replace("/", "\\", $model);
+            $model_name = str_replace("/Models/", "", $model);
+            if(class_exists($model_class_name)) {
+                //$this->$model_name = new $model_class_name($this);
+                $this->models[$this->$model_name] = new $model_class_name($this);
             }
         }
     }
 
     public function upsert($table, $data, $where=null): ?\PDOStatement
     {
-        if($this->has($table,$where)){
-            return $this->update($table,$data,$where);
+        if($this->has($table, $where)) {
+            return $this->update($table, $data, $where);
         } else {
-            return $this->insert($table,$data);
+            return $this->insert($table, $data);
         }
     }
-    public function paginate(string $table,  $columns = null , $where= null, $pagination=[], $join = null): array
+    public function paginate(string $table, $columns = null, $where= null, $pagination=[], $join = null): array
     {
 
         $isJoin = $this->isJoin($join);
@@ -53,13 +57,13 @@ class Db extends Medoo
         // the offset of the list, based on current page
         $offset = ($pagination["page"] - 1) * $pagination["rows"];
         //getting count of all data
-        $total = $isJoin?$this->count($table, $join, "*", $where):$this->count($table, "*", $where);
+        $total = $isJoin ? $this->count($table, $join, "*", $where) : $this->count($table, "*", $where);
         //getting total number of page
-        $pages = ceil ($total / $pagination["rows"]);
+        $pages = ceil($total / $pagination["rows"]);
         //generate limit object
         $where["LIMIT"] =  [$offset, $pagination["rows"]];
         //getting data
-        $data = $isJoin?$this->select($table, $join, $columns, $where):$this->select($table, $columns, $where);
+        $data = $isJoin ? $this->select($table, $join, $columns, $where) : $this->select($table, $columns, $where);
         //creating response
         $response = [
             "data"=>$data,
@@ -68,7 +72,7 @@ class Db extends Medoo
                 "pages"=>$pages,
                 "total"=>$total,
                 "from"=>$offset+1,
-                "to"=> $pagination["page"]==$pages? $total: ($offset+1+$pagination["rows"])
+                "to"=> $pagination["page"]==$pages ? $total : ($offset+1+$pagination["rows"])
             ]
         ];
         return $response;
@@ -76,9 +80,9 @@ class Db extends Medoo
 
     public function selectOne($table, $join, $columns=null, $where=null)
     {
-        $where=$where?:[];
+        $where=$where ?: [];
         $where["LIMIT"] = [0,1];
-        return @$this->select($table, $join, $columns, $where)[0]?:false;
+        return @$this->select($table, $join, $columns, $where)[0] ?: false;
     }
 
 }

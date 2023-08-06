@@ -1,103 +1,101 @@
-<? 
+<?php
 ## v-1.1 author Mizanur Rahaman  mizanur82@gmail.com
-global $os; 
-  
-function quickEdit_v_four($options ,$foreignIdValue,$functionId)
-{
 global $os;
 
-
-if($foreignIdValue<1)
+function quickEdit_v_four($options, $foreignIdValue, $functionId)
 {
-      //  $dataToSave[$options['foreignId']]='';
-    //    $foreignIdValue=   $os->save($options['foreignTable'],$dataToSave);
-
-}
+    global $os;
 
 
+    if($foreignIdValue<1) {
+        //  $dataToSave[$options['foreignId']]='';
+        //    $foreignIdValue=   $os->save($options['foreignTable'],$dataToSave);
 
-$options['functionId']=$functionId;
-$options['ajaxEditFunction']='ajaxEdit'.$functionId;
-$options['ajaxViewFunction']='ajaxView'.$functionId;
-$options['ajaxViewDataFunction']='ajaxViewData'.$functionId;
-$options['ajaxDeleteFunction']='ajaxDeleteData'.$functionId;
-$options['foreignIdGlobalKey']='foreignIdValueGlobal_'.$functionId;
-
-
-$options['ajaxDiv']='ajaxDiv'.$functionId;
- 
-
-
-extract($options);
-$sessionKey='quickEdit-'.$functionId;
+    }
 
 
 
+    $options['functionId']=$functionId;
+    $options['ajaxEditFunction']='ajaxEdit'.$functionId;
+    $options['ajaxViewFunction']='ajaxView'.$functionId;
+    $options['ajaxViewDataFunction']='ajaxViewData'.$functionId;
+    $options['ajaxDeleteFunction']='ajaxDeleteData'.$functionId;
+    $options['foreignIdGlobalKey']='foreignIdValueGlobal_'.$functionId;
 
 
-$_SESSION[$sessionKey]=$options;
- 
-  $javaScriptCallBack=$afterSaveCallback['javaScript'];
+    $options['ajaxDiv']='ajaxDiv'.$functionId;
 
-  ## form 
+
+
+    extract($options);
+    $sessionKey='quickEdit-'.$functionId;
+
+
+
+
+
+    $_SESSION[$sessionKey]=$options;
+
+    $javaScriptCallBack=$afterSaveCallback['javaScript'];
+
+    ## form
+
+
+    ?>
   
+  <?php
+     foreach($fields as $fld=>$alise) {
+
+
+
+         $scriptVarStr []="var ".$fld."=  escape(os.getVal('".$functionId.$fld."').trim());";
+         $scriptUrlStr[]="'&".$fld."='+".$fld."";
+
+
+     }
+    ?>
   
-  ?>
-  
-  <? 
-   foreach($fields as $fld=>$alise)
-  {
-       
-  
- 
-  $scriptVarStr []="var ".$fld."=  escape(os.getVal('".$functionId.$fld."').trim());";
-   $scriptUrlStr[]="'&".$fld."='+".$fld."";
-  
-  
-  }
-  ?>
-  
-  <div id="<? echo $ajaxDiv; ?>"> </div>
+  <div id="<?php echo $ajaxDiv; ?>"> </div>
   
    <script>
-   var <? echo $options['foreignIdGlobalKey'] ?>=<? echo $foreignIdValue ?>;
-   function <? echo $ajaxEditFunction ?>()
+   var <?php echo $options['foreignIdGlobalKey'] ?>=<?php echo $foreignIdValue ?>;
+   function <?php echo $ajaxEditFunction ?>()
    {
     
-    <? echo  implode(" ",$scriptVarStr); ?>
-	var vars=<? echo  implode('+',$scriptUrlStr); ?>;
-	var url='ajxQuickEdit.php?foreignIdValue='+<? echo $options['foreignIdGlobalKey'] ?>+'&aQEsessonKey=<? echo $sessionKey ?>&getQuickEditValues=OK'+vars;
+    <?php echo  implode(" ", $scriptVarStr); ?>
+	var vars=<?php echo  implode('+', $scriptUrlStr); ?>;
+	var url='ajxQuickEdit.php?foreignIdValue='+<?php echo $options['foreignIdGlobalKey'] ?>+'&aQEsessonKey=<?php echo $sessionKey ?>&getQuickEditValues=OK'+vars;
 	 
-	os.setAjaxFunc('<? echo $ajaxViewDataFunction ?>',url);
+	os.setAjaxFunc('<?php echo $ajaxViewDataFunction ?>',url);
 	
    
    }
    
-   function <? echo $ajaxViewFunction ?>(foreignId)
+   function <?php echo $ajaxViewFunction ?>(foreignId)
    {
    
-     <? echo $options['foreignIdGlobalKey'] ?>=foreignId;
+     <?php echo $options['foreignIdGlobalKey'] ?>=foreignId;
      
-	var url='ajxQuickEdit.php?foreignIdValue='+<? echo $options['foreignIdGlobalKey'] ?>+'&aQEsessonKey=<? echo $sessionKey ?>&getQuickViewValues=OK';
+	var url='ajxQuickEdit.php?foreignIdValue='+<?php echo $options['foreignIdGlobalKey'] ?>+'&aQEsessonKey=<?php echo $sessionKey ?>&getQuickViewValues=OK';
 	
-	os.setAjaxFunc('<? echo $ajaxViewDataFunction ?>',url);
+	os.setAjaxFunc('<?php echo $ajaxViewDataFunction ?>',url);
 	   
    }
    
-   function <? echo $ajaxDeleteFunction ?>(tableId)
+   function <?php echo $ajaxDeleteFunction ?>(tableId)
    {
    
      if(confirm('Are you sure. You want to delete the record?'))
 	 {
-	var url='ajxQuickEdit.php?foreignIdValue='+<? echo $options['foreignIdGlobalKey'] ?>+'&tableId='+tableId+'&aQEsessonKey=<? echo $sessionKey ?>&getQuickDeleteValues=OK';
+	var url='ajxQuickEdit.php?foreignIdValue='+<?php echo $options['foreignIdGlobalKey'] ?>+'&tableId='+tableId+'&aQEsessonKey=<?php echo $sessionKey ?>&getQuickDeleteValues=OK';
 	
-	os.setAjaxFunc('<? echo $ajaxViewDataFunction ?>',url);
+	os.setAjaxFunc('<?php echo $ajaxViewDataFunction ?>',url);
 	}
 	   
    }
    
    
-   function <? echo $ajaxViewDataFunction ?>(data)
+   function <?php echo $ajaxViewDataFunction ?>(data)
    {
      
 	  
@@ -114,7 +112,7 @@ $_SESSION[$sessionKey]=$options;
 
 	 
 	 
-	  os.setHtml('<? echo $ajaxDiv; ?>',D[0]);
+	  os.setHtml('<?php echo $ajaxDiv; ?>',D[0]);
 	  
 	   if(AC!=''){
 	    
@@ -135,12 +133,11 @@ $_SESSION[$sessionKey]=$options;
 	 }
 	 }
 	 
-	 <? if($javaScriptCallBack && $javaScriptCallBack!='')
-	 {
+	 <?php if($javaScriptCallBack && $javaScriptCallBack!='') {
 	     echo $javaScriptCallBack.'(data);';
-	 
+
 	 }
-	 ?>
+    ?>
 	
 	 
  
@@ -157,10 +154,10 @@ $_SESSION[$sessionKey]=$options;
      ///
    }
    
-  <?  echo $ajaxViewFunction ?>('<? echo $foreignIdValue ?>');
+  <?php  echo $ajaxViewFunction ?>('<?php echo $foreignIdValue ?>');
   
    </script>
-<? 
+<?php
 
 
 }

@@ -1,7 +1,7 @@
 
-<?
+<?php
 global $site;
-$tmce_base_url = $site["url"]."vendor/tinymce/tinymce";
+$tmce_base_url = BASE_URL."vendor/tinymce/tinymce";
 ?>
 <script src="<?= $tmce_base_url."/tinymce.min.js"?>"></script>
 <script>

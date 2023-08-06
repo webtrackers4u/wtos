@@ -27,7 +27,7 @@
 <script>
 var saa = new Object();
 saa.programmer = "Mizanur82@gmail.com";
-saa.ajaxPath='<? echo $site['url-wtos'] ; ?>wtosSearchAddAssignAjax.php?';
+saa.ajaxPath='<?php echo URL_WTOS ; ?>wtosSearchAddAssignAjax.php?';
 saa.execute=function(functionId,containerId,idForAssign,table,tableId,fields,fieldsTitle,returnField,scriptCallback,extraParams)
 {
 	// functionId any unique prefix char (a,b,ab,c,g, s, sw etc) container( span / div) id should be  SAA_m 

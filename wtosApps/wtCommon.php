@@ -1,23 +1,23 @@
-<?
-use Library\Classes\Template;
-use Tracy\Debugger;
-
+<?php
 global $os, $site;
-error_reporting($site['environment']);
-include($site['application'].'os.php');
-//show debug bar
-Debugger::$showBar = $site["environment"]=="-1";
+
+include(DIR_APP.'/os.php');
+
 /*
  * Routing
  */
 //menu
 $onHead = [];
 $onBottom = [];
-$pagecontentLinks=$os->get_pagecontent('seoId ,	externalLink, title  , pagecontentId , openNewTab, icon, onHead, onBottom,  loginRequired',"active=1 and parentPage<1 "," priority asc ",'','');
+$pagecontentLinks=$os->get_pagecontent('seoId ,	externalLink, title  , pagecontentId , openNewTab, icon, onHead, onBottom,  loginRequired', "active=1 and parentPage<1 ", " priority asc ", '', '');
 while($page=$os->mfa($pagecontentLinks)) {
-    $page["icon"] = $page['icon']!=""?$page['icon']:'fimanager flaticon-001-hand-wash';
-    if ($page["onHead"]==1) {$onHead[] = $page;}
-    if ($page["onBottom"]==1) {$onBottom[] = $page;}
+    $page["icon"] = $page['icon']!="" ? $page['icon'] : 'fimanager flaticon-001-hand-wash';
+    if ($page["onHead"]==1) {
+        $onHead[] = $page;
+    }
+    if ($page["onBottom"]==1) {
+        $onBottom[] = $page;
+    }
 }
 
 $pageVar['segment']=array();
@@ -31,21 +31,18 @@ $pageVar['segment']=$os->sefu->getSegments();
 // $lang=$os-> getLang();
 $lang='';
 $andLangId='';
-if($lang!='')
-{
+if($lang!='') {
     $andLangId=" and langId=$lang";
 }
 
 
-if($requestPage!="" && $requestPage!="home" )
-{
+if($requestPage!="" && $requestPage!="home") {
 
 
-    $os->wtospage = $os->rowByField('','pagecontent','seoId',$requestPage," and active=1  " ,'',' 1');
+    $os->wtospage = $os->rowByField('', 'pagecontent', 'seoId', $requestPage, " and active=1  ", '', ' 1');
 
-    if($os->wtospage['pagecontentId']>0)
-    {
-        $pageBody=preg_replace('/src=\".*?wtos-images/','src="'.$site['url']."wtos-images",stripslashes($os->wtospage['content']));
+    if($os->wtospage['pagecontentId']>0) {
+        $pageBody=preg_replace('/src=\".*?wtos-images/', 'src="'.BASE_URL."wtos-images", stripslashes($os->wtospage['content']));
         $pageBody=$os->replaceWtBox($pageBody);
 
     } else {
@@ -54,10 +51,10 @@ if($requestPage!="" && $requestPage!="home" )
         exit();
     }
 
-}else{
+} else {
 
-    $os->wtospage =$os->rowByField('','pagecontent','isHome','Yes'," and active=1  " ,'',' 1');
-    $pageBody=preg_replace('/src=\".*?wtos-images/','src="'.$site['url']."wtos-images",stripslashes($os->wtospage['content']));
+    $os->wtospage =$os->rowByField('', 'pagecontent', 'isHome', 'Yes', " and active=1  ", '', ' 1');
+    $pageBody=preg_replace('/src=\".*?wtos-images/', 'src="'.BASE_URL."wtos-images", stripslashes($os->wtospage['content']));
     $pageBody=$os->replaceWtBox($pageBody);
 
 }
@@ -65,9 +62,12 @@ if($requestPage!="" && $requestPage!="home" )
 $pageBody = "<div id='edit_area'>".$pageBody."</div>";
 
 $os->siteValidation();
-if($os->getSettings('Deactivate Site')!=0){  echo '<style>
+if($os->getSettings('Deactivate Site')!=0) {
+    echo '<style>
  .deactivateMessage{ margin:150px 0px 0px 250px ; font-size:20px; font-style:italic; color:#FF0000; font-weight:bold;}
- </style><div class="deactivateMessage">'.$os->getSettings('Deactivate Message').'</div>'; exit();}
+ </style><div class="deactivateMessage">'.$os->getSettings('Deactivate Message').'</div>';
+    exit();
+}
 
 $updateHit="update settings set value=value+1 where keyword='hitCoount'";
 $os->mq($updateHit);
@@ -79,19 +79,16 @@ $os->mq($updateHit);
  *********/
 
 $template = $site["application"]."template-default.php";
-$template = $os->val($os->wtospage, "template")!=""?$site["application"].$os->val($os->wtospage, "template"):$template;
+$template = $os->val($os->wtospage, "template")!="" ? $site["application"].$os->val($os->wtospage, "template") : $template;
 $page_template_name = $site["application"]."page-".$os->val($os->wtospage, "seoId").".php";
-$template = file_exists($page_template_name)?$page_template_name:$template;
+$template = file_exists($page_template_name) ? $page_template_name : $template;
 
-$template = $os->val($os->wtospage, "isHome")=="Yes"|| $os->val($os->wtospage, "seoId")==""?$site["application"]."template-home.php":$template;
+$template = $os->val($os->wtospage, "isHome")=="Yes"|| $os->val($os->wtospage, "seoId")=="" ? $site["application"]."template-home.php" : $template;
 
 
-if (file_exists($template)){
+if (file_exists($template)) {
     include $template;
     exit();
 } else {
     throw new Exception($template." template file not found");
 }
-
-
-

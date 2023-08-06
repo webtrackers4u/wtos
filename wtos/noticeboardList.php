@@ -1,64 +1,64 @@
-<? 
+<?php
 /*
    # wtos version : 1.1
-   # Edit page: noticeboardEdit.php 
-   #  
+   # Edit page: noticeboardEdit.php
+   #
 */
 include('wtosConfigLocal.php');
-include($site['root-wtos'].'top.php');
+include(DIR_ADMIN.'top.php');
 $pluginName='';
 $os->loadPluginConstant($pluginName);
 
- 
-?><? 
+
+?><?php
 
 $editPage='noticeboardEdit.php';
 $listPage='noticeboardList.php';
 $primeryTable='noticeboard';
 $primeryField='noticeboardId';
 $pageHeader='List noticeboard';
-$editPageLink=$os->pluginLink($pluginName).$editPage.'?'.$os->addParams(array(),array()).'editRowId=';
-$listPageLink=$os->pluginLink($pluginName).$listPage.'?'.$os->addParams(array(),array());
+$editPageLink=$os->pluginLink($pluginName).$editPage.'?'.$os->addParams(array(), array()).'editRowId=';
+$listPageLink=$os->pluginLink($pluginName).$listPage.'?'.$os->addParams(array(), array());
 
 
 ##  delete row
-if($os->get('operation')=='deleteRow')
-{
-       if($os->deleteRow($primeryTable,$primeryField,$os->get('delId')))
-	   {
-	     $flashMsg='Data Deleted Successfully';
-		 
-		  $os->flashMessage($primeryTable,$flashMsg);
-		  $os->redirect($site['url-wtos'].$listPage);
-		  
-	   }
+if($os->get('operation')=='deleteRow') {
+    if($os->deleteRow($primeryTable, $primeryField, $os->get('delId'))) {
+        $flashMsg='Data Deleted Successfully';
+
+        $os->flashMessage($primeryTable, $flashMsg);
+        $os->redirect(URL_WTOS.$listPage);
+
+    }
 }
- 
+
 
 ##  fetch row
 
 /* searching */
 
-$andtitleA=  $os->andField('title_s','title',$primeryTable,'%');
-   $title_s=$andtitleA['value']; $andtitle=$andtitleA['andField'];	 
-$andstatusA=  $os->andField('status_s','status',$primeryTable,'=');
-   $status_s=$andstatusA['value']; $andstatus=$andstatusA['andField'];	 
+$andtitleA=  $os->andField('title_s', 'title', $primeryTable, '%');
+$title_s=$andtitleA['value'];
+$andtitle=$andtitleA['andField'];
+$andstatusA=  $os->andField('status_s', 'status', $primeryTable, '=');
+$status_s=$andstatusA['value'];
+$andstatus=$andstatusA['andField'];
 
-$searchKey=$os->setNget('searchKey',$primeryTable);
+$searchKey=$os->setNget('searchKey', $primeryTable);
 $whereFullQuery='';
-if($searchKey!=''){
-$whereFullQuery ="and ( title like '%$searchKey%' Or status like '%$searchKey%' )";
+if($searchKey!='') {
+    $whereFullQuery ="and ( title like '%$searchKey%' Or status like '%$searchKey%' )";
 
 }
 
 $listingQuery=" select * from $primeryTable where $primeryField>0   $whereFullQuery    $andtitle  $andstatus   order by  $primeryField desc  ";
 
 ##  fetch row
- 
-$resource=$os->pagingQuery($listingQuery,$os->showPerPage);
+
+$resource=$os->pagingQuery($listingQuery, $os->showPerPage);
 $records=$resource['resource'];
 
- 
+
 $os->showFlash($os->flashMessage($primeryTable));
 ?>
 <style>
@@ -81,16 +81,16 @@ $os->showFlash($os->flashMessage($primeryTable));
 							
 							
 	Search Key  
-  <input type="text" id="searchKey"  value="<? echo $searchKey ?>" />   &nbsp;
+  <input type="text" id="searchKey"  value="<?php echo $searchKey ?>" />   &nbsp;
      
 	  
 	 
    <div style="display:none" id="advanceSearchDiv">
          
- Title: <input type="text" class="wtTextClass" name="title_s" id="title_s" value="<? echo $title_s?>" /> &nbsp;  Status:
+ Title: <input type="text" class="wtTextClass" name="title_s" id="title_s" value="<?php echo $title_s?>" /> &nbsp;  Status:
 	
-	<select name="status" id="status_s" class="textbox fWidth" ><option value="">Select Status</option>	<? 
-										  $os->onlyOption($os->noticeboardStatus,$status_s);	?></select>	
+	<select name="status" id="status_s" class="textbox fWidth" ><option value="">Select Status</option>	<?php
+                                          $os->onlyOption($os->noticeboardStatus, $status_s);	?></select>	
   
   </div>
 							
@@ -107,7 +107,7 @@ $os->showFlash($os->flashMessage($primeryTable));
 			  <span class="listHeader"> <?php  echo $pageHeader; ?> </span>
 			  
 			  	 <a href="" style="margin-left:50px; text-decoration:none;"><input type="button" value="Refesh" style="cursor:pointer; text-decoration:none;" /></a>    
-			   <a href="javascript:void(0)" style="text-decoration:none;" onclick="os.editRecord('<? echo $editPageLink?>0') "><input type="button" value="Add New Record" style="cursor:pointer;text-decoration:none;"/></a>
+			   <a href="javascript:void(0)" style="text-decoration:none;" onclick="os.editRecord('<?php echo $editPageLink?>0') "><input type="button" value="Add New Record" style="cursor:pointer;text-decoration:none;"/></a>
 					</div>	
 			</td>
 			</tr>	
@@ -117,7 +117,7 @@ $os->showFlash($os->flashMessage($primeryTable));
 					
 			  <td  class="middle" >
 			  
-			  <div class="pagingLinkCss">Total:<b><? echo $os->val($resource,'totalRec'); ?></b>  &nbsp;&nbsp; <?php  echo $resource['links'];?>		</div>	
+			  <div class="pagingLinkCss">Total:<b><?php echo $os->val($resource, 'totalRec'); ?></b>  &nbsp;&nbsp; <?php  echo $resource['links'];?>		</div>	
 			  
 			  <!--  ggggggggggggggg   -->
 			  
@@ -141,23 +141,23 @@ $os->showFlash($os->flashMessage($primeryTable));
 											
 							
 							<?php
-							 $serial=$os->val($resource,'serial');  
-							 while(  $record=$os->mfa($records )){ 
-							 $serial++;
-							   $rowId=$record[$primeryField];
-							 
-								
-							
-							 ?>							
+                             $serial=$os->val($resource, 'serial');
+while($record=$os->mfa($records)) {
+    $serial++;
+    $rowId=$record[$primeryField];
+
+
+
+    ?>							
 							<tr  class="trListing" >
 								<td><?php echo $serial?>      </td>
 								
 								 <td class="actionLink">                   
                        
 						
-						<? if($os->access('wtEdit')){ ?> <a href="javascript:void(0)" onclick="os.editRecord('<?   echo $editPageLink ?><?php echo $rowId  ?>')">Edit</a><? } ?>	 
+						<?php if($os->access('wtEdit')) { ?> <a href="javascript:void(0)" onclick="os.editRecord('<?php   echo $editPageLink ?><?php echo $rowId  ?>')">Edit</a><?php } ?>	 
 						 
-					<? if($os->access('wtDelete')){ ?> 	<a href="javascript:void(0)" onclick="os.deleteRecord('<?php echo  $rowId ?>') ">Delete</a><? } ?>	 
+					<?php if($os->access('wtDelete')) { ?> 	<a href="javascript:void(0)" onclick="os.deleteRecord('<?php echo  $rowId ?>') ">Delete</a><?php } ?>	 
 						 
 						
 						
@@ -167,12 +167,12 @@ $os->showFlash($os->flashMessage($primeryTable));
                        </td>
 								
 <td><?php echo $record['title']?><br />
-  <a href="<?php echo $site['url']?><?php echo $record['file'];?>" height="100" /><?php echo $record['file'];?></a>		
+  <a href="<?php echo BASE_URL?><?php echo $record['file'];?>" height="100" /><?php echo $record['file'];?></a>		
  </td>  
 <td> 
-								<? $os->editText($record['priority'],'noticeboard','priority','noticeboardId',$record['noticeboardId'], $inputNameID='editText',$extraParams='class="editText" ');?>  </td>
+								<?php $os->editText($record['priority'], 'noticeboard', 'priority', 'noticeboardId', $record['noticeboardId'], $inputNameID='editText', $extraParams='class="editText" ');?>  </td>
 								 
-								<td> <? $os->editSelect($os->noticeboardStatus,$record['status'],'noticeboard','status','noticeboardId',$record['noticeboardId'], $inputNameID='editSelect',$extraParams='class="editSelect" ',$os->noticeboardStatuseColor) ?>  </td>
+								<td> <?php $os->editSelect($os->noticeboardStatus, $record['status'], 'noticeboard', 'status', 'noticeboardId', $record['noticeboardId'], $inputNameID='editSelect', $extraParams='class="editSelect" ', $os->noticeboardStatuseColor) ?>  </td>
 
   
   
@@ -182,9 +182,9 @@ $os->showFlash($os->flashMessage($primeryTable));
 				 
                             
 							
-							<?php 
-							} 
-							 ?>
+							<?php
+}
+?>
 							
 							
 							
@@ -231,5 +231,5 @@ window.location='<?php echo $listPageLink; ?>title_s='+title_sVal +'&status_s='+
 	</script>
 	
 	 
-<? include($site['root-wtos'].'bottom.php'); ?>
+<?php include(DIR_ADMIN.'bottom.php'); ?>
     

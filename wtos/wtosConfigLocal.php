@@ -1,1 +1,1 @@
-<?php include('../wtosConfig.php'); ?>
+<?php include('../wtosConfig.php');

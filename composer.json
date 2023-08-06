@@ -14,10 +14,10 @@
         "tinymce/tinymce": ">= 5",
         "ext-json": "*",
         "catfan/medoo": "^2.1",
-        "tracy/tracy": "^2.8",
-        "fakerphp/faker": "^1.16",
-        "twig/twig": "^3.0",
-        "php": "7.3"
+        "filp/whoops": "^2.15",
+        "kint-php/kint": "^5.0",
+        "leafs/leaf": "^3.4",
+        "leafs/bareui": "^1.1"
     },
     "autoload": {
         "psr-4": {
@@ -25,8 +25,5 @@
             "Models\\": "Models",
             "": "library/wtosLibrary"
         }
-    },
-    "require-dev": {
-        "heroku/heroku-buildpack-php": "*"
     }
 }

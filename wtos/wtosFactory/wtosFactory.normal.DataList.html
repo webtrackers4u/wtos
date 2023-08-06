@@ -5,7 +5,7 @@
    #  
 */
 include('WTF_config_directory');
-include($site['root-wtos'].'top.php');
+include(DIR_ADMIN.'top.php');
 $pluginName='WTF_plugin';
 $os->loadPluginConstant($pluginName);
 
@@ -29,7 +29,7 @@ if($os->get('operation')=='deleteRow')
 	     $flashMsg='Data Deleted Successfully';
 		 
 		  $os->flashMessage($primeryTable,$flashMsg);
-		  $os->redirect($site['url-wtos'].$listPage);
+		  $os->redirect(URL_WTOS.$listPage);
 		  
 	   }
 }
@@ -199,5 +199,5 @@ $os->showFlash($os->flashMessage($primeryTable));
 	</script>
 	
 	 
-<? include($site['root-wtos'].'bottom.php'); ?>
+<? include(DIR_ADMIN.'bottom.php'); ?>
     

@@ -1,26 +1,23 @@
-<?
+<?php
 
 session_start();
 include('wtosConfigLocal.php');// load configuration
 include('wtos.php'); // load wtos Library
 
 
-if(!$os->isLogin())
-{
-exit();
+if(!$os->isLogin()) {
+    exit();
 }
 
- if($_GET['delete']=='ok' && $_GET['delid']>0)
- {
- $delid= $_GET['delid'];
+if($_GET['delete']=='ok' && $_GET['delid']>0) {
+    $delid= $_GET['delid'];
 
 
-  if($os->mq("delete from imageuploader where imageId='$delid'"))
-  {
-      $os->removeImage('imageuploader','imageId',$delid,'image',str_replace('wtos/','',$site['root']));
+    if($os->mq("delete from imageuploader where imageId='$delid'")) {
+        $os->removeImage('imageuploader', 'imageId', $delid, 'image', str_replace('wtos/', '', BASE_DIR));
 
-  }
- }
+    }
+}
 
 
 
@@ -28,29 +25,27 @@ exit();
 
 
 
-if($os->post('operation')=='updateImg')
-{
-   $updateMsg='';
+if($os->post('operation')=='updateImg') {
+    $updateMsg='';
 
 
 
 
 
-            $gImage=$os->UploadPhoto('image',$site['root'].'wtos-images');
+    $gImage=$os->UploadPhoto('image', BASE_DIR.'wtos-images');
 
-			if($gImage!='')
-			{
-
+    if($gImage!='') {
 
 
-				$dataToSave['title']=$os->post('title');
 
-				$dataToSave['image']='wtos-images/'.$gImage;
+        $dataToSave['title']=$os->post('title');
 
-				$os->save('imageuploader',$dataToSave,'imageId','0');
-				$updateMsg='Image Updated Successfully';
+        $dataToSave['image']='wtos-images/'.$gImage;
 
-			}
+        $os->save('imageuploader', $dataToSave, 'imageId', '0');
+        $updateMsg='Image Updated Successfully';
+
+    }
 
 
 
@@ -75,7 +70,9 @@ if($os->post('operation')=='updateImg')
 
 						  <td width="107"  valign="top">Image Title:</td>
 							<td width="231"  valign="top">
-						  <input value="<?php if(isset($pageData['title'])){ echo $pageData['title']; } ?>" type="text" name="title"  style="width:210px;" class="textbox fWidth"/>	&nbsp;	&nbsp;	&nbsp;
+						  <input value="<?php if(isset($pageData['title'])) {
+						      echo $pageData['title'];
+						  } ?>" type="text" name="title"  style="width:210px;" class="textbox fWidth"/>	&nbsp;	&nbsp;	&nbsp;
 						  </td>
 						  <td valign="top">
 
@@ -87,10 +84,10 @@ if($os->post('operation')=='updateImg')
 
 
 
-<? if($updateMsg!='') { ?>
- <div style="color:#FFFFFF; background-color:#06990A; font-size:16px; font-weight:bold; padding:4px;" > <? echo $updateMsg; ?></div>
+<?php if($updateMsg!='') { ?>
+ <div style="color:#FFFFFF; background-color:#06990A; font-size:16px; font-weight:bold; padding:4px;" > <?php echo $updateMsg; ?></div>
 
-<? } ?>
+<?php } ?>
 
 						  </td>
 
@@ -114,7 +111,7 @@ if($os->post('operation')=='updateImg')
 
 
 						</form>
-	<?
+	<?php
 
 $userGalleryInfo=$os->get_imageuploader();
 
@@ -132,16 +129,16 @@ border-radius:3px; }
 </style>
 <div>
 
-<?  while($record=$os->mfa( $userGalleryInfo)){  ?>
-<?
+<?php  while($record=$os->mfa($userGalleryInfo)) {  ?>
+<?php
 
 
-?>
+    ?>
 <div class="imgBox">
-<img src="<?php  echo $site['url'].$record['image']; ?>" alt="" height="100" width="150"  onclick="javascript:insertWtImg(this);" /> <br />
-	  <a href="?delete=ok&delid=<? echo $record['imageId']; ?> " title="Delete Image" style="color:#FF0000;">D</a> &nbsp;  <?php  echo $record['title']; ?>
+<img src="<?php  echo BASE_URL.$record['image']; ?>" alt="" height="100" width="150"  onclick="javascript:insertWtImg(this);" /> <br />
+	  <a href="?delete=ok&delid=<?php echo $record['imageId']; ?> " title="Delete Image" style="color:#FF0000;">D</a> &nbsp;  <?php  echo $record['title']; ?>
 	  </div>
-<? } ?>
+<?php } ?>
 
 </div>
 

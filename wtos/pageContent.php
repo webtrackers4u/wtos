@@ -1,9 +1,9 @@
-<?
+<?php
 include('wtosConfigLocal.php');
-include($site['root-wtos'].'top.php');
+include(DIR_ADMIN.'top.php');
 
-if(!$os->checkAccess('Pages')){
-//exit();
+if(!$os->checkAccess('Pages')) {
+    //exit();
 }
 
 $editPage='pageContentEdit.php';
@@ -11,19 +11,17 @@ $listPage='pageContent.php';
 $primeryTable='pagecontent';
 $primeryField='pagecontentId';
 $pageHeader='Web Pages';
-$editPageLink=$site['url-wtos'].$editPage.'?'.$os->addParams(array(),array()).'editRowId=';
-$listPageLink=$site['url-wtos'].$listPage.'?'.$os->addParams(array(),array());
+$editPageLink=URL_WTOS.$editPage.'?'.$os->addParams(array(), array()).'editRowId=';
+$listPageLink=URL_WTOS.$listPage.'?'.$os->addParams(array(), array());
 
 
 ##  delete row
-if($os->get('operation')=='deleteRow')
-{
-    if($os->deleteRow($primeryTable,$primeryField,$os->get('delId')))
-    {
+if($os->get('operation')=='deleteRow') {
+    if($os->deleteRow($primeryTable, $primeryField, $os->get('delId'))) {
         $flashMsg='Data Deleted Successfully';
 
-        $os->flashMessage('123',$flashMsg);
-        $os->redirect($site['url-wtos'].$listPage);
+        $os->flashMessage('123', $flashMsg);
+        $os->redirect(URL_WTOS.$listPage);
 
     }
 }
@@ -33,19 +31,22 @@ if($os->get('operation')=='deleteRow')
 
 /* searching */
 
-$active= $os->setNget('active',$primeryTable);  //for session set
-$andActive=($active!=-1 && $active!='' )? " and active='$active'":'';
+$active= $os->setNget('active', $primeryTable);  //for session set
+$andActive=($active!=-1 && $active!='') ? " and active='$active'" : '';
 
 
-$andUser=$os->andField('name_search','title',$primeryTable,'%');
-$name_search=$andUser['value']; $andname=$andUser['andField'];
+$andUser=$os->andField('name_search', 'title', $primeryTable, '%');
+$name_search=$andUser['value'];
+$andname=$andUser['andField'];
 
 
-$pagecontentIdA=$os->andField('pagecontentId','parentPage',$primeryTable);
-$pagecontentId=$pagecontentIdA['value']; $andPagecontentId=$pagecontentIdA['andField'];
+$pagecontentIdA=$os->andField('pagecontentId', 'parentPage', $primeryTable);
+$pagecontentId=$pagecontentIdA['value'];
+$andPagecontentId=$pagecontentIdA['andField'];
 
-$langIdA=$os->andField('langId','langId',$primeryTable);
-$langId=$langIdA['value']; $andlangId=$langIdA['andField'];
+$langIdA=$os->andField('langId', 'langId', $primeryTable);
+$langId=$langIdA['value'];
+$andlangId=$langIdA['andField'];
 
 
 
@@ -59,7 +60,7 @@ $listingQuery=" select * from $primeryTable where $primeryField>0  $andActive   
 
 
 
-$recordsArr=$os->pagingQuery($listingQuery,10);
+$recordsArr=$os->pagingQuery($listingQuery, 10);
 
 $records=$recordsArr['resource'];
 
@@ -97,10 +98,10 @@ $os->showFlash($os->flashMessage('123'));
                             <select name="catId" id="pagecontentId" >
                                 <option value=""> Select Parent Page </option>
                                 <option value="0"> Only Parent Pages </option>
-                                <?
-                                $os->optionsHTML($pagecontentId,'pagecontentId','title','pagecontent',"active=1 and parentPage<1");
+                                <?php
+                                $os->optionsHTML($pagecontentId, 'pagecontentId', 'title', 'pagecontent', "active=1 and parentPage<1");
 
-                                ?>
+?>
                             </select>
 
 
@@ -111,15 +112,15 @@ $os->showFlash($os->flashMessage('123'));
                             Language:<select name="langId" id="langId" onchange="searchText()">
                                 <option value=""> Select Language</option>
 
-                                <?
-                                $os->optionsHTML($langId,'langId','title,langId','lang',"");
+                                <?php
+$os->optionsHTML($langId, 'langId', 'title,langId', 'lang', "");
 
-                                ?>
+?>
                             </select>
 
                             Status:
                             &nbsp;
-                            <select name="active" id="active_search" ><?php  $os->onlyOption($statuslist,$active);	?>
+                            <select name="active" id="active_search" ><?php  $os->onlyOption($statuslist, $active);	?>
                             </select>
                             &nbsp;
 
@@ -136,7 +137,7 @@ $os->showFlash($os->flashMessage('123'));
                 <span class="listHeader"> <?php  echo $pageHeader; ?></span>
 
                 <a href="" style="margin-left:50px; text-decoration:none;"><input type="button" value="Refesh" style="cursor:pointer; text-decoration:none;" /></a>
-                <a href="javascript:void(0)" style="text-decoration:none;" onclick="os.editRecord('<? echo $editPageLink?>0') "><input type="button" value="Add New Record" style="cursor:pointer;text-decoration:none;"/></a>
+                <a href="javascript:void(0)" style="text-decoration:none;" onclick="os.editRecord('<?php echo $editPageLink?>0') "><input type="button" value="Add New Record" style="cursor:pointer;text-decoration:none;"/></a>
 
 
             </div>
@@ -156,14 +157,14 @@ $os->showFlash($os->flashMessage('123'));
 
 
 
-            <div class="pagingLinkCss">Total:<b><? echo $os->val($recordsArr,'totalRec'); ?></b>  &nbsp;&nbsp; <?php  echo $recordsArr['links'];?>	 <?  $pagecontentIdHome=$os->rowByField('pagecontentId','pagecontent','isHome','Yes'); ?>
+            <div class="pagingLinkCss">Total:<b><?php echo $os->val($recordsArr, 'totalRec'); ?></b>  &nbsp;&nbsp; <?php  echo $recordsArr['links'];?>	 <?php  $pagecontentIdHome=$os->rowByField('pagecontentId', 'pagecontent', 'isHome', 'Yes'); ?>
 
                 &nbsp; &nbsp; Current Home Page   <select name="homepage" id="pagecontentIdHome" onchange="setHomePage();" >
                     <option value=""> Select Home Page </option>
-                    <?
-                    $os->optionsHTML($pagecontentIdHome,'pagecontentId','pagecontentId,title','pagecontent',"active=1");
+                    <?php
+                    $os->optionsHTML($pagecontentIdHome, 'pagecontentId', 'pagecontentId,title', 'pagecontent', "active=1");
 
-                    ?>
+?>
                 </select>
                 <script>
                     function setHomePage()
@@ -204,34 +205,34 @@ $os->showFlash($os->flashMessage('123'));
 
                 <?php
                 $i=1;
-                while(  $record=$os->mfa($records )){
+while($record=$os->mfa($records)) {
 
-                    $rowId=$record[$primeryField];
-                    $parentPage=$os->rowByField('title','pagecontent','pagecontentId',$record['parentPage']);
-                    $selected=0;
+    $rowId=$record[$primeryField];
+    $parentPage=$os->rowByField('title', 'pagecontent', 'pagecontentId', $record['parentPage']);
+    $selected=0;
 
-                    $homeColor="";
-                    if($record['isHome']=='Yes')
-                    {
-                        $homeColor="background-color:#FFC6AA";
-                    }
+    $homeColor="";
+    if($record['isHome']=='Yes') {
+        $homeColor="background-color:#FFC6AA";
+    }
 
 
-                    ?>
+    ?>
 
-                    <tr  class="trListing" style="<? echo $homeColor ?>" >
+                    <tr  class="trListing" style="<?php echo $homeColor ?>" >
                         <td><?php echo $i?>      </td>
                         <td valign="top"><b style="color:#2E2E2E;"> <?php echo $record['title']?></b><br />
                             <font style="font-size:10px; font-style:italic; color:#787878;">
-                                Page Heading/Title : <?  echo  $record['heading'];?> <br />
-                                position : <?  echo  ($record['onHead'])?'Header ' :'';  echo  ($record['onBottom'])?'  Footer' :'';  ?>
-                                , Page Id : <b> <?  echo  $record['pagecontentId'];  ?></b>
+                                Page Heading/Title : <?php  echo  $record['heading'];?> <br />
+                                position : <?php  echo  ($record['onHead']) ? 'Header ' : '';
+    echo  ($record['onBottom']) ? '  Footer' : '';  ?>
+                                , Page Id : <b> <?php  echo  $record['pagecontentId'];  ?></b>
 
-                                <? if($record['image']!=''){ ?> <br />
-                                    Show Image :  <?  echo  ($record['showImage'])?'<font color="#008A45">Active</font> ' :'<font color="#FF4848">Inactive</font>';?><br />
-                                    Image  Link <a href="<?  echo $site['url'].$record['image'] ; ?> " target="_blank" ><?php echo  $record['image']; ?> </a>
+                                <?php if($record['image']!='') { ?> <br />
+                                    Show Image :  <?php  echo  ($record['showImage']) ? '<font color="#008A45">Active</font> ' : '<font color="#FF4848">Inactive</font>';?><br />
+                                    Image  Link <a href="<?php  echo BASE_URL.$record['image'] ; ?> " target="_blank" ><?php echo  $record['image']; ?> </a>
 
-                                <? } ?>
+                                <?php } ?>
                             </font>
 
 
@@ -246,18 +247,18 @@ $os->showFlash($os->flashMessage('123'));
                             <?php echo $parentPage?>
                         </td>
                         <td>
-                            <?php if(  $record['externalLink'] ){ ?>
-                                Ex: <font color="#FF0000"><b><? echo $record['externalLink']?></b></font>
-                            <? } else{ ?>
+                            <?php if($record['externalLink']) { ?>
+                                Ex: <font color="#FF0000"><b><?php echo $record['externalLink']?></b></font>
+                            <?php } else { ?>
 
                                 <font color="#0000CC"><b><?php echo $record['seoId']?></b></font>
 
-                            <? } ?>
+                            <?php } ?>
                             <br />
                             <font style="font-size:10px; font-style:italic; color:#787878">
 
-                                Meta Tag : <?  echo  $record['metaTag'];?> <br />
-                                Meta Description : <?  echo  $record['metaDescription'];?>
+                                Meta Tag : <?php  echo  $record['metaTag'];?> <br />
+                                Meta Description : <?php  echo  $record['metaDescription'];?>
                             </font>
 
 
@@ -265,15 +266,15 @@ $os->showFlash($os->flashMessage('123'));
                         </td>
 
                         <td>
-                            <? $os->editText($record['priority'],'pagecontent','priority','pagecontentId',$record['pagecontentId'], $inputNameID='editText',$extraParams='class="editText" ');?>
+                            <?php $os->editText($record['priority'], 'pagecontent', 'priority', 'pagecontentId', $record['pagecontentId'], $inputNameID='editText', $extraParams='class="editText" ');?>
                         </td>
 
 
-                        <td> <? $os->editSelect($os->pageContentStatus,$record['active'],'pagecontent','active','pagecontentId',$record['pagecontentId'], $inputNameID='editSelect',$extraParams='class="editSelect" ',$os->pageContentStatusColor) ?>  </td>
+                        <td> <?php $os->editSelect($os->pageContentStatus, $record['active'], 'pagecontent', 'active', 'pagecontentId', $record['pagecontentId'], $inputNameID='editSelect', $extraParams='class="editSelect" ', $os->pageContentStatusColor) ?>  </td>
                         <td class="actionLink">
 
 
-                            <a href="javascript:void(0)" onclick="os.editRecord('<?   echo $editPageLink ?><?php echo $rowId  ?>')">Edit</a>
+                            <a href="javascript:void(0)" onclick="os.editRecord('<?php   echo $editPageLink ?><?php echo $rowId  ?>')">Edit</a>
 
                             <a href="javascript:void(0)" onclick="os.deleteRecord('<?php echo  $rowId ?>') ">Delete</a>
 
@@ -289,13 +290,13 @@ $os->showFlash($os->flashMessage('123'));
 
 
                     <?php $i++;
-                }
-                ?>
+}
+?>
 
 
 
             </table>
-            <div class="pagingLinkCss">Total:<b><? echo $os->val($recordsArr,'totalRec'); ?></b>  &nbsp;&nbsp; <?php  echo $recordsArr['links'];?>	</div>
+            <div class="pagingLinkCss">Total:<b><?php echo $os->val($recordsArr, 'totalRec'); ?></b>  &nbsp;&nbsp; <?php  echo $recordsArr['links'];?>	</div>
 
 
 
@@ -337,4 +338,4 @@ $os->showFlash($os->flashMessage('123'));
 
 </script>
 
-<? include($site['root-wtos'].'bottom.php'); ?>
+<?php include(DIR_ADMIN.'bottom.php'); ?>

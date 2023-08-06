@@ -3,37 +3,39 @@
 <td><?php echo $os->showDate($record['dated']);?> </td>  
   <td><?php echo $os->showDate($record['fromDate']);?> </td>  
   <td><?php echo $os->showDate($record['toDate']);?> </td>  
-  <td><?php echo  
-  $os->rowByField('firstName ','member','memberId',$record['tenantId'],$where='',$orderby='');?>
+  <td><?php echo
+  $os->rowByField('firstName ', 'member', 'memberId', $record['tenantId'], $where='', $orderby='');?>
 	 </td> 
  
   
-  <td><?php echo  
-	$os->agreementType[$record['type']]; ?></td> 
+  <td><?php echo
+    $os->agreementType[$record['type']]; ?></td> 
   <td><?php echo $record['commission']?> </td>  
   <td><?php echo $record['rentAmount']?> </td>  
-  <td><?php 
-  
-  if(isset($os->agreementStatus[$record['status']])){
-  echo  $os->agreementStatus[$record['status']]; } ?></td> 
+  <td><?php
+
+  if(isset($os->agreementStatus[$record['status']])) {
+      echo  $os->agreementStatus[$record['status']];
+  } ?></td> 
   <td><?php echo $record['note']?> </td>  
 
 
 /**********************WTF_andFields********************************/
-<? 
-	$f_dated_s= $os->post('f_dated_s');	$t_dated_s= $os->post('t_dated_s');
-	$anddated=$os->DateQ('dated_s',$f_dated_s,$t_dated_s,$sTime='00:00:00',$eTime='59:59:59');
-	
-	$andtenantId=  $os->postAndQuery('tenantId_s','tenantId','%');
-	$andlandlordId=  $os->postAndQuery('landlordId_s','landlordId','%');
-	$andpropertyId=  $os->postAndQuery('propertyId_s','propertyId','%');
-	$andtype=  $os->postAndQuery('type_s','type','%');
- 	$andagentName=  $os->postAndQuery('agentName_s','agentName','%');
-	$andstatus=  $os->postAndQuery('status_s','status','%');
-	$andnote=  $os->postAndQuery('note_s','note','%');
-	
-	
-	?>
+<?php
+    $f_dated_s= $os->post('f_dated_s');
+$t_dated_s= $os->post('t_dated_s');
+$anddated=$os->DateQ('dated_s', $f_dated_s, $t_dated_s, $sTime='00:00:00', $eTime='59:59:59');
+
+$andtenantId=  $os->postAndQuery('tenantId_s', 'tenantId', '%');
+$andlandlordId=  $os->postAndQuery('landlordId_s', 'landlordId', '%');
+$andpropertyId=  $os->postAndQuery('propertyId_s', 'propertyId', '%');
+$andtype=  $os->postAndQuery('type_s', 'type', '%');
+$andagentName=  $os->postAndQuery('agentName_s', 'agentName', '%');
+$andstatus=  $os->postAndQuery('status_s', 'status', '%');
+$andnote=  $os->postAndQuery('note_s', 'note', '%');
+
+
+?>
 	 
  /**********************WTF_searchFullQuery********************************/
 	$where ="and ( dated like '%$searchKey%' Or tenantId like '%$searchKey%' Or landlordId like '%$searchKey%' Or propertyId like '%$searchKey%' Or type like '%$searchKey%' Or agentName like '%$searchKey%' Or status like '%$searchKey%' Or note like '%$searchKey%' )";
@@ -46,32 +48,32 @@
 	$listingQuery="  select * from WTF_table where WTF_primery>0   $where  WTF_andFieldQuery   order by WTF_primery desc";
 	
 	/**************************WTF_dataToSave****************************/
-	<? 
- $dataToSave['dated']=$os->saveDate($os->post('dated')); 
- $dataToSave['fromDate']=$os->saveDate($os->post('fromDate')); 
- $dataToSave['toDate']=$os->saveDate($os->post('toDate')); 
- $dataToSave['tenantId']=$os->post('tenantId'); 
- $dataToSave['landlordId']=$os->post('landlordId'); 
- $dataToSave['propertyId']=$os->post('propertyId'); 
- $dataToSave['type']=$os->post('type'); 
- $dataToSave['rentAmountLandlord']=$os->post('rentAmount'); // varG('rentAmountLandlord'); 
- $dataToSave['commission']=$os->post('commission'); 
- $dataToSave['rentAmount']=$os->post('rentAmount'); 
- $dataToSave['deposite']=$os->post('deposite'); 
- $dataToSave['holdingDeposite']=$os->post('holdingDeposite'); 
- $dataToSave['adminFees']=$os->post('adminFees'); 
- $dataToSave['agentName']=$os->post('agentName'); 
- $dataToSave['rentDueDate']=$os->saveDate($os->post('rentDueDate')); 
- $dataToSave['paybleAmount']=$os->post('paybleAmount'); 
- $dataToSave['status']=$os->post('status'); 
- $dataToSave['note']=$os->post('note'); 
+	<?php
+ $dataToSave['dated']=$os->saveDate($os->post('dated'));
+$dataToSave['fromDate']=$os->saveDate($os->post('fromDate'));
+$dataToSave['toDate']=$os->saveDate($os->post('toDate'));
+$dataToSave['tenantId']=$os->post('tenantId');
+$dataToSave['landlordId']=$os->post('landlordId');
+$dataToSave['propertyId']=$os->post('propertyId');
+$dataToSave['type']=$os->post('type');
+$dataToSave['rentAmountLandlord']=$os->post('rentAmount'); // varG('rentAmountLandlord');
+$dataToSave['commission']=$os->post('commission');
+$dataToSave['rentAmount']=$os->post('rentAmount');
+$dataToSave['deposite']=$os->post('deposite');
+$dataToSave['holdingDeposite']=$os->post('holdingDeposite');
+$dataToSave['adminFees']=$os->post('adminFees');
+$dataToSave['agentName']=$os->post('agentName');
+$dataToSave['rentDueDate']=$os->saveDate($os->post('rentDueDate'));
+$dataToSave['paybleAmount']=$os->post('paybleAmount');
+$dataToSave['status']=$os->post('status');
+$dataToSave['note']=$os->post('note');
 
-                  $floorplan=$os->UploadPhoto('imageTenant',$site['root'].'wtos-images');
-					if($floorplan){
-					$dataToSave['imageTenant']='wtos-images/'.$floorplan;
-					}	
-					
-					?>
+$floorplan=$os->UploadPhoto('imageTenant', BASE_DIR.'wtos-images');
+if($floorplan) {
+    $dataToSave['imageTenant']='wtos-images/'.$floorplan;
+}
+
+?>
 					
 					
 					
@@ -96,7 +98,7 @@
  $record['status']=stripslashes($record['status']);
  $record['note']=stripslashes($record['note']);
  if($record['imageTenant']!=''){
-		$record['imageTenant']=$site['url'].$record['imageTenant'];
+		$record['imageTenant']=BASE_URL.$record['imageTenant'];
 		}
 		
 		
@@ -107,33 +109,33 @@ From Date: <input class="dtpk" type="text" name="f_dated_s" id="f_dated_s" value
    Tenant:
 	
 	
-	<select name="tenantId_s" id="tenantId_s" class="textbox fWidth" ><option value="">Select Tenant</option>		  	<? 
-								
-										  $os->optionsHTML('','memberId','firstName','member ');?>
+	<select name="tenantId_s" id="tenantId_s" class="textbox fWidth" ><option value="">Select Tenant</option>		  	<?php
+
+                      $os->optionsHTML('', 'memberId', 'firstName', 'member ');?>
 							</select>
    Landlord:
 	
 	
-	<select name="landlordId_s" id="landlordId_s" class="textbox fWidth" ><option value="">Select Landlord</option>		  	<? 
-								
-										  $os->optionsHTML('','memberId','firstName','member ');?>
+	<select name="landlordId_s" id="landlordId_s" class="textbox fWidth" ><option value="">Select Landlord</option>		  	<?php
+
+                      $os->optionsHTML('', 'memberId', 'firstName', 'member ');?>
 							</select>
    Property:
 	
 	
-	<select name="propertyId_s" id="propertyId_s" class="textbox fWidth" ><option value="">Select Property</option>		  	<? 
-								
-										  $os->optionsHTML('','propertyId','title','property');?>
+	<select name="propertyId_s" id="propertyId_s" class="textbox fWidth" ><option value="">Select Property</option>		  	<?php
+
+                      $os->optionsHTML('', 'propertyId', 'title', 'property');?>
 							</select>
    Type:
 	
-	<select name="type_s" id="type_s" class="textbox fWidth" ><option value="">Select Type</option>	<? 
-										  $os->onlyOption($os->agreementType,'');	?></select>	
+	<select name="type_s" id="type_s" class="textbox fWidth" ><option value="">Select Type</option>	<?php
+                      $os->onlyOption($os->agreementType, '');	?></select>	
    Agent Name: <input type="text" name="agentName_s" id="agentName_s" value="" style="width:100px;" /> &nbsp;  
    Status:
 	
-	<select name="status_s" id="status_s" class="textbox fWidth" ><option value="">Select Status</option>	<? 
-										  $os->onlyOption($os->agreementStatus,'');	?></select>	
+	<select name="status_s" id="status_s" class="textbox fWidth" ><option value="">Select Status</option>	<?php
+                      $os->onlyOption($os->agreementStatus, '');	?></select>	
    Note: <input type="text" name="note_s" id="note_s" value="" style="width:100px;" /> &nbsp;  
    
    
@@ -252,10 +254,10 @@ From Date: <input class="dtpk" type="text" name="f_dated_s" id="f_dated_s" value
 	  									<td>Property </td>
 										<td colspan="10"><select name="propertyId" id="propertyId" class="textbox fWidth" >
 							
-							 		<?
-							
-							 $os->optionsHTML('','propertyId','title','property');
-							?>
+							 		<?php
+
+         $os->optionsHTML('', 'propertyId', 'title', 'property');
+?>
 							</select>
   
 										</td>						
@@ -267,10 +269,10 @@ From Date: <input class="dtpk" type="text" name="f_dated_s" id="f_dated_s" value
 										<td><select name="tenantId" id="tenantId" class="textbox fWidth" >
 										<option></option>
 							
-							 		<?
-							
-							 $os->optionsHTML('','memberId','firstName','member '," status='TENANT' and memberType like 'Existing%' ");
-							?>
+							 		<?php
+
+ $os->optionsHTML('', 'memberId', 'firstName', 'member ', " status='TENANT' and memberType like 'Existing%' ");
+?>
 							</select>
   
 										</td>						
@@ -278,10 +280,10 @@ From Date: <input class="dtpk" type="text" name="f_dated_s" id="f_dated_s" value
 	  									<td>Landlord </td>
 										<td><select name="landlordId" id="landlordId" class="textbox fWidth" >
 							<option></option>
-							 		<?
-							
-							 $os->optionsHTML('','memberId','firstName','member '," status='LANDLORD'");
-							?>
+							 		<?php
+
+ $os->optionsHTML('', 'memberId', 'firstName', 'member ', " status='LANDLORD'");
+?>
 							</select>
   
 										</td>						
@@ -342,8 +344,8 @@ From Date: <input class="dtpk" type="text" name="f_dated_s" id="f_dated_s" value
 											<tr >
 											
 											<td>Status </td>
-										<td><select name="status" id="status" class="textbox fWidth" >	<? 
-										  $os->onlyOption($os->agreementStatus,'');	?></select>	
+										<td><select name="status" id="status" class="textbox fWidth" >	<?php
+              $os->onlyOption($os->agreementStatus, '');	?></select>	
   
 										</td>	
 	  									<td>Holding Deposite </td>
@@ -371,8 +373,8 @@ From Date: <input class="dtpk" type="text" name="f_dated_s" id="f_dated_s" value
 										<td><input value="" type="text" name="rentAmountLandlord" id="rentAmountLandlord" class="textbox fWidth"/>
 										</td>	
 										 <td>Type </td>
-										<td><select name="type" id="type" class="textbox fWidth" >	<? 
-										  $os->onlyOption($os->agreementType,$pageData['type']);	?></select>	
+										<td><select name="type" id="type" class="textbox fWidth" >	<?php
+              $os->onlyOption($os->agreementType, $pageData['type']);	?></select>	
   
 										</td>			
 	  													

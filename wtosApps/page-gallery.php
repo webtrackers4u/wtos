@@ -1,4 +1,4 @@
-<?
+<?php
 
 use Library\Classes\Request;
 
@@ -8,7 +8,7 @@ echo stripslashes($os->wtospage['pageCss']);
 
 $gallery_id = Request::getGet("id");
 $gallery = $os->_db->gallerycatagory->selectOne("*", ["galleryCatagoryId"=>$gallery_id]);
-if(!$gallery){
+if(!$gallery) {
     $galleries = $os->_db->gallerycatagory->select("*");
     ?>
 
@@ -24,8 +24,8 @@ if(!$gallery){
             <div class="uk-child-width-1-4@l uk-child-width-1-3@m uk-child-width-1-2@s" uk-grid>
 
 
-            <?
-            foreach ($galleries as $gallery){
+            <?php
+            foreach ($galleries as $gallery) {
                 ?>
                 <div>
                     <div class="uk-card uk-card-default uk-card-outline uk-border-rounded uk-card-body uk-text-center pointable">
@@ -33,13 +33,13 @@ if(!$gallery){
                     </div>
                 </div>
 
-                <?
+                <?php
             }
-            ?>
+    ?>
             </div>
         </div>
     </section>
-<? } else {
+<?php } else {
     $images = $os->_db->photogallery->select("*", [
         "galleryCatagoryId"=>$gallery_id
     ]);
@@ -57,8 +57,8 @@ if(!$gallery){
             <div class="uk-child-width-1-4@l uk-child-width-1-3@m uk-child-width-1-2@s" uk-grid>
 
 
-                <?
-                foreach ($images as $image){
+                <?php
+                foreach ($images as $image) {
                     ?>
                     <div>
                         <div class="uk-card uk-card-default uk-card-outline uk-border-rounded pointable uk-overflow-hidden">
@@ -72,9 +72,9 @@ if(!$gallery){
                         </div>
                     </div>
 
-                    <?
+                    <?php
                 }
-                ?>
+    ?>
             </div>
         </div>
     </section>
@@ -83,5 +83,5 @@ if(!$gallery){
 }
 ?>
 
-<? include "__footer.php"?>
+<?php include "__footer.php"?>
 

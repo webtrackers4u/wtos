@@ -1,6 +1,9 @@
-<? function loadMap($mapConfig=array()){
-  if($mapConfig['zoom']<1){$mapConfig['zoom']=8;}
- ?>
+<?php function loadMap($mapConfig=array())
+{
+    if($mapConfig['zoom']<1) {
+        $mapConfig['zoom']=8;
+    }
+    ?>
    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script>
       var geocoder;
@@ -9,7 +12,7 @@
         geocoder = new google.maps.Geocoder();
         var latlng = new google.maps.LatLng(51.5085133, -0.2284655);
         var mapOptions = {
-          zoom: <? echo $mapConfig['zoom']?>,
+          zoom: <?php echo $mapConfig['zoom']?>,
           center: latlng,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         }
@@ -46,14 +49,14 @@
 	  
 	  
 	     </script>
-<?  } 
+<?php  }
 
 function wtCanvas($style)
 {
-?>
-<div id="map_canvas" <? echo $style ?> ></div>
+    ?>
+<div id="map_canvas" <?php echo $style ?> ></div>
  <script>initialize();</script>
-<? 
+<?php
 }
 
 function wtPlot($data)
@@ -63,24 +66,26 @@ function wtPlot($data)
     var t=0;
 	  function wtPlot()
 	  {
-	     <? if(is_array($data)){ foreach($data as $k =>$val){  
-		 
-		 $addressP=$val['address'];
-		 $info=addslashes($val['info']);
-		
-		 if($addressP!=''){
-		 
-		 ?>t='<? echo $k ?>'; t=parseInt(t); var InterVAl=t*600; setTimeout("codeAddress('<? echo $addressP ?>','<? echo $info ?>');",InterVAl);<?  
-	 
-          }	 
-	  }    }?>
+	     <?php if(is_array($data)) {
+	         foreach($data as $k =>$val) {
+
+	             $addressP=$val['address'];
+	             $info=addslashes($val['info']);
+
+	             if($addressP!='') {
+
+	                 ?>t='<?php echo $k ?>'; t=parseInt(t); var InterVAl=t*600; setTimeout("codeAddress('<?php echo $addressP ?>','<?php echo $info ?>');",InterVAl);<?php
+
+	             }
+	         }
+	     }?>
 	    
 		 
 	  }
    
    
  </script>	  
-<? 
+<?php
 }
 
 
