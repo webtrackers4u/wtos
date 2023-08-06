@@ -7,8 +7,8 @@ use Medoo\Medoo;
 class Db extends Medoo
 {
     protected $pagination = [
-        "rows"=> 30,
-        "page"=>1,
+        "rows" => 30,
+        "page" => 1,
     ];
     protected $models = [];
     /**
@@ -28,32 +28,32 @@ class Db extends Medoo
 
     protected function loadAllModels()
     {
-        $models = glob(BASE_DIR."/Models/*.php");
+        $models = glob(BASE_DIR . "/Models/*.php");
         foreach ($models as $model) {
             require $model;
             $model = str_replace([".php", BASE_DIR], "", $model);
             $model_class_name = str_replace("/", "\\", $model);
             $model_name = str_replace("/Models/", "", $model);
-            if(class_exists($model_class_name)) {
-                //$this->$model_name = new $model_class_name($this);
+            if (class_exists($model_class_name)) {
                 $this->models[$model_name] = new $model_class_name($this);
             }
         }
     }
 
-    function getModel($modelName){
-        return   $this->models[$modelName];
+    function getModel($model_name)
+    {
+        return   $this->models[$model_name];
     }
 
-    public function upsert($table, $data, $where=null): ?\PDOStatement
+    public function upsert($table, $data, $where = null): ?\PDOStatement
     {
-        if($this->has($table, $where)) {
+        if ($this->has($table, $where)) {
             return $this->update($table, $data, $where);
         } else {
             return $this->insert($table, $data);
         }
     }
-    public function paginate(string $table, $columns = null, $where= null, $pagination=[], $join = null): array
+    public function paginate(string $table, $columns = null, $where = null, $pagination = [], $join = null): array
     {
 
         $isJoin = $this->isJoin($join);
@@ -70,23 +70,22 @@ class Db extends Medoo
         $data = $isJoin ? $this->select($table, $join, $columns, $where) : $this->select($table, $columns, $where);
         //creating response
         $response = [
-            "data"=>$data,
-            "pager"=> [
-                "page"=>$pagination["page"],
-                "pages"=>$pages,
-                "total"=>$total,
-                "from"=>$offset+1,
-                "to"=> $pagination["page"]==$pages ? $total : ($offset+1+$pagination["rows"])
+            "data" => $data,
+            "pager" => [
+                "page" => $pagination["page"],
+                "pages" => $pages,
+                "total" => $total,
+                "from" => $offset + 1,
+                "to" => $pagination["page"] == $pages ? $total : ($offset + 1 + $pagination["rows"])
             ]
         ];
         return $response;
     }
 
-    public function selectOne($table, $join, $columns=null, $where=null)
+    public function selectOne($table, $join, $columns = null, $where = null)
     {
-        $where=$where ?: [];
-        $where["LIMIT"] = [0,1];
+        $where = $where ?: [];
+        $where["LIMIT"] = [0, 1];
         return @$this->select($table, $join, $columns, $where)[0] ?: false;
     }
-
 }

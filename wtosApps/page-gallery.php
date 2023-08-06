@@ -7,9 +7,9 @@ global $os, $pageBody, $site;
 echo stripslashes($os->wtospage['pageCss']);
 
 $gallery_id = Request::getGet("id");
-$gallery = $os->_db->gallerycatagory->selectOne("*", ["galleryCatagoryId"=>$gallery_id]);
+$gallery = $os->_db->getModel("gallerycatagory")->selectOne("*", ["galleryCatagoryId"=>$gallery_id]);
 if(!$gallery) {
-    $galleries = $os->_db->gallerycatagory->select("*");
+    $galleries = $os->_db->getModel("gallerycatagory")->select("*");
     ?>
 
     <section class="uk-section banner">
@@ -40,7 +40,7 @@ if(!$gallery) {
         </div>
     </section>
 <?php } else {
-    $images = $os->_db->photogallery->select("*", [
+    $images = $os->_db->getModel("photogallery")->select("*", [
         "galleryCatagoryId"=>$gallery_id
     ]);
     ?>
