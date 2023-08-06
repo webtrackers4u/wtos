@@ -36,9 +36,13 @@ class Db extends Medoo
             $model_name = str_replace("/Models/", "", $model);
             if(class_exists($model_class_name)) {
                 //$this->$model_name = new $model_class_name($this);
-                $this->models[$this->$model_name] = new $model_class_name($this);
+                $this->models[$model_name] = new $model_class_name($this);
             }
         }
+    }
+
+    function getModel($modelName){
+        return   $this->models[$modelName];
     }
 
     public function upsert($table, $data, $where=null): ?\PDOStatement

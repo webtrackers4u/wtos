@@ -78,12 +78,11 @@ $os->mq($updateHit);
  * Templating System
  *********/
 
-$template = $site["application"]."template-default.php";
-$template = $os->val($os->wtospage, "template")!="" ? $site["application"].$os->val($os->wtospage, "template") : $template;
-$page_template_name = $site["application"]."page-".$os->val($os->wtospage, "seoId").".php";
+$template = DIR_APP."/template-default.php";
+$template = $os->val($os->wtospage, "template")!="" ? DIR_APP."/".$os->val($os->wtospage, "template") : $template;
+$page_template_name = DIR_APP."/page-".$os->val($os->wtospage, "seoId").".php";
 $template = file_exists($page_template_name) ? $page_template_name : $template;
-
-$template = $os->val($os->wtospage, "isHome")=="Yes"|| $os->val($os->wtospage, "seoId")=="" ? $site["application"]."template-home.php" : $template;
+$template = $os->val($os->wtospage, "isHome")=="Yes"|| $os->val($os->wtospage, "seoId")=="" ? DIR_APP."/template-home.php" : $template;
 
 
 if (file_exists($template)) {
