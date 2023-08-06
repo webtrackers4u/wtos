@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6f827705245f2f83fa1296e3f276815b",
+    "content-hash": "096dd3d24c5785ecf5b14f06c91dd382",
     "packages": [
         {
             "name": "catfan/medoo",
@@ -276,67 +276,6 @@
                 }
             ],
             "time": "2023-07-09T00:51:55+00:00"
-        },
-        {
-            "name": "leafs/bareui",
-            "version": "v1.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/leafsphp/bareui.git",
-                "reference": "a84d855be5ba319a9c0c695d65d25aabf959b23b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/leafsphp/bareui/zipball/a84d855be5ba319a9c0c695d65d25aabf959b23b",
-                "reference": "a84d855be5ba319a9c0c695d65d25aabf959b23b",
-                "shasum": ""
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "src/scripts.php"
-                ],
-                "psr-4": {
-                    "Leaf\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Michael Darko",
-                    "email": "mickdd22@gmail.com",
-                    "homepage": "https://mychi.netlify.app",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Leaf PHP bareui templating engine",
-            "homepage": "https://leafphp.netlify.app/#/",
-            "keywords": [
-                "framework",
-                "leaf",
-                "php",
-                "simple templating",
-                "template",
-                "view"
-            ],
-            "support": {
-                "issues": "https://github.com/leafsphp/bareui/issues",
-                "source": "https://github.com/leafsphp/bareui/tree/v1.1.1"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/leafsphp",
-                    "type": "github"
-                },
-                {
-                    "url": "https://opencollective.com/leaf",
-                    "type": "open_collective"
-                }
-            ],
-            "time": "2023-05-17T08:42:17+00:00"
         },
         {
             "name": "leafs/exception",

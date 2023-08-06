@@ -23,7 +23,7 @@ define("DB_NAME", "wtosv20");
 define("BASE_FOLDER", "");
 
 
-const BASE_DIR = __DIR__ . "/";
+const BASE_DIR = __DIR__ . "/".BASE_FOLDER;
 define("DIR_APP", realpath(BASE_DIR . "wtosApps/"));
 define("DIR_LIB", realpath(BASE_DIR . "library/wtosLibrary/"));
 define("DIR_UPLOAD", realpath(BASE_DIR . "wtos-images/"));
@@ -45,6 +45,7 @@ const LOGIN_KEY = "wtos-" . DB_NAME;
 const LOGIN_KEY_ADMIN = "twos-" . DB_NAME . "-wtos";
 const ENVIRONMENT = ~E_WARNING;
 
+//setup environmaent
 error_reporting(ENVIRONMENT);
 
 //use debug bar

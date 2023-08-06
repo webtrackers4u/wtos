@@ -34,7 +34,7 @@ class wtosLibrary extends wtosBase
         $this->loginKey = $loginKey;
         $this->sessionKey = $loginKey;
 
-        $this->connect($site['host'], $site['user'], $site['pass'], $site['db']);
+        $this->connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
         $this->loadGlobalConstant();
 
 
@@ -42,10 +42,10 @@ class wtosLibrary extends wtosBase
         $this->_db = new \Library\Classes\Db([
             // [required]
             'type' => 'mysql',
-            'host' => $site['host'],
-            'database' => $site['db'],
-            'username' => $site['user'],
-            'password' => $site['pass'],
+            'host' => DB_HOST,
+            'database' => DB_NAME,
+            'username' => DB_USER,
+            'password' => DB_PASS,
 
             // [optional]
             'charset' => 'utf8mb4',

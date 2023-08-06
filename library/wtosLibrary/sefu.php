@@ -89,13 +89,10 @@ class sefu
 
         $request_uri = $this->sefuParams['queryStr'];
         $request_uri = explode("?", $request_uri)[0];
-        $request_uri = substr($request_uri, strlen($wtSystemFolder));
+        $request_uri = substr($request_uri, strlen(BASE_FOLDER));
 
 
         $this->sefuParams['segment']=explode('/', $request_uri);
-
-        //_d($this->sefuParams); exit();
-
         $seg=$this->sefuParams['segment'];
 
         if(count($seg)>0 && is_array($seg)) {
