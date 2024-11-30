@@ -1,0 +1,11 @@
+version: '2'
+name: wtos-services
+services:
+  wtos:
+    image: wtos:latest
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - 8089:80
+    environment:
+      - ALLOW_OVERRIDE=All
